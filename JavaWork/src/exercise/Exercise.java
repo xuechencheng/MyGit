@@ -14,9 +14,14 @@ public class Exercise {
 	private BufferedReader bf = null;
 	private void loadTopicFromFile(String title, int chapter) throws IOException {
 		topics.clear();
-		String filePath = "src\\files\\" + title + chapter + ".txt";
-		FileInputStream inputStream = new FileInputStream(filePath);
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+		String filePath = "src\\files\\" + title;
+		if(chapter != 0) {
+			filePath += chapter;
+		}
+		filePath += ".txt";
+		//FileInputStream inputStream = new FileInputStream(filePath);
+		BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(new FileInputStream(filePath),"UTF-8"));
+		//BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 		String question = null;
 		String answer = null;
 		while((question = bufferedReader.readLine()) != null &&
@@ -25,14 +30,15 @@ public class Exercise {
 			System.out.println(question + "  ---   " + answer);
 			topics.add(new Topic(question, answer));
 		}
-		inputStream.close();
+		//inputStream.close();
 		bufferedReader.close();
 	}
 
 	public void startExercise(String title, int chapter) throws IOException {
 		loadTopicFromFile(title, chapter);
+		System.out.println("Total topic num is " + topics.size());
 		for(int i = 0; i < topics.size(); i++) {
-			 var topic = topics.get(i);
+			 Topic topic = topics.get(i);
 			 if(answerOneTopic(topic))
 				 rightList.add(topic);
 			 else {
