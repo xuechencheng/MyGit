@@ -5,12 +5,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Exercise {
 	private List<Topic> topics = new ArrayList<Topic>();
-	private List<Topic> rightList = new ArrayList<Topic>();
-	private List<Topic> wrongList = new ArrayList<Topic>();
 	private BufferedReader bf = null;
 	private void loadTopicFromFile(String title, int chapter) throws IOException {
 		topics.clear();
@@ -36,16 +35,17 @@ public class Exercise {
 
 	public void startExercise(String title, int chapter) throws IOException {
 		loadTopicFromFile(title, chapter);
-		System.out.println("Total topic num is " + topics.size());
-		for(int i = 0; i < topics.size(); i++) {
-			 Topic topic = topics.get(i);
-			 if(answerOneTopic(topic))
-				 rightList.add(topic);
-			 else {
-				 wrongList.add(topic);
-			 }
+		
+		while(topics.size() > 0) {
+			System.out.println("Total topic num is " + topics.size());
+			Iterator<Topic> iterator = topics.iterator();
+			while(iterator.hasNext()) {
+				Topic topic = iterator.next();
+				if(answerOneTopic(topic)) {
+					iterator.remove();
+				}
+			}
 		}
-		System.out.println("wrong num is " + wrongList.size());
 		endExercise();
 	}
 	
@@ -60,6 +60,7 @@ public class Exercise {
 				System.out.println("Wrong!!!    Try Again!!!");
 			}
 		}
+		System.out.println(topic.getAnswer());
 		return false;
 	}
 	

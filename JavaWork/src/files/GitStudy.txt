@@ -1,4 +1,4 @@
-配置Git用户名
+﻿配置Git用户名
 git config --global user.name xuechencheng
 把目录变成Git仓库
 git init
@@ -9,7 +9,7 @@ git commit -m "Hello World"
 查看状态
 git status
 查看readme.txt修改的内容
-git diff readme.txt 
+git diff readme.txt
 查看历史记录
 git log
 单行模式查看历史记录
@@ -59,7 +59,7 @@ git stash pop
 恢复指定的stash
 git stash apply stash@{0}
 强行删除dev分支
-git branch -d dev
+git branch -D dev
 查看远程库的信息
 git remote
 查看远程库详细的信息
@@ -81,7 +81,7 @@ git tag v0.9 f52c633
 查看v0.9标签信息
 git show v0.9
 打个v1版本，备注version 1，版本号1094adb
-git tag -a v0.1 -m "version 1" 1094adb
+git tag -a v1 -m "version 1" 1094adb
 删除v0.1标签
 git tag -d v0.1
 推送v1.0到远程库
@@ -95,4 +95,4 @@ git add -f App.class
 让st命令代替status
 git config --global alias.st status
 撤销掉st的设置
-git config --global alias.st 'reset HEAD'
+git config --global alias.st "reset HEAD"
