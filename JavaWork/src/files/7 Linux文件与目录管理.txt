@@ -1,0 +1,150 @@
+代表前一个工作目录
+-
+代表目前用户身份所在的主文件夹
+~
+代表account这个用户的主文件夹
+~account
+递归创建目录
+mkdir -p
+删除一个空的目录。
+rmdir
+连同上层“空的”目录一起删除。
+rmdir –p
+显示PATH
+echo $PATH
+将root加入PATH
+PATH=”$PATH”:/root
+全部的文件，连同隐藏文件一起列出来
+ls -a
+仅列出目录本身，而不是列出目录内的文件数据
+ls -d
+列出数据串，包含文件的属性与权限等
+ls -l
+将主文件夹下的所有文件列出来，含属性与隐藏文件
+ls -al ~
+不显示颜色，但在文件名末显示出该文件名代表的类型
+ls -alF --color=never ~
+完整呈现文件的修改时间
+ls -al --full-time
+若目标文件已经存在时，在覆盖时会先询问操作的进行
+cp -i
+递归持续复制，用于目录的复制
+cp -r
+用root身份将主文件夹下的.bashrc复制到/tmp下，并更名为bashrc
+cp ~/.bashrc /tmp/bashrc
+默认情况下，复制后的文件属性会改变，如果想要连同所有特性都复制过来，将/var/log/wtmp 复制到当前目录
+cp –a /var/log/wtmp .
+创建bashrc的软连接bashrc_slink
+cp –s bashrc bashrc_slink
+创建bashrc的硬链接bashrc_hlink
+cp –l bashrc bashrc_hlink
+若~/.bashrc比/tmp/bashrc更新才复制过来
+cp -u ~/.bashrc /tmp/bashrc
+将主文件夹的.bashrc和.bash_history复制到/temp下面
+cp ~/.bashrc ~/.bashrc_history /tmp
+rm移除文件或目录，force模式
+rm -f	
+互动模式
+rm -i
+递归删除，这是非常危险的参数
+rm -r
+删除bashrc文件
+rm -i bashrc
+删除以bashrc开头的文件
+rm -i bashrc*
+递归删除掉/tmp/etc这个目录
+rm -r /tmp/etc
+移动文件与目录或更名的命令mv，强制
+mv -f 
+-i 若目标存在，就会询问覆盖
+mv - i
+若目标文件已经存在，且source更新，才会更新
+mv -u
+将/.bashrc复制到当前文件夹下bashrc
+cp ~/.bashrc bashrc
+将bashrc重命名为mvtest
+mv bashrc mvtest
+由第一行开始显示文件内容
+cat
+从最后一行开始显示
+tac
+显示的时候，顺便输出行号
+nl
+一页一页显示文件内容
+more
+比more更好一点
+less
+只看前几行
+head
+只看结尾几行
+tail
+以二进制方式读取内容
+od
+文件的三种时间
+更改时间 状态时间 读取时间
+查看bashrc更改时间
+ls -l bashrc
+查看读取时间
+ls -l --time=atime bashrc
+查看状态时间
+ls -l --time=ctime bashrc
+touch命令,仅修改访问时间
+touch -a
+仅修改文件的时间，若文件不存在则不创建新文件
+touch -c
+后面可以接想要修改的日期
+touch -d
+仅修改mtime
+touch -m
+创建testtouch文件
+touch testtouch
+修改bashrc时间到两天前
+touch -d “2 days ago” bashrc
+将bashrc日期改为07.09.15 2:02
+touch -t 0709150202 bashrc
+同时查看三个时间
+ll bashrc;ll --time=atime bashrc;ll --time=ctime bashrc
+查看文件或文件夹的默认权限
+umask
+更详细的查看默认权限
+umask -S
+文件默认的最大权限和文件夹默认权限权限分别是什么
+666 777
+设置umask为002
+umask 002
+root和一般用户的umask默认值
+022 002
+设置文件隐藏属性chattr，文件只能增加数据，不能删除和修改数据，只有root才能设置这个属性
+a
+让文件不能删除，改名，设置连接也无法写入或添加数据，只有root能设置
+i
+给attrtest文件添加i属性
+chattr +i attrtest
+取消attrtest文件的i属性
+chattr –I attrtest
+查看attrtest文件的隐藏属性
+lsattr attrtest
+查看~/.bashrc文件的类型
+file ~/.bashrc
+查找ifconfig命令的位置
+which ifconfig
+查找ifconfig文件
+whereis ifconfig
+使用locate查找passwd相关的文件名
+locate passwd
+将过去系统上面24小时内有效改动的文件列出
+find / -mtime 0
+寻找/etc下面的文件，如果文件日期比/etc/passwd新就列出
+find /etc –newer /etc/passwd
+查找/home下面属于vbird的文件
+find /home –user vbird
+查找系统中不属于任何人的文件
+find / -nouser
+查找文件名为passwd的文件
+find / -name passwd
+查找/var目录下文件类型为Socket的文件名有哪些
+find /var -type s
+找出系统中大于1MB的文件
+find / -size +1000k
+找出/etc下面文件名含httpd的文件
+find /etc -name ‘*httpd*’

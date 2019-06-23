@@ -5,18 +5,26 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class Exercise {
 	private List<Topic> topics = new ArrayList<Topic>();
 	private BufferedReader bf = null;
-	private void loadTopicFromFile(String title, int chapter) throws IOException {
+	private long startTime = 0;
+	private Set<String> wrongSet = new HashSet<String>();
+	private int maxNum = 0;
+	private List<String> filePaths = new ArrayList<String>();
+	
+	public void Init() {
+		filePaths.add("GitStudy");
+	}
+	
+	private void loadTopicFromFile(String path) throws IOException {
 		topics.clear();
-		String filePath = "src\\files\\" + title;
-		if(chapter != 0) {
-			filePath += chapter;
-		}
+		String filePath = "src\\files\\" + path;
 		filePath += ".txt";
 		//FileInputStream inputStream = new FileInputStream(filePath);
 		BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(new FileInputStream(filePath),"UTF-8"));
@@ -33,17 +41,28 @@ public class Exercise {
 		bufferedReader.close();
 	}
 
-	public void startExercise(String title, int chapter) throws IOException {
-		loadTopicFromFile(title, chapter);
-		
+	
+	public void startExercise(int fileIndex) throws IOException {
+		String filePath = filePaths.get(fileIndex);
+		loadTopicFromFile(filePath);
+		startTime = System.currentTimeMillis();
 		while(topics.size() > 0) {
 			System.out.println("Total topic num is " + topics.size());
+			int index = 1;
+			int totalNum = topics.size();
+			if(totalNum > maxNum) {
+				maxNum = totalNum;
+			}
 			Iterator<Topic> iterator = topics.iterator();
 			while(iterator.hasNext()) {
+				System.out.print("" + index + "/" + totalNum + "£¬");
 				Topic topic = iterator.next();
 				if(answerOneTopic(topic)) {
 					iterator.remove();
+				}else {
+					wrongSet.add(topic.getQuestion());
 				}
+				index++;
 			}
 		}
 		endExercise();
@@ -65,6 +84,9 @@ public class Exercise {
 	}
 	
 	private void endExercise() throws IOException {
+		int spendSec = (int)(System.currentTimeMillis() - startTime);
+		System.out.println("Congratulations !!! Time is " + spendSec / 60 + " minutes and "
+		+ spendSec % 60 + " seconds   Correct rate is " + 1.0f * (maxNum - wrongSet.size()) / maxNum * 100 + "%");
 		bf.close();
 	}
 	
