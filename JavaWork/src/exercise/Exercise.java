@@ -84,7 +84,7 @@ public class Exercise {
 	}
 	
 	private void endExercise() throws IOException {
-		int spendSec = (int)(System.currentTimeMillis() - startTime);
+		int spendSec = (int)((System.currentTimeMillis() - startTime) / 1000);
 		System.out.println("Congratulations !!! Time is " + spendSec / 60 + " minutes and "
 		+ spendSec % 60 + " seconds   Correct rate is " + 1.0f * (maxNum - wrongSet.size()) / maxNum * 100 + "%");
 		bf.close();
