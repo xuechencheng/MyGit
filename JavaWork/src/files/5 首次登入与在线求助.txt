@@ -1,11 +1,9 @@
-命令模式登录后所取得的程序被称为什么？
+﻿命令模式登录后所取得的程序被称为什么？
 shell
 很多说明文档保存在哪个目录下？
 /usr/share/doc
-n开头的简单文本编辑器的名字
-nano
 Shell命令格式
-command [-options] parameter1 parameter2
+command [-option] param1 param2
 有时候会使用参数的完整名称，则参数前带有什么符号？
 --
 显示当前语言的命令
