@@ -8,7 +8,7 @@ public class MainTest {
 		// TODO Auto-generated method stub
 		Exercise exercise = new Exercise();
 		exercise.Init();
-		exercise.startExercise(0);
+		exercise.startExercise(1);
 	}
 
 }

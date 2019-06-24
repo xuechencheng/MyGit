@@ -20,6 +20,7 @@ public class Exercise {
 	
 	public void Init() {
 		filePaths.add("GitStudy");
+		filePaths.add("0 ¼ÆËã»ú¸ÅÂÛ");
 	}
 	
 	private void loadTopicFromFile(String path) throws IOException {
@@ -72,7 +73,7 @@ public class Exercise {
 		System.out.println(topic.getQuestion());
 		int time = 0;
 		while(time++ < 3) {
-			if(readOneLine().equals(topic.getAnswer())) {
+			if(readOneLine().trim().equals(topic.getAnswer().trim())) {
 				System.out.println("Right!!!");
 				return true;
 			}else {
