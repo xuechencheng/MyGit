@@ -21,6 +21,7 @@ public class Exercise {
 	public void Init() {
 		filePaths.add("GitStudy");
 		filePaths.add("0 计算机概论");
+		filePaths.add("5 首次登入与在线求助");
 	}
 	
 	private void loadTopicFromFile(String path) throws IOException {

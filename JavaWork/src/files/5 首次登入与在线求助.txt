@@ -7,7 +7,7 @@ command [-option] param1 param2
 有时候会使用参数的完整名称，则参数前带有什么符号？
 --
 显示当前语言的命令
-each $LANG
+echo $LANG
 设置语言的英文的命令
 LANG=en_US
 显示日期和时间的命令
@@ -19,7 +19,7 @@ bc
 命令补全和文件补齐功能键
 Tab
 让程序停下来的键
-Tab+C
+Ctrl+C
 相当于quit的键
 Ctrl+D
 man page指令中，page文件的目录
@@ -31,7 +31,7 @@ man page指令中，page文件的目录
 在man page的模式下，查询下一个和上一个的快捷键
 n N
 查看page有哪些page的快捷键
-man –f page。
+man –f page
 shell环境中可以操作的命令或可执行文件用哪个数字表示
 1
 查看配置文件或者某些文件格式使用哪个数字
@@ -42,7 +42,7 @@ man –f命令相当于什么命令？
 whatis
 相当于man page的网页版的命令是什么
 info page
-man page文件目录是什么
+info page文件目录是什么
 /usr/share/info
 使用什么命令查看有谁在线？
 who
@@ -54,6 +54,3 @@ ps -aux
 sync
 惯用的关机命令是什么？
 shutdown	
-
-
-
