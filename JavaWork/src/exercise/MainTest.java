@@ -8,7 +8,8 @@ public class MainTest {
 		// TODO Auto-generated method stub
 		Exercise exercise = new Exercise();
 		exercise.Init();
-		exercise.startExercise(2);
+		for(int i = exercise.getFileNum() - 1; i >= 0; i--) {
+			exercise.startExercise(i);
+		}
 	}
-
 }

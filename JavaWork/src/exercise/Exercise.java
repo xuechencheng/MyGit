@@ -21,7 +21,15 @@ public class Exercise {
 	public void Init() {
 		filePaths.add("GitStudy");
 		filePaths.add("0 计算机概论");
+		filePaths.add("3 主机规划与磁盘分区");
+		filePaths.add("4 安装CentOS与多重引导小技巧");
 		filePaths.add("5 首次登入与在线求助");
+		filePaths.add("6 Linux的文件权限与目录配置");
+		filePaths.add("7 Linux文件与目录管理");
+	}
+	
+	public int getFileNum() {
+		return filePaths.size();
 	}
 	
 	private void loadTopicFromFile(String path) throws IOException {
@@ -74,7 +82,9 @@ public class Exercise {
 		System.out.println(topic.getQuestion());
 		int time = 0;
 		while(time++ < 3) {
-			if(readOneLine().trim().equals(topic.getAnswer().trim())) {
+			String myAnswer = readOneLine().trim();
+			String rightAnswer = topic.getAnswer().trim();
+			if(myAnswer.equals(rightAnswer)) {
 				System.out.println("Right!!!");
 				return true;
 			}else {
