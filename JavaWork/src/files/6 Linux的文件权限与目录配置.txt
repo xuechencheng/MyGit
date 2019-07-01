@@ -1,4 +1,4 @@
-Linux里面，任何一个文件都具有哪3种身份权限？
+﻿Linux里面，任何一个文件都具有哪3种身份权限？
 User Group Others
 默认情况下所有的系统上的账号与一般身份用户，还有root的相关信息，都是记录在哪个文件？
 /etc/passwd
@@ -19,9 +19,9 @@ d - | b c
 三组rwx，每组分别表示谁的权限？
 文件所有者 用户组 其他用户
 改变文件所属用户组命令
-chgrp [-R] user dirname/filename
+chgrp
 改变文件所有者命令
-chown [-R] user dirname/filename
+chown
 将install.log文件的所有者和用户组设为root
 chown root:root install.log
 改变文件的权限
@@ -78,10 +78,8 @@ Ext2/Ext3
 /sys
 这五个目录不可与根目录分开放在不同的分区。
 /etc /bin /dev /lib /sbin
-usr目录
-/usr
 绝大部分的用户可以使用的命令都放在这里，这个与/bin的不同在于后者放置的与开机是否有关。
-/usr/bin/
+/usr/bin
 C/C++等程序语言的头文件与包含文件放置处
 /usr/include
 包含各应用软件的函数库，目标文件，以及不被一般用户惯用的执行文件或脚本。
