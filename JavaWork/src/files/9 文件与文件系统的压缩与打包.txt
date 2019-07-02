@@ -1,0 +1,80 @@
+1byte=多少bit
+8
+压缩前与压缩后的文件所占用的磁盘空间大小称为什么？
+压缩比
+gzip程序压缩文件扩展名
+.gz
+bzip2程序压缩的文件扩展名
+.bz2
+tar程序打包的数据
+.tar
+tar程序打包，并经过gzip压缩
+.tar.gz
+tar程序打包，并经过bzip2压缩
+.tar.bz2
+gzip和bzip2通常用于压缩什么
+一个文件
+gzip命令中，将压缩的数据输出到屏幕上的参数
+c
+解压缩的参数
+d
+可以显示压缩比等信息
+V
+设置压缩等级
+#
+压缩man.config文件
+gzip -v man.config
+使用什么命令压缩的文件可以在windows上使用？
+gzip
+读取gzip压缩的文件的指令
+zcat
+比gzip压缩比更高的命令
+bzip2
+bzip2命令中，将压缩过程中产生的数据输出到屏幕上的参数
+c
+解压缩的参数
+d
+保留原文件
+k
+压缩的参数
+z
+可以显示压缩比等信息
+v
+设置压缩比，9最佳
+#
+tar指令中，新建打包文件，可搭配-v来查看过程中被打包的文件名
+c
+查看打包文件的内容含有那些文件名
+t
+解打包或解压缩功能，可以搭配-C在特定目录解开。注意-c -t -x不能同时出现
+x
+通过bzip2的支持进行压缩和解压缩，文件名最好是*.tar.bz2
+j
+通过gzip的支持进行压缩和解压缩，文件名最好是*.tar.gz
+z
+在压缩和解压缩过程中，将正在处理的文件名显示出来
+v
+后面要接被处理的文件名，建议单独写一个参数
+f
+解压缩时，若要在特定目录解压缩使用
+C
+压缩过程中，不要将File打包
+--exclude=File
+压缩文件命令
+tar -jcv -f filename.tar.bz2
+查询
+tar -jtv -f filename.tar.bz2
+解压缩
+tar -jxv -f filename.tar.bz2 –C
+解压/root/etc.tar.bz2中的shadow文件
+tar –jtv –f /root/etc.tar.baz|grep ‘shadow’
+仅备份比某个时刻要新的文件，有两个选项
+--newer –newer-mtime
+使用tar打包未压缩和压缩的文件分别称为
+tarfile tarball
+将/etc整个目录一边打包，一边解开
+tar –cvf - /etc | tar –vxf –
+完整的备份工具
+dump
+dump的恢复命令是什么
+restore
