@@ -1,4 +1,4 @@
-在当前行上移动光标: 到行头
+﻿在当前行上移动光标: 到行头
 0
 到本行的第一个非blank字符
 ^
@@ -19,13 +19,13 @@ d y v
 object单词,一个以空格为分隔的单词,一个句字,一个段落
 w W s p
 你有一个字符串 (map (+) ("foo")).而光标键在第一个 o 的位置。vi" 
-foo.
+foo
 va"
-"foo".
+"foo"
 vi)
-"foo".
+"foo"
 va)
-("foo").
+("foo")
 v2i)
 map (+) ("foo")
 v2a)
@@ -39,10 +39,10 @@ Ctrl+D
 插入“--”，按ESC键来为每一行生效
 I--ESC
 自动提示
-Ctrl+n Ctrl+p
-宏录制：把你的操作记录在寄存器
+Ctrl+N Ctrl+P
+宏录制：把你的操作记录在寄存器a中
 qa
-replay被录制的宏
+replay被录制的宏a
 @a
 replay最新录制的宏
 @@
@@ -62,10 +62,6 @@ $ A
 :vsplit
 切换分屏
 Ctrl+W hjkl
-最大化尺寸
-Ctrl+W_
-最大化垂直分配
-Ctrl+W_
 增加尺寸
 Ctrl+W+
 减小尺寸

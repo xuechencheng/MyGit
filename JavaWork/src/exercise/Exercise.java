@@ -20,6 +20,10 @@ public class Exercise {
 	
 	public void Init() {
 		filePaths.add("GitStudy");
+		filePaths.add("VIM1，存活");
+		filePaths.add("VIM2，感觉良好");
+		filePaths.add("VIM3 更好，更强，更快");
+		filePaths.add("VIM4 Vim 超能力");
 		filePaths.add("0 计算机概论");
 		filePaths.add("3 主机规划与磁盘分区");
 		filePaths.add("4 安装CentOS与多重引导小技巧");
@@ -99,7 +103,7 @@ public class Exercise {
 		int spendSec = (int)((System.currentTimeMillis() - startTime) / 1000);
 		System.out.println("Congratulations !!! Time is " + spendSec / 60 + " minutes and "
 		+ spendSec % 60 + " seconds   Correct rate is " + 1.0f * (maxNum - wrongSet.size()) / maxNum * 100 + "%");
-		bf.close();
+		//bf.close();
 	}
 	
 	private String readOneLine() throws IOException {

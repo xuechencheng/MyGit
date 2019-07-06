@@ -8,7 +8,7 @@ public class MainTest {
 		// TODO Auto-generated method stub
 		Exercise exercise = new Exercise();
 		exercise.Init();
-		for(int i = exercise.getFileNum() - 1; i >= 0; i--) {
+		for(int i = 4; i < 6; i++) {
 			exercise.startExercise(i);
 		}
 	}
