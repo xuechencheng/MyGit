@@ -1,0 +1,98 @@
+﻿#增加 4个     将readme.txt加到暂存区
+git add readme.txt
+强制添加被忽略的文件App.class
+git add -f App.class
+将暂存区推送到版本库，并备注Hello World
+git commit -m "Hello World"
+把目录变成Git仓库
+git init
+#删除 5个     丢弃工作区对readme.txt的修改
+git checkout --readme.txt
+删除readme.txt文件
+git rm readme.txt
+把暂存区对readme.txt的修改撤销掉，重新放回工作区
+git reset HEAD readme.txt
+把当前版本回退到上一个版本
+git reset --hard HEAD^
+回退版本到1094adb
+git reset --hard 1094adb
+#查看 7个      查看历史记录
+git log
+单行模式查看历史记录
+git log --pretty=oneline
+rebase简化log
+git rebase
+用带参数的git log查看分支的合并情况
+git log --graph --pretty=oneline --abbrev-commit
+查看命令历史记录
+git reflog
+查看状态
+git status
+查看readme.txt修改的内容
+git diff readme.txt
+#远程库 10个     创建SSH Key
+ssh-keygen -t rsa -C 1031022030@qq.com
+克隆gitskills库
+git clone git@github.com:xuechencheng/gitskills.git
+和learngit关联
+git remote add origin git@github.com:xuechencheng/learngit.git
+推送并关联分支
+git push -u origin master
+之后再提交
+git push
+推送dev分支
+git push origin dev
+抓取远程库内容
+git pull
+git pull也失败,指定本地dev分支与远程origin/dev分支的链接
+git branch --set-upstream-to=origin/dev dev
+查看远程库的信息
+git remote
+查看远程库详细的信息
+git remote -v
+#分支 11个     创建并切换到dev分支
+git checkout -b dev
+创建dev分支
+git branch dev
+切换到dev分支
+git checkout dev
+查看当前分支情况
+git branch
+把dev分支的工作成果合并到当前分支上
+git merge dev
+合并完成后删除dev分支
+git branch -d dev
+强行删除dev分支
+git branch -D dev
+把当前工作现场“储藏”起来
+git stash
+查看存储起来的工作现场
+git stash list
+恢复工作现场并删除
+git stash pop
+恢复指定的stash
+git stash apply stash@{0}
+#配置 4个     配置Git用户名
+git config --global user.name xuechencheng
+让Git显示颜色
+git config --global color.ui true
+让st命令代替status
+git config --global alias.st status
+撤销掉st的设置
+git config --global alias.st "reset HEAD"
+#标签 8个     打v1.0标签
+git tag v1.0
+给f52c633版本打v0.9标签
+git tag v0.9 f52c633
+打个v1版本，备注version 1，版本号1094adb
+git tag -a v1 -m "version 1" 1094adb
+查看所有标签
+git tag
+查看v0.9标签信息
+git show v0.9
+删除v0.1标签
+git tag -d v0.1
+推送v1.0到远程库
+git push origin v1.0
+一次性推送全部尚未推送到远程的本地标签
+git push origin --tags
