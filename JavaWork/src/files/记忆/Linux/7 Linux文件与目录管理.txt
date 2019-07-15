@@ -1,0 +1,41 @@
+﻿三个工作目录
+-	~	~account
+目录操作的三个指令
+mkdir -p	rmdir	rmdir -p
+PATH设置
+echo $PATH	PATH="$PATH":/root
+ls 命令
+ls -a	ls -l	ls -al ~	ls -al --full-time
+cp指令
+cp -i	cp -r	cp -a 	cp -s 	cp -l	cp -u 
+rm指令
+rm -f	
+rm -i
+rm -r
+mv指令
+mv -f 	mv -i	mv -u	mv重命名
+touch指令
+touch -a	touch -c	touch -d	touch -m	touch testtouch
+umask指令
+umask	umask -S	umask 002
+chattr指令
+chattr +i 	chattr -i 
+lsattr指令
+lsattr attrtest
+file指令
+file ~/.bashrc
+which指令
+which ifconfig
+whereis指令
+whereis ifconfig
+locate指令
+locate passwd
+find指令
+find / -mtime 0
+find /etc -newer /etc/passwd
+find /home -user vbird
+find / -nouser
+find / -name passwd
+find /var -type s
+find / -size +1000k
+find /etc -name "*httpd*"
