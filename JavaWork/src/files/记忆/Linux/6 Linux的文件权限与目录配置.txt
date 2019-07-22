@@ -1,16 +1,20 @@
 ﻿权限
-任何一个文件都具有哪3种身份权限？
-User Group Others
-权限的第一个字符如果是目录，文件，连接文件，可提供存储的接口设备，串行接口设备分别用什么字母表示？
-d - | b c
-改变文件所有者命令
-chown
-将install.log文件的所有者和用户组设为root
-chown root:root install.log
-改变文件所属用户组命令
-chgrp
-改变文件的权限
-chmod
+三种身份
+rwx对于文件和文件夹的含义
+权限第一个字符的类型
+改变用户 改变用户组 改变权限的命令
+chown	chgrp	chmod
+常用的文件夹
+/bin /sbin /usr/bin /usr/sbin
+/boost	/dev	/etc	/home	/lib	/media	/mnt	/opt	/proc	/root	/srv	/sys	/tmp
+/usr /usr/include	/usr/lib	/usr/local	/usr/share	/usr/src	
+/var	/var/cache	/var/log	/var/mail
+
+/bin /sbin /usr/bin /usr/sbin
+/boost	/dev	/etc	/home	/lib	/media	/mnt	/opt	/proc	/root	/srv	/sys	/tmp
+/usr /usr/include	/usr/lib	/usr/local	/usr/share	/usr/src	
+/var	/var/cache	/var/log	/var/mail
+
 将.bashrc文件权限改为777
 chmod 777 .bashrc
 将.bashrc权限改为u:rwx go:rx
@@ -22,10 +26,7 @@ chmod a-x .bashrc
 对于目录而言：rwx表示什么权限？
 读取目录 修改目录 进入目录
 
-常用的文件夹
-/bin /sbin /usr/bin /usr/sbin
-/boost	/dev	/etc	/home	/lib	/media	/mnt	/opt	/proc	/root	/srv	/sys	/tmp
-/usr /usr/include	/usr/lib	/usr/local	/usr/share	/usr/src	/var	/var/cache	/var/log	/var/mail
+
 
 /bin和/sbin：存放着系统所需要的基础命令，bin是普通用户用的，sbin是root用户用的；在/usr下的bin和sbin目录同理，但是他们与/bin的不同在于后者放置的与开机是否有关。
 这个目录主要放置开机会使用到的文件
