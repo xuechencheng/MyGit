@@ -14,6 +14,10 @@ Minix
 GNU
 GNU的C语言编译程序是什么？
 GCC
+GNU项目的程序编辑器是什么软件？
+Emacs
+GNU项目的shell工具
+bash shell
 一旦软件挂上什么版权声明之后，它就称为自由软件？
 GPL
 Linux与Unix软件的关系是什么
