@@ -26,6 +26,7 @@ public class Exercise {
 		filePaths.add("VIM4 Vim 超能力");
 		filePaths.add("0 计算机概论");
 		filePaths.add("1 Linux是什么");
+		filePaths.add("2 如何学习Linux");
 		filePaths.add("3 主机规划与磁盘分区");
 		filePaths.add("4 安装CentOS与多重引导小技巧");
 		filePaths.add("5 首次登入与在线求助");

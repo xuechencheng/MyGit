@@ -1,19 +1,8 @@
-<<<<<<< HEAD
-#显示和设置当前语言的命令
-
-#三个实用的命令 date cal 和 bc
-
-#让程序停下来
-
-#在man page的翻页 查找字符串
-man –f 和 whatis	info page
-
-#关机5步
-=======
+﻿5，首次登入与在线求助
 目录
 1，首次登录系统
 2，在命令行模式下执行命令
-3，Linux系统的在线求助man page与info page
+3，man page与info page
 4，超简单文本编辑器：nano
 5，正确的关机方法
 6，开机过程的问题排解
@@ -27,7 +16,6 @@ man –f 和 whatis	info page
 查找字符串
 查看page有哪些page的快捷键
 4，关机流程
->>>>>>> 80f96c714b38d6278925aea58fdc69461ccf7ac4
 who
 netstat -a
 ps -aux
