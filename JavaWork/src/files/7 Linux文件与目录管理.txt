@@ -4,6 +4,16 @@
 ~
 代表account这个用户的主文件夹
 ~account
+切换目录命令
+cd
+显示当前目录命令
+pwd
+显示出当前的路径，而非使用连接路径
+pwd -P
+配置文件案的权限，直接设置，不需要看默认的权限
+mkdir -m
+新建权限为711的目录test
+mkdri -m 711 test
 递归创建目录
 mkdir -p
 删除一个空的目录。
@@ -14,6 +24,10 @@ rmdir -p
 echo $PATH
 将root加入PATH
 PATH="$PATH":/root
+不同的用户的PATH相同还是不同
+不同
+执行当前目录下的ls命令
+./ls
 全部的文件，连同隐藏文件一起列出来
 ls -a
 仅列出目录本身，而不是列出目录内的文件数据
@@ -22,18 +36,26 @@ ls -d
 ls -l
 将主文件夹下的所有文件列出来，含属性与隐藏文件
 ls -al ~
-不显示颜色，但在文件名末显示出该文件名代表的类型
-ls -alF --color=never ~
 完整呈现文件的修改时间
 ls -al --full-time
+cp命令中，相当于-pdr的意思
+cp -a
 复制文件时候，若目标文件存在，会先询问操作的进行
 cp -i
+进行硬连接的连接文件创建，而非复制文件本身
+cp -l
+复制成为符号链接文件，即快捷方式文件
+cp -s
+连同文件的属性一起复制过去，而非使用默认属性
+cp -p
 递归持续复制，用于目录的复制
 cp -r
 用root身份将主文件夹下的.bashrc复制到/tmp下，并更名为bashrc
 cp ~/.bashrc /tmp/bashrc
 默认情况下，复制后的文件属性会改变，如果想要连同所有特性都复制过来，将/var/log/wtmp 复制到当前目录
 cp -a /var/log/wtmp .
+使用root身份，cp复制过来的文件的所有者和用户组分别是什么
+root root
 创建bashrc的s连接bashrc_slink
 cp -s bashrc bashrc_slink
 创建bashrc的硬链接bashrc_hlink
@@ -64,6 +86,12 @@ mv -u
 cp ~/.bashrc bashrc
 将bashrc重命名为mvtest
 mv bashrc mvtest
+获取/etc/sysconfig/network的文件名
+basename /etc/sysconfig/network
+获取 /etc/sysconfig/network的目录名
+dirname /etc/sysconfig/network
+最常用的三个显示文件内容的命令
+cat more less
 由第一行开始显示文件内容
 cat
 从最后一行开始显示
@@ -82,6 +110,8 @@ tail
 od
 文件的三种时间
 更改时间 状态时间 读取时间
+三种时间的英文缩写
+mtime ctime atime
 查看bashrc更改时间
 ls -l bashrc
 查看读取时间
