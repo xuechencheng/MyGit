@@ -134,16 +134,24 @@ touch -d "2 days ago" bashrc
 touch -t 0709150202 bashrc
 同时查看三个时间
 ll bashrc;ll --time=atime bashrc;ll --time=ctime bashrc
+设置和查看系统隐藏属性的命令分别是什么
+chattr lsattr
 查看文件或文件夹的默认权限
 umask
 更详细的查看默认权限
 umask -S
+如果umask -S查看的结果是 u=rwx,g=rx,o=rx，那么umask对应的结果是什么？
+0022
 文件默认的最大权限和文件夹默认权限权限分别是什么
 666 777
+默认值需要减掉的权限是什么值？
+umask
 设置umask为002
 umask 002
 root和一般用户的umask默认值
 022 002
+chattr命令常用的参数
+chattr [+-=][ai]
 设置文件隐藏属性chattr，文件只能增加数据，不能删除和修改数据，只有root才能设置这个属性
 a
 让文件不能删除，改名，设置连接也无法写入或添加数据，只有root能设置
@@ -154,16 +162,38 @@ chattr +i attrtest
 chattr -i attrtest
 查看attrtest文件的隐藏属性
 lsattr attrtest
+当s这个标志出现在所有者的x权限上时候，这个文件被称为什么特殊权限
+SUID
+一般用户无法写入/etc/shadow，但是可以通过passwd命令，修改密码是因为什么
+SUID
+SUID只能由于什么程序，而不能用于shell脚本
+二进制
+当s标志在文件用户组的x时，则称为什么
+SGID
 查看~/.bashrc文件的类型
 file ~/.bashrc
+查找ls这样的命令放置的目录用什么命令
+which type
+which命令什么参数可以找到所有的命令，而不是第一个
+a
 查找ifconfig命令的位置
 which ifconfig
 查找ifconfig文件
 whereis ifconfig
+通过文件名查找文件使用的命令是什么
+whereis locate
 使用locate查找passwd相关的文件名
 locate passwd
+whereis和locate都是通过数据库取查找的，更新数据库的命令是什么
+updatedb
+find命令的格式
+find [PATH] [option] [action]
 将过去系统上面24小时内有改动的文件列出
 find / -mtime 0
+3天前的24小时内有改动的文件列出来
+find / -mtime 3
+4天内被改动的文件列出来
+find / -mtime -4
 寻找/etc下面的文件，如果文件日期比/etc/passwd新就列出
 find /etc -newer /etc/passwd
 查找/home下面属于vbird的文件
