@@ -10,10 +10,10 @@ cd
 pwd
 显示出当前的路径，而非使用连接路径
 pwd -P
-配置文件案的权限，直接设置，不需要看默认的权限
+配置文件夹的权限，直接设置，不需要看默认的权限
 mkdir -m
 新建权限为711的目录test
-mkdri -m 711 test
+mkdir -m 711 test
 递归创建目录
 mkdir -p
 删除一个空的目录。
@@ -70,9 +70,9 @@ rm -f
 rm -i
 递归删除，这是非常危险的参数
 rm -r
-删除bashrc文件
+互动模式删除bashrc文件
 rm -i bashrc
-删除以bashrc开头的文件
+互动模式删除以bashrc开头的文件
 rm -i bashrc*
 递归删除掉/tmp/etc这个目录
 rm -r /tmp/etc
@@ -109,9 +109,9 @@ tail
 以二进制方式读取内容
 od
 文件的三种时间
-更改时间 状态时间 读取时间
+读取时间 更改时间 状态时间
 三种时间的英文缩写
-mtime ctime atime
+atime ctime mtime 
 查看bashrc更改时间
 ls -l bashrc
 查看读取时间
@@ -132,7 +132,7 @@ touch testtouch
 touch -d "2 days ago" bashrc
 将bashrc日期改为07.09.15 2:02
 touch -t 0709150202 bashrc
-同时查看三个时间
+用ll同时查看bashrc三个时间
 ll bashrc;ll --time=atime bashrc;ll --time=ctime bashrc
 设置和查看系统隐藏属性的命令分别是什么
 chattr lsattr
@@ -178,10 +178,10 @@ which命令什么参数可以找到所有的命令，而不是第一个
 a
 查找ifconfig命令的位置
 which ifconfig
-查找ifconfig文件
-whereis ifconfig
 通过文件名查找文件使用的命令是什么
 whereis locate
+查找ifconfig文件
+whereis ifconfig
 使用locate查找passwd相关的文件名
 locate passwd
 whereis和locate都是通过数据库取查找的，更新数据库的命令是什么
