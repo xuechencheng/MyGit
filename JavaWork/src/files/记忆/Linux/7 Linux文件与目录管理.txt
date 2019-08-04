@@ -7,58 +7,42 @@ cp [-ailspru]
 rm [-irf]
 mv [-fiu]
 
+2，文件的三种时间
 
-文件的三种时间
-更改时间 状态时间 读取时间
-三种时间的英文缩写
-mtime ctime atime
-ls -l bashrc
-ls -l --time=atime bashrc
-ls -l --time=ctime bashrc
+3，chattr lsattr
+chattr [+-=][ai]
 
+4，umask和umask -S
 
+5，查找命令
+which type
 
-查看文件或文件夹的默认权限
-umask
-更详细的查看默认权限
-umask -S
-文件默认的最大权限和文件夹默认权限权限分别是什么
-666 777
-设置umask为002
-umask 002
-root和一般用户的umask默认值
-022 002
-设置文件隐藏属性chattr，文件只能增加数据，不能删除和修改数据，只有root才能设置这个属性
-a
-让文件不能删除，改名，设置连接也无法写入或添加数据，只有root能设置
-i
-给attrtest文件添加i属性
-chattr +i attrtest
-取消attrtest文件的i属性
-chattr -i attrtest
-查看attrtest文件的隐藏属性
-lsattr attrtest
-查看~/.bashrc文件的类型
-file ~/.bashrc
-查找ifconfig命令的位置
-which ifconfig
-查找ifconfig文件
-whereis ifconfig
-使用locate查找passwd相关的文件名
-locate passwd
+查找文件
+whereis locate
+
+find命令
+find [PATH] [option] [action]
+
 将过去系统上面24小时内有改动的文件列出
 find / -mtime 0
+
 寻找/etc下面的文件，如果文件日期比/etc/passwd新就列出
 find /etc -newer /etc/passwd
+
 查找/home下面属于vbird的文件
 find /home -user vbird
+
 查找系统中不属于任何人的文件
 find / -nouser
+
 查找文件名为passwd的文件
 find / -name passwd
+
 查找/var目录下文件类型为Socket的文件名有哪些
 find /var -type s
+
 找出系统中大于1MB的文件
 find / -size +1000k
+
 找出/etc下面文件名含httpd的文件
 find /etc -name "*httpd*"
