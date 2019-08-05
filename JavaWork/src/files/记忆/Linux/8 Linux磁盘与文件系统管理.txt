@@ -1,0 +1,38 @@
+﻿8 Linux磁盘与文件系统管理
+一，
+inode 128bytes
+data block
+superblock 1024bytes
+inode bitmap
+block bitmap
+
+将inode记录blokc号码的区域定义为直接，间接，双间接和三间接记录区的数量。
+12 1 1 1
+所谓的间接就是再拿一个block来当作记录block号码的记录区，间接可以指向多少条记录？
+256
+每个block的号码会占用多大
+4bytes
+
+二，
+符号连接和硬连接
+ln
+
+三，
+查看superblock的命令
+dumpe2fs 
+查看目前挂载的设备的命令
+df
+评估文件系统的磁盘使用量
+du
+磁盘分区命令
+fdisk
+格式化命令：
+mkfs
+硬盘检测命令：检验文件系统是否出错
+fsck
+检查硬盘或软盘扇区有没有坏轨
+badblocks
+挂载的命令
+mount
+卸载设备文件的命令
+umount

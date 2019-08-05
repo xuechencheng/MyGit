@@ -32,6 +32,7 @@ public class Exercise {
 		filePaths.add("5 首次登入与在线求助");
 		filePaths.add("6 Linux的文件权限与目录配置");
 		filePaths.add("7 Linux文件与目录管理");
+		filePaths.add("8 Linux磁盘与文件系统管理");
 	}
 	
 	public int getFileNum() {
