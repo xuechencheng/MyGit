@@ -7,10 +7,10 @@ vi共分为3种模式
 向上向下翻一页
 Ctrl+B Ctrl+F
 光标向下移动n行
-N+Enter
+N Enter
 从第一行到最后一行查找并替换word1字符串为word2字符串，并且需要确认
 :1,$s/word1/word2/gc
-使用vim比较/tmp/man.config时候会自动创建什么文件？
+使用vim编辑/tmp/man.config时候会自动创建什么文件？
 /tmp/man.config.swp
 vim主动将你曾经做过的行为记录下来，并保存在哪个文件？
 ~/.viminfo

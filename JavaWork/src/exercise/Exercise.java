@@ -33,6 +33,9 @@ public class Exercise {
 		filePaths.add("6 Linux的文件权限与目录配置");
 		filePaths.add("7 Linux文件与目录管理");
 		filePaths.add("8 Linux磁盘与文件系统管理");
+		filePaths.add("9 文件与文件系统的压缩与打包");
+		filePaths.add("10 vim程序编辑器");
+		filePaths.add("11 认识与学习bash");
 	}
 	
 	public int getFileNum() {
