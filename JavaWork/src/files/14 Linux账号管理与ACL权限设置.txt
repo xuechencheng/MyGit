@@ -1,0 +1,106 @@
+﻿Linux主机只认识id，id和账号的对应关系在哪个文件中
+/etc/passwd
+每个登录用户至少有两个ID，用户id和用户组id，简写为什么
+UID和GID
+用户登录之后，首先读取哪两个文件获取uid和gid
+/etc/passwd /etc/group
+然后使用UID去哪个文件验证密码
+/etc/shadow
+/etc/passwd里面的bin，daemon，adm，nobody等账号是什么账号
+系统账号
+/etc/passwd文件root:x:0:0:root:/root:/bin/bash各个字段的含义
+账号 密码 UID GID 用户信息 主文件夹 Shell
+系统管理员的UID是多少
+0
+系统账号UID范围
+1-499
+/etc/shadow的内容root:*:18037:0:99999:7:::各个字段含义
+账号名称 密码 密码更改日期 密码不可更改天数 密码需要重新更改天数 密码需要更改期限前警告天数 密码过期后宽限时间 账号失效日期 保留
+/etc/group文件结构 root:x:0:root
+用户组名称 用户组密码 GID 用户组的账号
+用户登录时，立刻拥有的用户组称为什么
+初始用户组
+创建的文件和目录属于哪个用户组，取决于什么
+有效用户组
+查看所属的用户的命令
+groups
+将有效用户组切换为users
+newgrp users
+/etc/gshadow内容 root:::root各字段含义
+用户组名 密码 管理员账号 用户组所属账号
+gshadow最大的功能是什么
+创建组管理员
+让用户组管理员管理组员信息，但是现在可以使用什么命令代替，这个功能很少使用列
+sudo
+添加用户的命令
+useradd
+添加用户vbird
+useradd vbird
+使用useradd命令会给更改哪些文件
+/etc/passwd /etc/shadow /etc/group /home
+查看useradd添加用户的默认值
+useradd -D
+默认值的配置文件是哪个
+/etc/default/useradd
+密码过期后是否会失效的设置值
+INACTIVE
+账号失效的日期
+EXPIRE
+默认的shell程序文件名
+SHELL
+让用户无法登陆shell，可以把SHELL设置为什么
+/sbin/nologin
+新用户的主文件夹内的东西参考哪个目录的
+/etc/skel
+UID和GID还参考什么文件
+/etc/login.defs
+useradd这个程序在创建账号时，至少会参考哪些文件
+/etc/default/useradd /etc/login /etc/skel/*
+修改密码的命令
+passwd
+给vbird账号设置密码
+passwd vbird
+账号的复杂度要求写在哪个文件里
+/etc/pam.d/passwd
+使用stdin设置vbird用户的密码为123456
+echo "123456" | passwd --stdin vbird
+管理vbird账号，使其密码60天更改，10天失效密码设置
+passwd -x 60 -i 10 vbird
+使vbird账号失效
+passwd -l vbird
+使vbird账号恢复
+passwd -u vbird
+查看vbird密码信息
+passwd -S vbird
+更详细的查看密码信息的命令
+chage
+让新建的用户vbird第一次登录时更改密码
+chage -d 0 vbird
+对账号相关数据进行微调的命令
+usermod
+删除用户连同用户的主文件夹
+userdel -r username
+如果只是让某个用户暂时不可用修改什么文件
+/etc/shadow第八个字段设置为0
+查看登录等指纹信息
+finger [-s] username
+类似于finger的命令
+chfn chsn
+查询默认或自己UID/GID等信息的命令
+id
+与用户组内容有关的两个文件
+/etc/group /etc/gshadow
+新建用户组的命令
+groupadd
+对group参数进行修改的命令
+groupmod
+删除用户组
+groupdel
+管理用户组的命令
+gpasswd
+gpasswd将主控权交给后面的用户管理
+A
+将某些账户加入这个用户组当中
+N
+将密码删除
+r

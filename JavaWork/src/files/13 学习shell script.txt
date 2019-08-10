@@ -14,3 +14,79 @@ total = $(($first*$second))
 var=$((运算内容))
 编程：输入两个变量，进行相乘计算
 1
+当使用字节命令执行脚本时候，脚本会使用心得bash环境还是旧的
+新的
+利用什么命令执行的脚本，在执行结束后，变量仍然存在
+source
+进行调节判断的命令
+test
+查看/dmtsai是否存在
+test -e /dmtsai
+将测试结果打印出来
+test -e /dmtsai && echo "exist" || echo "not exist"
+在test命令中，判断该文件名是否存在的参数
+e
+该文件名是否存在且为文件
+f
+该文件名是否存在且为目录
+d
+编程：用户输入一个文件名，判断是否存在文件，是目录还是文件，打印权限
+1
+利用判断符号，判断HOME变量是否存在
+[ -z $HOME ]; echo $?
+中括号内的每个组件需要用什么分隔
+空格
+中括号内的变量，最好用什么括起来
+双引号
+在中括号内的常量，用什么括起来
+单引号
+执行脚本文件名是哪个变量
+$0
+第一个接的参数是什么
+$1
+参数的个数
+$#
+单独的表示所有的每个参数
+$@
+编程：打印程序的文件名，参数数量，显示全部参数内容，显示第一个参数
+1
+让参数变量号码偏移
+shift
+if语句表达式
+if 条件; then fi
+WWW ssh 的端口号
+80 22
+使用netstat查看80端口是否开启
+${netstat -tuln | grep ":80 "}
+编程：查看端口80，22，21，25是否开启
+1
+case...esac语句语法
+case $变量 in "变量1") 代码 ;; esac
+编程：让用户输入数字，然后使用case语句打印
+1
+函数表示方式
+funtion fname(){程序}
+函数内的参数$0,$1,$2分别代表什么
+函数名 第一个变量 第二个变量
+while循环语句
+while [condition] do 程序 done
+until循环语句和while刚好相反
+until [condition] do 程序 done
+编程：使用while语句，如果输入yes，则退出程序，输入其他，则打印
+1
+编程：使用while计算1到100之和
+1
+for语句
+for var in con1 con2 con3 do 程序 done
+编程：使用for语句打印三种动物dog cat elephant
+1
+for循环1到100
+for var in $(seq 1 100)
+for循环的数值处理，1到100
+for((i=1;i<=100;i=i+1))
+sh script.sh的参数，不要执行脚本，仅仅检查语法问题
+n
+将script内容打印到屏幕
+v
+将使用到的script内容打印出来
+x
