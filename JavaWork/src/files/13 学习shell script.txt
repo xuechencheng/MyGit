@@ -1,0 +1,16 @@
+shell script的注释
+#
+在shell script中设置bash为我们的shell
+#!/bin/shell
+编程：输入firstname和lastname并打印
+1
+获取前天的日期
+$(date --date='2 days ago' +%Y%m%d)
+编程：用户输入用户名，然后创建三个文件，时间分别为前天，昨天和今天
+1
+计算两个输入的变量相乘
+total = $(($first*$second))
+运算表达式
+var=$((运算内容))
+编程：输入两个变量，进行相乘计算
+1

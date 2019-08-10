@@ -120,3 +120,79 @@ sed 's/oldstr/newstr/g'
 /sbin/ifconfig eth0 | grep 'inet addr' | sed 's/^.*addr://g'
 将IP后面的部分删除
 /sbin/ifconfig eth0 | grep 'inet addr' | sed 's/^.*addr://g' | sed 's/Bcast.*$//g'
+使用扩展正则表达式使用什么命令
+egrep
+egrep和什么命令类似别名的关系
+grep -E
+重复一个或多个以上的前一个的RE字符
++
+在test文件中，查找god，good和goood等字符
+egrep -n 'go+d' test
+零个或一个的前一个RE字符
+?
+查找gd或god
+egrep -n 'go?d' test
+用或的方式找出字符串
+|
+使用|查找gd或good
+egrep -n 'gd|good' test
+找出组字符串
+()
+查找glad或good字符串
+egrep -n 'g(la|oo)d'
+多个重复组的判别
+()+
+找出AC中间有多个xyz的字符串
+egrep -n 'A(xyz)+C'
+格式化打印命令是什么
+printf
+n个字符
+%ns
+n个数字
+%ni
+长度为10，小数点后两位
+%10.2f
+printf '%10s %5i %5i %5i %8.2f \n' $(cat printf.txt) 有几列
+5
+awk命令格式
+awk '条件类型1{动作1} ...' filename
+取出前5行登录者的数据
+last -n 5
+取出上例数据的第一和第三列
+last -n 5 | awk '{print $1 "\t" $3}'
+第1列，第3列和整行分别用什么表示？
+$1 $3 $0
+awk一次处理单位是什么？最小的处理单位是什么？
+行 字段
+每一行拥有的字段总数
+NF
+目前awk所处理的是第几行数据
+NR
+目前的分隔符，默认是空格
+FS
+第一列显示原第一列内容，第二列显示line：行号，第三列显示columes：列数
+last -n -5 | awk '{print $1 "\t lines:" NR "\t columes:" NF}'
+使用:分隔/etc/passwd，打印第三列小于10的行里面的第1第3列
+cat /etc/passwd | awk 'BEGIN {FS=':'} $3 < 10 {print $1 "\t" $3}'
+cat pay.txt | awk '{if(NR==1) printf "%10s %10s %10s %10s %10s\n" $1,$2,$3,$4,"Total"} NR>=2{total =$2+$3+$4 printf "%10s %10s %10s %10s %10s\n", $1,$2,$3,$4,total}
+计算工资
+比较ASCII文件的不同的命令
+diff
+diff可比较文件和什么
+目录
+diff比较的单位是什么
+行
+可以用来比较二进制文件的命令是什么
+cmp
+cmp比较单位是什么
+字节
+使用passwd.old和passwd.new制作passwd.patch
+diff -Naur passwd.old passwd.new > passwd.patch
+更新文件
+patch -pN < patch_file
+还原文件
+patch -R -pN < patch_file
+把passwd.old更新成passwd.new
+patch -p0 < passwd.patch
+打印/etc/man.config
+pr /etc/man.config
