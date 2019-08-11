@@ -104,3 +104,79 @@ A
 N
 将密码删除
 r
+设置ACL支持文件
+/etc/fstab
+取得某个文件/目录的ACL设置项目
+getfacl
+设置某个文件/目录的ACL设置项目
+setfacl
+使用acl设置vbird用户对于acl_test文件具有rx权限
+setfacl -m u:vbird:rx acl_test
+查看acl_test权限
+getfacl acl_test
+使用acl设置mygroup组对于acl_test文件的rx权限
+setfacl -m g:mygroup:rx acl_test
+系统日常操作使用什么账号
+一般账号
+让一般用户转变身份成为root，有哪两种方式？
+su - sudo
+使用su -登入root账号使用的是什么shell？
+login-shell
+使用su登入root账号使用的是什么shell？
+non-login-shell
+退出切换的身份，回到刚开始的身份使用什么命令
+exit
+只使用root身份执行一次命令
+su - -c
+su和sudo哪个需要知道别人的密码？
+su
+哪个文件内的用户才可以执行sudo？
+/etc/sudoers
+sudo的参数，后面可以接想要切换的用户，若无此项就代表身份切换为root
+u
+修改/etc/sudoers的命令
+visudo
+/etc/sudoers的一行内容 root ALL=(ALL) ALL 四列的含义
+用户账号 登录者的来源主机名 可切换的身份 可执行的命令
+设置用户组权限时，最左边时什么符号
+%
+设置第四个字段为免除密码输入
+NOPASSWD:ALL
+让其他用户不能执行修改密码的命令，需要设置第四列为什么
+!/usr/bin/passwd
+为了方便一次处理多个账号的sudo权限，可以使用什么功能？
+别名
+系统账号使用的是哪个shell？
+/sbin/nologin
+系统账号可以使用bash或其他shell来登录系统吗？
+不可以
+一套验证机制，可以提供给其他程序调用
+pam
+PAM模块会去哪里寻找与程序比如passwd同名的配置文件
+/etc/pam.d
+/etc/pam.d/passwd中一行 auth include system-auth分别是什么含义
+验证类别 控制标准 PAM模块
+哪四种验证类型
+auth account session password
+哪四种验证的控制标志
+required requisite sufficient optional
+查看用户的登录时间的命令
+last
+查看目前登录的用户的两个命令
+w who
+知道每个账号的最近登录时间
+lastlog
+和其他用户聊天的命令
+write
+给所有用户发送消息的命令
+wall
+发邮件的命令是什么
+mail
+给vbird用户发送一份标题为hello，内容为filename内容的邮件
+mail vbird -s "hello" < filename
+收取邮件的命令是什么
+mail
+检查/etc/passwd配置信息的命令
+pwck
+将/etc/passwd内的账号与密码移动到/etc/shadow中的命令
+pwconv
