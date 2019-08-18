@@ -1,4 +1,4 @@
-linux的内核需要保护，我们通过什么跟内核通信？
+﻿linux的内核需要保护，我们通过什么跟内核通信？
 shell
 登录的时候系统会给我一个shell，让我们工作，这个shell记录在哪个文件？
 /etc/passwd
@@ -7,7 +7,7 @@ bash具有命令记忆能力，命令记录在哪里？
 查看别名的命令
 alias
 设置ls -al的快捷命令为lm
-alias lm="ls -al"
+alias lm='ls -al'
 每个用户的变量相同吗
 不同
 查看PATH变量
@@ -51,9 +51,9 @@ ulimit -a
 限制用户仅能创建10mb以下的容量的文件
 ulimit -f 10240
 显示删除掉PATH变量中的/usr/kerberos/sbin和/usr/kerberos/bin变量
-echo ${PATH#/*kerberos/bin}
+echo ${path#*/bin:}
 删除PATH变量，第一个目录，并显示
-echo ${PATH#/*:}
+echo ${path#*/bin:}
 符合替换文字的最短的那一个的符号
 #
 符合替换文字的最长的那一个的符号
@@ -105,7 +105,7 @@ history 10
 执行以al开头的历史命令
 !al
 寻找需要执行的命令的四个步骤
-当前路径 别名 内置命令 path
+当前路径 别名 内置命令 PATH
 登录信息设置的文件
 /etc/issue
 当我们使用telnet连接到主机时，主机的登录界面就会显示什么内容
@@ -146,7 +146,7 @@ a,b,c,d中任意一个
 2 2>或2>>
 将ll的信息输出到~/rootfile中
 ll > ~/rootfile
-如果要讲每次输出的内容累加到文件中，使用什么
+如果要将每次输出的内容累加到文件中，使用什么
 >>
 将find /home -name .bashrc正确的输出和错误输出分别存放到rightfile和errorfile
 find /home -name .bashrc > rightfile 2> errorfile
@@ -159,7 +159,7 @@ cat > catfile < ~/.bashrc
 将键盘的输入信息写入到catfile文件中，如果输入eof则结束
 cat > catfile << "eof"
 不考虑命令相关性的连续命令执行
-cmd;cmd
+cmd1;cmd2
 如果第一个命令执行成功，则执行第二个命令你
 cmd1&&cmd2
 第一个命令执行不成功才执行第二个命令
@@ -167,7 +167,7 @@ cmd1||cmd2
 如果/tmp/abc存在就创建/tmp/abc/test，如果不存在就先创建/tmp/abc
 ls /tmp/abc || mkdir /tmp/abc && touch /tmp/abc/test
 使用less命令读取/etc下面的文件列表信息
-ls -al /etc | less
+ls /etc | less
 显示PATH的第3个和第5个信息
 echo $PATH | cut -d ':' -f 3,5
 显示export输出信息第12个字符之后的内容

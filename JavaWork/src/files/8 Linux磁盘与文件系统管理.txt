@@ -60,8 +60,8 @@ block大小在什么时候确定？
 不能
 block较大会造成
 空间浪费
-block较小会造成
-性能不佳
+block较小会造成什么不佳
+性能
 记录文件实际数据放置在哪些block内的是什么？
 inode
 每个inode的大小是多大？
@@ -83,17 +83,17 @@ dumpe2fs
 查看目前挂载的设备的命令
 df
 创建目录时，会分配至少一个什么给目录？
-inode block
+inode data block
 其中记录该目录的相关权限和属性，并记录分配到的那块block号码的是什么
 inode
 记录这个目录下的文件名与该文件名占用的inode号码数据的是什么
-block
+data block
 创建一个目录时，block记录目录下的文件名与该文件名占用的什么
 inode
 block大小为4KB，新建一个100KB文件，会分配多少inode和block？
 1 25
 inode本身并不记录文件名，文件名是记录在目录的哪里？
-block
+data block
 新建文件时，根据什么找到没有使用的inode号码？
 inode bitmap
 根据什么找到没有使用的block号码？
