@@ -1,5 +1,5 @@
-﻿一个账号可以有多少用户组的支持
-多个
+﻿DAY1 一个账号可以有多少用户组支持吗
+可以
 Linux里面，任何一个文件都具有哪3种身份的个别权限？
 User Group Others
 Linux里面万能的万能的天神是什么
@@ -30,16 +30,22 @@ i-node
 隐藏文件
 改变文件所属用户组命令
 chgrp
-chgrp的参数R的含义
-递归
+递归更改用户组
+chgrp -R
 将install.log文件的用户组改成user
 chgrp user install.log
 改变文件所有者命令
 chown
-chown命令的-R参数的含义
-递归
+chown是什么的缩写
+change owner
+递归更改权限
+chown -R
+将install.log的所有者改为bin这个账号
+chown bin install.log
 将install.log文件的所有者和用户组设为root
 chown root:root install.log
+复制命令cp，会改变文件的权限吗
+会
 改变文件的权限
 chmod
 -R参数的含义
