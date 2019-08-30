@@ -170,8 +170,12 @@ SUID
 SUID
 SUID只能由于什么程序，而不能用于shell脚本
 二进制
+SUID能够用来设置目录吗？
+不能
 当s标志在文件用户组的x时，则称为什么
 SGID
+SGID可以用在目录上吗？
+可以
 查看~/.bashrc文件的类型
 file ~/.bashrc
 查找ls这样的命令放置的目录用什么命令
