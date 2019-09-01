@@ -1,4 +1,30 @@
-﻿5，首次登入与在线求助
-1，三个实用的命令
-2，man命令
-3，关机流程
+﻿三个实用的命令：
+date
+date +%Y/%m/%d
+cal
+cal 2020
+cal 5 2020
+显示计算器的命令
+bc
+在计算器中设置小数点后保留三位的命令
+scale = 3
+
+man命令：
+目录：/usr/share/man
+翻页：空格键
+查找字符串：/string
+命令参数：
+man –f = whatis
+man -k
+
+
+info 
+快捷键：n u p Tab Enter
+关键信息：FILE Node
+
+关机命令：
+who
+netstat -a
+ps -aux
+sync
+shutdown

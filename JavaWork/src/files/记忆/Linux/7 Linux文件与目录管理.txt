@@ -1,48 +1,124 @@
-﻿1，7个命令
-pwd [-p]
-mkdir [-mp]
-rmdir [-p]
-ls [-adl] --full-time
-cp [-ailspru]
-rm [-irf]
-mv [-fiu]
+﻿
+显示当前目录命令
+pwd
+显示出当前的路径，而非使用连接路径
+pwd -P
 
-2，文件的三种时间
 
-3，chattr lsattr
+配置文件夹的权限，直接设置，不需要看默认的权限
+mkdir -m
+递归创建目录
+mkdir -p
+
+删除一个空的目录。
+rmdir
+连同上层“空的”目录一起删除。
+rmdir -p
+
+将所有文件列出来，含属性与隐藏文件
+ls -al
+完整呈现文件的修改时间
+ls -al --full-time
+用ll同时查看bashrc三个时间
+ll bashrc;ll --time=atime bashrc;ll --time=ctime bashrc
+
+cp命令中，相当于-pdr的意思
+cp -a
+复制文件时候，若目标文件存在，会先询问操作的进行
+cp -i
+进行硬连接的连接文件创建，而非复制文件本身
+cp -l
+复制成为符号链接文件，即快捷方式文件
+cp -s
+连同文件的属性一起复制过去，而非使用默认属性
+cp -p
+递归持续复制，用于目录的复制
+cp -r
+
+rm移除文件或目录，force模式
+rm -f	
+互动模式
+rm -i
+递归删除，这是非常危险的参数
+rm -r
+
+移动文件与目录或更名的命令mv，强制
+mv -f 
+-i 若目标存在，就会询问覆盖
+mv -i
+若目标文件已经存在，且source更新，才会更新
+mv -u
+将bashrc重命名为mvtest
+mv bashrc mvtest
+
+
+touch命令,仅修改访问时间
+touch -a
+仅修改文件的时间，若文件不存在则不创建新文件
+touch -c
+后面可以接想要修改的日期
+touch -d
+仅修改mtime
+touch -m
+创建testtouch文件
+touch testtouch
+
+
+
+
+查看文件或文件夹的默认权限
+umask
+更详细的查看默认权限
+umask -S
+如果umask -S查看的结果是 u=rwx,g=rx,o=rx，那么umask对应的结果是什么？
+0022
+文件默认的最大权限和文件夹默认权限权限分别是什么
+666 777
+默认值需要减掉的权限是什么值？
+umask
+设置umask为002
+umask 002
+root和一般用户的umask默认值
+022 002
+
+chattr命令常用的参数
 chattr [+-=][ai]
+设置文件隐藏属性chattr，文件只能增加数据，不能删除和修改数据，只有root才能设置这个属性
+a
+让文件不能删除，改名，设置连接也无法写入或添加数据，只有root能设置
+i
+给attrtest文件添加i属性
+chattr +i attrtest
+取消attrtest文件的i属性
+chattr -i attrtest
+查看attrtest文件的隐藏属性
+lsattr attrtest
 
-4，umask和umask -S
+当s这个标志出现在所有者的x权限上时候，这个文件被称为什么特殊权限
+SUID
+SGID
 
-5，查找命令
+
+查找ls这样的命令放置的目录用什么命令
 which type
-
-查找文件
+通过文件名查找文件使用的命令是什么
 whereis locate
+whereis和locate都是通过数据库取查找的，更新数据库的命令是什么
+updatedb
 
-find命令
+find命令的格式
 find [PATH] [option] [action]
-
 将过去系统上面24小时内有改动的文件列出
 find / -mtime 0
-
 寻找/etc下面的文件，如果文件日期比/etc/passwd新就列出
 find /etc -newer /etc/passwd
-
 查找/home下面属于vbird的文件
 find /home -user vbird
-
 查找系统中不属于任何人的文件
 find / -nouser
-
 查找文件名为passwd的文件
 find / -name passwd
-
 查找/var目录下文件类型为Socket的文件名有哪些
 find /var -type s
-
 找出系统中大于1MB的文件
 find / -size +1000k
-
-找出/etc下面文件名含httpd的文件
-find /etc -name "*httpd*"
