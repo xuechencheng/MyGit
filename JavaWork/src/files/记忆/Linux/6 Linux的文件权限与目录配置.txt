@@ -29,3 +29,7 @@ u g o a
 bin  boot  dev  etc  home  lib  lib64  lost+found  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
 /usr目录下的文件夹
 bin  etc  games  include  lib  lib64  libexec  local  sbin  share  src  tmp
+
+1，文件的8个属性
+2，chgrp chown chmod
+3，目录

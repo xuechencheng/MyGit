@@ -28,3 +28,8 @@ netstat -a
 ps -aux
 sync
 shutdown
+
+1，3个实用命令
+2，man的快捷键和参数
+3，info的快捷键和页面信息
+4，关机流程

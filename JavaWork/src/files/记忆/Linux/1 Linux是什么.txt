@@ -11,3 +11,7 @@ GCC
 Emacs
 bash shell
 Linux
+
+
+1，Unix重要的三个系统
+2，GNU的4个主要软件

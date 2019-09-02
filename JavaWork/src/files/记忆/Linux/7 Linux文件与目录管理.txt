@@ -122,3 +122,8 @@ find / -name passwd
 find /var -type s
 找出系统中大于1MB的文件
 find / -size +1000k
+
+1，pwd mkdir rmdir ls cp rm mv touch
+2，umask chattr lsattr SUID SGID
+3，which type whereis locate
+4，find mtime/newer/user/name/type/size
