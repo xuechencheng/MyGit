@@ -1,17 +1,1 @@
-﻿主要的Unix系统：
-第一个可以在x86上运行的Unix系统是什么？
-System V
-目前被称为纯种的Unix，指的是哪两个？
-System V BSD
-为了教学，自己编写的Unix版本叫什么？
-Minix
-
-GNU主要软件：
-GCC
-Emacs
-bash shell
-Linux
-
-
-1，Unix重要的三个系统
-2，GNU的4个主要软件
+﻿

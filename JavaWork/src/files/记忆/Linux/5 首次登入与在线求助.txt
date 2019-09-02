@@ -4,23 +4,14 @@ date +%Y/%m/%d
 cal
 cal 2020
 cal 5 2020
-显示计算器的命令
 bc
-在计算器中设置小数点后保留三位的命令
 scale = 3
 
-man命令：
-目录：/usr/share/man
-翻页：空格键
-查找字符串：/string
-命令参数：
-man –f = whatis
+man和info
+man
+man -f
 man -k
-
-
-info 
-快捷键：n u p Tab Enter
-关键信息：FILE Node
+info
 
 关机命令：
 who
@@ -28,8 +19,3 @@ netstat -a
 ps -aux
 sync
 shutdown
-
-1，3个实用命令
-2，man的快捷键和参数
-3，info的快捷键和页面信息
-4，关机流程
