@@ -182,6 +182,8 @@ f
 du -sb
 查看当前目录使用的节点数
 df -i .
+系统新增一块硬盘时，应该有哪些动作要做？
+分区 格式化 检验 挂载
 磁盘分区命令
 fdisk
 找出系统中的根目录所在磁盘，并查阅该硬盘内的相关信息
@@ -208,7 +210,15 @@ badblocks
 mount
 用默认的方式，将/dev/hdc6挂载到/mnt/hdc6上
 mount /dev/hdc6 /mnt/hdc6
+查看已经挂载的文件系统的命令
+mount -l
 卸载设备文件的命令
 umount
 开机挂载文件
 /etc/fstab
+为了应付物理内存不足情况，使用什么分区
+swap
+格式化/dev/hdc7成为swap格式
+mkswap /dev/hdc7
+查看内存以及swap使用情况的命令
+free
