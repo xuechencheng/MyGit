@@ -33,7 +33,7 @@ gzip
 读取gzip压缩的文件的指令
 zcat
 使用gzip压缩man.config并保留源文件
-gzip man.cofig > man.config.gz
+gzip man.config > man.config.gz
 比gzip压缩比更高的命令
 bzip2
 bzip2命令中，将压缩过程中产生的数据输出到屏幕上的参数
