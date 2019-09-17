@@ -5,7 +5,7 @@ C陷阱与缺陷 172
 C++ Primer 964
 Effective C++ 297
 More Effective C++ 317
-深度探索 C++ 对象模型 356
+深度探索C++对象模型 356
 
 
 工具
@@ -25,7 +25,7 @@ VSCODE
 
 
 数据库
-MYSQL 241
+MYSQL必知必会 241
 数据库原理 805
 MYSQL TOOL
 
