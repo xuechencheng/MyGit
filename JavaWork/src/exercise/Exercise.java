@@ -36,6 +36,7 @@ public class Exercise {
 		filePaths.add("9 文件与文件系统的压缩与打包");
 		filePaths.add("10 vim程序编辑器");
 		filePaths.add("11 认识与学习bash");
+		filePaths.add("12 正则表达式与文件格式化处理");
 	}
 	
 	public int getFileNum() {
