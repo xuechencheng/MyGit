@@ -1,4 +1,9 @@
-﻿df
+﻿df du dumpe2fs free
+fdisk mkfs fsck badblocks mount umount
+ln sync
+
+
+df
 df -h
 df -i
 

@@ -1,4 +1,8 @@
-﻿
+﻿pwd mkdir rmdir ls cp rm mv touch
+umask lsattr chattr
+which type     whereis locate     find
+
+
 显示当前目录命令
 pwd
 显示出当前的路径，而非使用连接路径
