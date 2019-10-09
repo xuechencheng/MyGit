@@ -10,7 +10,7 @@ scale = 3
 man和info
 man
 man -f
-man -k
+
 info
 
 关机命令：

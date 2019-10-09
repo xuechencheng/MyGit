@@ -1,1 +1,6 @@
-﻿chgrp chown chmod
+﻿chgrp 
+-R recursive
+chown 
+-R recursive
+chmod
+-R recursive
