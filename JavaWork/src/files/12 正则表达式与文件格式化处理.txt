@@ -3,7 +3,7 @@
 找出/etc/init.d/*文件里含有mail单词的文件
 grep 'mail' /etc/init.d/*
 正则表达式分成哪两组？
-基础正则表达式 扩展正则表达式
+基础 扩展
 grep命令中，什么参数后面可以加数字，after的意思，除了列出该行外，后续的n行也列出来
 A
 grep命令中，什么参数后面可以加数字，before的意思，除了列出该行外，前面的n行也列出来
@@ -13,17 +13,17 @@ dmesg | grep -n -A3 -B2 --color=auto 'eth'
 在test文件中，找出含有the的行，并显示行号
 grep -n 'the' test
 找出不含有test的行
-grep -vn 'the' test
+grep -v 'the' test
 忽略the大小写选出有关的行
-grep -in 'the' test
+grep -i 'the' test
 查找包含test或者tast的行
-grep -n 't[ae]st' test
+grep 't[ae]st' test
 查找包含了oo，并且oo前面没有g的行
-grep -n '[^g]oo' test
+grep '[^g]oo' test
 查找包含了oo，并且oo前面没有小写字母的行
-grep -n '[^a-z]oo' test
+grep '[^a-z]oo' test
 查找包含数字的行
-grep -n '[0-9]' test
+grep '[0-9]' test
 代表英文大小写字符及数字
 [:alnum:]
 代表了任何英文字符
@@ -35,11 +35,11 @@ grep -n '[0-9]' test
 代表数字
 [:digit:]
 查找包含数字的行
-grep -n '[[:digit:]]' test
+grep '[[:digit:]]' test
 查找the出现在行首的行
-grep -n '^the' test
+grep '^the' test
 查找小写字母开头的行
-grep -n '^[a-z]' test
+grep '^[a-z]' test
 在[]内代表反向选择，在[]外代表定位在行首的符号是什么
 ^
 找出行尾以.结束的行

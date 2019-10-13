@@ -1,4 +1,4 @@
-linux的内核需要保护，我们通过什么跟内核通信？
+﻿linux的内核需要保护，我们通过什么跟内核通信？
 shell
 登录的时候系统会给我一个shell，让我们工作，这个shell记录在哪个文件？
 /etc/passwd
@@ -7,7 +7,7 @@ bash具有命令记忆能力，命令记录在哪里？
 查看别名的命令
 alias
 设置ls -al的快捷命令为lm
-alias lm="ls -al"
+alias lm='ls -al'
 每个用户的变量相同吗
 不同
 查看PATH变量
@@ -50,28 +50,12 @@ ulimit
 ulimit -a
 限制用户仅能创建10mb以下的容量的文件
 ulimit -f 10240
-显示删除掉PATH变量中的/usr/kerberos/sbin和/usr/kerberos/bin变量
-echo ${PATH#/*kerberos/bin}
-删除PATH变量，第一个目录，并显示
-echo ${PATH#/*:}
 符合替换文字的最短的那一个的符号
 #
 符合替换文字的最长的那一个的符号
 ##
 前面提到的是从前面开始删除变量，如果从后面删除使用什么符号?
 %
-删除path最后的一个目录
-echo ${path%:*bin}
-只保留第一个目录
-echo ${path%%:*bin}
-变量MAIL的值为/var/spool/mail/root，使用双#打印root
-echo ${MAIL##/*/}
-相反只去掉root，保留目录
-echo ${MAIL%/*}
-将path的变量的第一个sbin替换成SBIN
-echo ${path/sbin/SBIN}
-将path的变量的所有sbin替换成SBIN
-echo ${path//sbin/SBIN}
 若变量内容从头开始的数据符合关键字，则将符合的最短的数据删除
 ${变量#关键字}
 若变量内容从头开始的数据符合关键字，则将符合的最长的数据删除
@@ -105,7 +89,7 @@ history 10
 执行以al开头的历史命令
 !al
 寻找需要执行的命令的四个步骤
-当前路径 别名 内置命令 path
+当前路径 别名 内置命令 PATH
 登录信息设置的文件
 /etc/issue
 当我们使用telnet连接到主机时，主机的登录界面就会显示什么内容
@@ -121,7 +105,7 @@ login shell会读取哪两个文件？
 bash会依次读取~/.bash_profile,~/.bash_login和~/.profile，这三个文件中的一个还是三个？
 一个
 直接将配置文件内容读取到bash中，而不需要注销登录的命令
-source或.
+source .
 查看所有快捷键
 stty -a
 设置erase为Ctrl+h
@@ -146,7 +130,7 @@ a,b,c,d中任意一个
 2 2>或2>>
 将ll的信息输出到~/rootfile中
 ll > ~/rootfile
-如果要讲每次输出的内容累加到文件中，使用什么
+如果要将每次输出的内容累加到文件中，使用什么
 >>
 将find /home -name .bashrc正确的输出和错误输出分别存放到rightfile和errorfile
 find /home -name .bashrc > rightfile 2> errorfile
@@ -159,15 +143,15 @@ cat > catfile < ~/.bashrc
 将键盘的输入信息写入到catfile文件中，如果输入eof则结束
 cat > catfile << "eof"
 不考虑命令相关性的连续命令执行
-cmd;cmd
-如果第一个命令执行成功，则执行第二个命令你
+cmd1;cmd2
+如果第一个命令执行成功，则执行第二个命令
 cmd1&&cmd2
 第一个命令执行不成功才执行第二个命令
 cmd1||cmd2
 如果/tmp/abc存在就创建/tmp/abc/test，如果不存在就先创建/tmp/abc
 ls /tmp/abc || mkdir /tmp/abc && touch /tmp/abc/test
 使用less命令读取/etc下面的文件列表信息
-ls -al /etc | less
+ls /etc | less
 显示PATH的第3个和第5个信息
 echo $PATH | cut -d ':' -f 3,5
 显示export输出信息第12个字符之后的内容
@@ -193,13 +177,13 @@ last | grep [a-zA-Z] | grep -v 'wtmp' | wc -l
 将数据同时流向文件和屏幕的命令
 tee
 将/home下的文件信息存到~/.homefile，并在屏幕用more处理
-ls -al /home | tee ~/.homefile | more
+ls -al /home | tee ~/.homefile
 删除一段信息当中的文字，或进行文字信息的替换
 tr
 将last输出的信息的小写字符变成大写字符
 last | tr '[a-z]' '[A-Z]'
 将/etc/passwd输出信息中的冒号删除
-cat /etc/passwd | tr -d ":"
+cat /etc/passwd | tr -d ':'
 将tab键转换成对等的空格键
 col -x
 在文字内有反斜杠时，保留反斜杠最后接的那个字符

@@ -1,17 +1,14 @@
-﻿gzip 	.gz
-bzip2	.bz2
-tar		.tar
-tar，gzip	.tar.gz
-tar，bzip2	.tar.bz2
-
-tar参数
+﻿gzip
+bzip2
+tar
 压缩文件命令
 tar -jcv -f filename.tar.bz2
-解压缩
-tar -jxv -f filename.tar.bz2 –C
+解压缩到特定目录
+tar -jxv -f filename.tar.bz2 -C
+查看/root/etc.tar.bz2中的shadow文件
+tar -jtv -f /root/etc.tar.bz2 | grep 'shadow'
 
 完整的备份工具
 dump
+dump备份的文件的恢复命令是什么
 restore
-其他常见的压缩与备份工具
-dd cpio

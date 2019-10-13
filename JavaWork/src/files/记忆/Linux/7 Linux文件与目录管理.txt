@@ -1,48 +1,51 @@
-﻿1，7个命令
-pwd [-p]
-mkdir [-mp]
-rmdir [-p]
-ls [-adl] --full-time
-cp [-ailspru]
-rm [-irf]
-mv [-fiu]
+﻿一，八个常用
+pwd 
 
-2，文件的三种时间
+ls 
+-a all
+-l
 
-3，chattr lsattr
-chattr [+-=][ai]
+mkdir
+-m mode
+-p parents
 
-4，umask和umask -S
+rmdir
+-p parents
 
-5，查找命令
-which type
+cp
+-a archive
+-i interactive
+-r recursive
 
-查找文件
-whereis locate
+mv
+-i interactive
+-u update
 
-find命令
-find [PATH] [option] [action]
+touch
 
-将过去系统上面24小时内有改动的文件列出
-find / -mtime 0
+rm
+-i interactive
+-r recursive
+-f force
 
-寻找/etc下面的文件，如果文件日期比/etc/passwd新就列出
-find /etc -newer /etc/passwd
 
-查找/home下面属于vbird的文件
-find /home -user vbird
+umask 
+-S
+lsattr 
+chattr
++a
++i 
 
-查找系统中不属于任何人的文件
-find / -nouser
+which 
+type     
+whereis 
+locate     
 
-查找文件名为passwd的文件
-find / -name passwd
+find
+-newer
+-user
+-name
+-type
+-size
 
-查找/var目录下文件类型为Socket的文件名有哪些
-find /var -type s
 
-找出系统中大于1MB的文件
-find / -size +1000k
-
-找出/etc下面文件名含httpd的文件
-find /etc -name "*httpd*"

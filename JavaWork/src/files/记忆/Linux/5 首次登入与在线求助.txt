@@ -1,4 +1,21 @@
-﻿5，首次登入与在线求助
-1，三个实用的命令
-2，man命令
-3，关机流程
+﻿三个实用的命令：
+date
+date +%Y/%m/%d
+cal
+cal 2020
+cal 5 2020
+bc
+scale = 3
+
+man和info
+man
+man -f
+
+info
+
+关机命令：
+who
+netstat -a
+ps -aux
+sync
+shutdown
