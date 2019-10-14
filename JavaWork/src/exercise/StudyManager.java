@@ -29,9 +29,9 @@ public class StudyManager {
 		for (File fileInfo : file.listFiles()) {
 			if(fileInfo.isDirectory()) {
 				String dirName = fileInfo.getName();
-				String[] dirs = dirName.split(" ");
+//				String[] dirs = dirName.split(" ");
 				//int number = Integer.parseInt(dirs[0]);
-				String bookName = dirs[1];
+				String bookName = dirName;
 				for (File element : fileInfo.listFiles()) {
 					if(element.isDirectory()) {
 						continue;
@@ -56,12 +56,17 @@ public class StudyManager {
 	public void WriteStudyInfos() throws IOException {
 		BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(recordText),"UTF-8"));
 		for (StudyInfo studyInfo : studyInfos) {
-			bufferedWriter.write( studyInfo.turnString() + "\t\n");
+			bufferedWriter.write( studyInfo.turnString() + "\n");
 		}
 		bufferedWriter.close();
 	}
 	
 	public StudyInfo getStudyInfo(String bookName, String chapterName) {
+		for (StudyInfo studyInfo : studyInfos) {
+			if(studyInfo.bookName.equals(bookName) && studyInfo.chapterName.equals(chapterName)) {
+				return studyInfo;
+			}
+		}
 		return null;
 	}
 }
@@ -78,14 +83,14 @@ class StudyInfo{
 				splitSign + successTime + splitSign + totalTime;
 	}
 	public void reserveFormString(String str) {
-		if(str == null || str == "") {
+		if(str == null || str.equals("")) {
 			return;
 		}
 		String[] strs = str.split(splitSign);
 		chapter = Integer.parseInt(strs[0]);
 		chapterName = strs[1];
 	    bookName = strs[2];
-		successTime = Integer.parseInt(strs[0]);
-		totalTime = Integer.parseInt(strs[0]);
+		successTime = Integer.parseInt(strs[3]);
+		totalTime = Integer.parseInt(strs[4]);
 	}
 }

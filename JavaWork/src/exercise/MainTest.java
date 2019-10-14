@@ -15,6 +15,17 @@ public class MainTest {
 		//JsonObject obj;
 		StudyManager studyManager = new StudyManager();
 		studyManager.LoadStudyInfos();
+		
+		for (StudyInfo studyInfo : studyManager.studyInfos) {
+			if(studyInfo.successTime == 0) {
+				Exercise exercise = new Exercise();
+				float success = exercise.startExercise(studyInfo.bookName, studyInfo.chapterName, studyInfo.chapter);
+				if(success > 0.95) {
+					studyInfo.successTime++;
+				}
+			} 
+		}
+		
 		studyManager.WriteStudyInfos();
 		//test();
 		return;

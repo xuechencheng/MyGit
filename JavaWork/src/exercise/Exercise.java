@@ -45,10 +45,11 @@ public class Exercise {
 	
 	private void loadTopicFromFile(String path) throws IOException {
 		topics.clear();
-		String filePath = "src\\files\\" + path;
-		filePath += ".txt";
+//		String filePath = "src\\files\\" + path;
+//		filePath += ".txt";
 		//FileInputStream inputStream = new FileInputStream(filePath);
-		BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(new FileInputStream(filePath),"UTF-8"));
+		System.out.println(path);
+		BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(new FileInputStream(path),"UTF-8"));
 		//BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 		String question = null;
 		String answer = null;
@@ -63,8 +64,10 @@ public class Exercise {
 	}
 
 	
-	public void startExercise(int fileIndex) throws IOException {
-		String filePath = filePaths.get(fileIndex);
+	public float startExercise(String bookName, String chapterName,int chapter) throws IOException {
+//		String filePath = filePaths.get(fileIndex);
+		String filePath = "src\\files\\" + bookName + "\\" + chapter + " " + chapterName;
+		
 		loadTopicFromFile(filePath);
 		startTime = System.currentTimeMillis();
 		while(topics.size() > 0) {
@@ -86,7 +89,7 @@ public class Exercise {
 				index++;
 			}
 		}
-		endExercise();
+		return endExercise();
 	}
 	
 	private boolean answerOneTopic(Topic topic) throws IOException {
@@ -106,11 +109,12 @@ public class Exercise {
 		return false;
 	}
 	
-	private void endExercise() throws IOException {
+	private float endExercise() throws IOException {
 		int spendSec = (int)((System.currentTimeMillis() - startTime) / 1000);
 		System.out.println("Congratulations !!! Time is " + spendSec / 60 + " minutes and "
 		+ spendSec % 60 + " seconds   Correct rate is " + 1.0f * (maxNum - wrongSet.size()) / maxNum * 100 + "%");
 		//bf.close();
+		return 1.0f * (maxNum - wrongSet.size()) / maxNum * 100;
 	}
 	
 	private String readOneLine() throws IOException {
