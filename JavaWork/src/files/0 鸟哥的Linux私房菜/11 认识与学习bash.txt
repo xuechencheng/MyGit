@@ -17,7 +17,7 @@ type
 每个用户的变量相同吗
 不同
 查看PATH变量
-echo $PATH
+echo $PATH echo ${PATH}
 查看邮箱地址
 echo $MAIL
 设置变量时候=两边能有空格吗？
@@ -28,16 +28,32 @@ echo $MAIL
 unset myname
 将name变量变成环境变量
 export name
+在name变量后面添加yes
+name="$name"yes name=${name}yes
+在一串命令中，什么符号内的命令将被先执行？
+反单引号
+进入内核的模块目录
+cd /lib/modules/`uname -r`/kernel   cd /lib/modules/$(uname -r)/kernel
+将work变量设置为/cluster/server/work/taiwan
+work="/cluster/server/work/taiwan"
 查看所有环境变量的命令
-env
+env export
 代表用户的主文件夹的变量
 HOME
+表示环境使用哪个shell的变量
+SHELL
+代表使用的语系的变量
+LANG
+取一个0-9的随机数
+declare -i number=$RANDOM*10/32768
 PATH变量里，各目录之间用什么符号分隔
 冒号
-查看环境变量和自定义变量的命令
+查看所有变量，包括环境变量和自定义变量的命令
 set
 命令提示符[root@www ~]是什么变量设置的？
 PS1
+$本身也是一个变量，代表的是什么？
+线程代号
 echo $$显示的是什么号码
 PID
 查看上个命令回传码
