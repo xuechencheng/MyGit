@@ -1,27 +1,9 @@
-﻿df du dumpe2fs free
-fdisk mkfs fsck badblocks mount umount
-ln sync
-
+﻿fdisk
+mkfs
+fsck	badblocks
+mount umount
 
 df
-df -h
-df -i
-
 du
-du -s
-du -sh /*
-
 dumpe2fs
-free
-
-
-
-fdisk
-mkfs
-fsck
-badblocks
-mount
-umount
-
 ln
-sync
