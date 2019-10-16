@@ -64,11 +64,15 @@ echo $?
 export
 查看Linux支持哪些语系的命令
 locale -a
+变量分为哪两种
+环境变量 自定义变量
 使用用户输入设置atest变量
 read atest
 声明变量num=1+2+3
 declare -i num=1+2+3
-文件系统与程序进行限制的命令
+使用declare将变量sum声明为环境变量
+declare -x sum
+限制用户使用资源的命令
 ulimit
 列出你目前身份的所有限制数据数值
 ulimit -a
