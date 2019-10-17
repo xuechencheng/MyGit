@@ -262,7 +262,7 @@ paste /etc/passwd /etc/shadow
 split
 将/etc/termcap文件分成300kb一个文件
 split -b 300k /etc/termcap termcap
-将三个小文件合并成一个文件
+使用cat命令将termcap开头文件合并成到tercapback文件
 cat termcap* >> tercapback
 
 
