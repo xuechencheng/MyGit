@@ -265,3 +265,4 @@ split -b 300k /etc/termcap termcap
 将三个小文件合并成一个文件
 cat termcap* >> tercapback
 
+
