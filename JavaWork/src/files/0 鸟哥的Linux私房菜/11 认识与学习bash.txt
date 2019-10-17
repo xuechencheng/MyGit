@@ -126,14 +126,22 @@ history 10
 /etc/motd
 命令别名，自定义的变量，在你注销bash会怎么样
 失效
-从X Window启动终端接口没有再次输入账号与密码称为什么登录？
+没有输入账号与密码的登录称为什么登录？
 non-login shell
+从bash里面，进入bash子进程的操作是登录non-login shell吗？
+是的
 login shell会读取哪两个文件？
 /etc/profile ~/.bash_profile或~/.bash_login或~/.profile
 bash会依次读取~/.bash_profile,~/.bash_login和~/.profile，这三个文件中的一个还是三个？
 一个
+PATH，MAIL，USER，HOSTNAME和HISTSIZE等变量定义在哪个文件里？
+/etc/profile
 直接将配置文件内容读取到bash中，而不需要注销登录的命令
 source .
+non-login shell会读取哪两个文件？
+~/.bashrc
+指定man指定去哪里查找man page的文件是什么？
+/etc/man.config
 查看所有快捷键
 stty -a
 设置erase为Ctrl+h
@@ -150,6 +158,8 @@ a,b,c,d中任意一个
 [0-9]
 非abcd
 [^abcd]
+命令执行所回传的正确的信息和错误的信息分别称为什么？
+标准输出和标准错误输出
 标准输入的代码和表示符号分别是什么
 0 <或<<
 标准输出的代码和符号
@@ -158,7 +168,7 @@ a,b,c,d中任意一个
 2 2>或2>>
 将ll的信息输出到~/rootfile中
 ll > ~/rootfile
-如果要将每次输出的内容累加到文件中，使用什么
+如果要将每次输出的内容累加到文件中，而不是完全替换，使用什么
 >>
 将find /home -name .bashrc正确的输出和错误输出分别存放到rightfile和errorfile
 find /home -name .bashrc > rightfile 2> errorfile
@@ -168,6 +178,8 @@ find /home -name .bashrc > rightfile 2> /dev/null
 find /home -name .bashrc &> list
 将~/.bashrc内容写入到catfile中
 cat > catfile < ~/.bashrc
+<<代表什么含义？
+结束输入
 将键盘的输入信息写入到catfile文件中，如果输入eof则结束
 cat > catfile << "eof"
 不考虑命令相关性的连续命令执行
@@ -176,24 +188,48 @@ cmd1;cmd2
 cmd1&&cmd2
 第一个命令执行不成功才执行第二个命令
 cmd1||cmd2
+若/tmp/abc存在，则创建/tmp/abc/hehe
+ls /tmp/abc && touch /tmp/abc/hehe
 如果/tmp/abc存在就创建/tmp/abc/test，如果不存在就先创建/tmp/abc
 ls /tmp/abc || mkdir /tmp/abc && touch /tmp/abc/test
 使用less命令读取/etc下面的文件列表信息
 ls /etc | less
+管道处理的数据是前一个命令输出的什么信息？
+正确信息
+管道命令必须能接收什么？
+标准输入
+cut命令的基本使用方法
+cut -d '分隔符' -f fields     cut -c 字符范围
 显示PATH的第3个和第5个信息
 echo $PATH | cut -d ':' -f 3,5
 显示export输出信息第12个字符之后的内容
 export | cut -c 12-
+grep命令的用法
+grep [inv] '查找字符串' filename
+grep的inv参数的含义
+忽略大小写 输出行号 反向选择
 last结果中，出现root的行读取出来
 last | grep 'root'
 last结果中，没有出现root的行读取出来
 last | grep -v 'root'
+sort命令的常用格式
+sort [-ftkr] [file or stdin]
+ftkr参数的含义
+忽略大小写 分隔符 第几列 反向排序
 将个人账号信息进行排序
 cat /etc/passwd | sort
 按个人账号信息的第三列内容排序
 cat /etc/passwd | sort -t ':' -k 3
 从last命令中取出账号，并排序
 last | cut -d ' ' -f 1 | sort
+uniq命令的用法
+uniq [-ic]
+ic参数的含义
+忽略大小写 进行计数
+统计命令wc的用法
+wc [-lwm]
+lwm的含义
+行，英文单字，字符
 从last命令中取出账号，并排序，并去掉重复信息
 last | cut -d ' ' -f 1 | sort | uniq
 从last命令中取出账号，并排序，并去掉重复信息，并统计次数
@@ -205,9 +241,11 @@ last | grep [a-zA-Z] | grep -v 'wtmp' | wc -l
 将数据同时流向文件和屏幕的命令
 tee
 将/home下的文件信息存到~/.homefile，并在屏幕用more处理
-ls -al /home | tee ~/.homefile
+ls -al /home | tee ~/.homefile | more
 删除一段信息当中的文字，或进行文字信息的替换
 tr
+tr命令的d和s参数的含义
+删除 替换重复的字符
 将last输出的信息的小写字符变成大写字符
 last | tr '[a-z]' '[A-Z]'
 将/etc/passwd输出信息中的冒号删除
