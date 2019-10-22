@@ -1,0 +1,39 @@
+别名命令？
+alias
+历史命令？
+history
+限制用户的命令？
+ulimit
+直接将配置文件内容读取到bash的命令？
+source
+快捷键命令？
+stty
+
+环境变量
+env set export
+export name
+declare -i num=1+2+3
+
+字符串三种操作
+符合替换文字的最短的那一个的符号的命令是什么？
+符合替换文字的最长的那一个的符号的命令是什么？
+若变量内容符合旧字符串，则所有旧字符串会被新字符串替换
+
+通配符，
+* ? [abcd] [0-9] [^abcd]
+
+标准输入
+标准输出
+标准错误
+
+cmd1;cmd2
+cmd1&&cmd2
+cmd1||cmd2
+
+管道命令
+cut
+grep
+sort
+uniq
+wc
+tee
