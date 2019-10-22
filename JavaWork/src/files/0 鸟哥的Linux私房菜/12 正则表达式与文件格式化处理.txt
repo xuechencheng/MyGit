@@ -2,8 +2,26 @@
 行
 找出/etc/init.d/*文件里含有mail单词的文件
 grep 'mail' /etc/init.d/*
+grep支持正则表达式吗？
+支持
+常见的支持正则表达式的工具有哪些？
+vi grep awk sed
+cp和ls支持正则表达式吗？
+不支持
 正则表达式分成哪两组？
 基础 扩展
+语系对正则表达式有影响吗？
+有
+代表英文大小写字符及数字
+[:alnum:]
+代表了任何英文字符
+[:alpha:]
+代表小写字符
+[:lower:]
+代表大写字符
+[:upper:]
+代表数字
+[:digit:]
 grep命令中，什么参数后面可以加数字，after的意思，除了列出该行外，后续的n行也列出来
 A
 grep命令中，什么参数后面可以加数字，before的意思，除了列出该行外，前面的n行也列出来
@@ -24,24 +42,14 @@ grep '[^g]oo' test
 grep '[^a-z]oo' test
 查找包含数字的行
 grep '[0-9]' test
-代表英文大小写字符及数字
-[:alnum:]
-代表了任何英文字符
-[:alpha:]
-代表小写字符
-[:lower:]
-代表大写字符
-[:upper:]
-代表数字
-[:digit:]
 查找包含数字的行
 grep '[[:digit:]]' test
 查找the出现在行首的行
 grep '^the' test
 查找小写字母开头的行
 grep '^[a-z]' test
-在[]内代表反向选择，在[]外代表定位在行首的符号是什么
-^
+^在[]内和[]外分别代表什么意思？
+反向选择和在行首
 找出行尾以.结束的行
 grep -n '\.$' test
 找出空白行
@@ -58,12 +66,16 @@ grep -n 'g..d' test
 grep -n 'ooo*' test
 字符串开头和结尾都是g，但是两个g之间仅能存在至少一个o
 grep -n 'goo*g' test
+代表零个或多个任意字符
+.*
 g开头g结尾的字符串
 grep -n 'g.*g' test
 找出含有两个o的字符串
 grep -n 'o\{2\}' test
 找出含有2到5个o的字符串
 grep -n 'o\{2,5\}' test
+找出两个o以上的字符串
+grep -n 'o\{2,\}' test
 待查找的字符串在行首
 ^word
 待查找的字符串在行尾
@@ -82,15 +94,19 @@ word$
 [^list]
 连续n到m个的前一个RE字符
 \{n,m\}
-sed命令的参数，使用安静模式
+正则表达式的*和通配符含义相同吗？
+不同
+sed可以对数据进行哪些操作？
+替换，删除，新增和选取等
+sed命令的参数，使用安静模式的参数是什么？
 n
-直接在命令行模式上进行sed编辑
+直接在命令行模式上进行sed编辑的参数是什么？
 e
-直接将sed的动作写在一个文件内
+直接将sed的动作写在一个文件内，然后执行文件内动作的参数是什么？
 f
-sed的动作支持的是扩展型正则表达式语法
+sed的动作支持的是扩展型正则表达式语法的参数是什么？
 r
-直接修改读取的文件内容，而不是由屏幕输出
+直接修改读取的文件内容，而不是由屏幕输出的参数是什么？
 i
 动作说明 
 [n1,[n2]] function
@@ -120,6 +136,12 @@ sed 's/oldstr/newstr/g'
 /sbin/ifconfig eth0 | grep 'inet addr' | sed 's/^.*addr://g'
 将IP后面的部分删除
 /sbin/ifconfig eth0 | grep 'inet addr' | sed 's/^.*addr://g' | sed 's/Bcast.*$//g'
+将man.config文件里MAN所在行取出来，删除掉#开头和空白行
+cat /etc/man.config | grep 'MAN' | sed 's/#.*$//g' | sed '/^$/d'
+sed可以直接修改文件，将test内每一行结尾的"."变成"!"
+sed -i 's/\.$/\!/g' test
+在test最后一行添加“#This is a test”
+sed -i '$a #This is a test' test
 使用扩展正则表达式使用什么命令
 egrep
 egrep和什么命令类似别名的关系
