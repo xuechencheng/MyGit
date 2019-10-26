@@ -196,10 +196,14 @@ FS
 last -n -5 | awk '{print $1 "\t lines:" NR "\t columes:" NF}'
 使用:分隔/etc/passwd，打印第三列小于10的行里面的第1第3列
 cat /etc/passwd | awk 'BEGIN {FS=':'} $3 < 10 {print $1 "\t" $3}'
-cat pay.txt | awk '{if(NR==1) printf "%10s %10s %10s %10s %10s\n" $1,$2,$3,$4,"Total"} NR>=2{total =$2+$3+$4 printf "%10s %10s %10s %10s %10s\n", $1,$2,$3,$4,total}
 计算工资
+cat pay.txt | awk '{if(NR==1) printf "%10s %10s %10s %10s %10s\n" $1,$2,$3,$4,"Total"} NR>=2{total =$2+$3+$4 printf "%10s %10s %10s %10s %10s\n", $1,$2,$3,$4,total}
 比较ASCII文件的不同的命令
 diff
+diff的语法
+diff [-bBi] from-file to-file
+bBi的含义
+忽略一行中仅有多个空白的区别 忽略空白行的区别 忽略大小写的区别
 diff可比较文件和什么
 目录
 diff比较的单位是什么

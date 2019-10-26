@@ -1,3 +1,0 @@
-﻿Linux当前最热门的应用是什么？
-X Window System只是Linux上面的一套软件，而不是什么，所以即使X Window挂了，对Linux也不会有直接的影响？
-务必要学会的文本编辑器是什么？
