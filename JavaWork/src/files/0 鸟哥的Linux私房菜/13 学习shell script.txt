@@ -1,7 +1,7 @@
 shell script的注释
 #
 在shell script中设置bash为我们的shell
-#!/bin/shell
+#!/bin/bash
 编程：编写Hello World
 程序执行成功返回0的代码是什么？
 exit 0
