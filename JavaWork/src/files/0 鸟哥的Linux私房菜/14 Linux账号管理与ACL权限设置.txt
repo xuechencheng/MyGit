@@ -22,7 +22,7 @@ UID和GID
 初始用户组
 创建的文件和目录属于哪个用户组，取决于什么
 有效用户组
-查看所属的用户的命令
+查看支持的用户组的命令
 groups
 将有效用户组切换为users
 newgrp users
@@ -30,18 +30,22 @@ newgrp users
 用户组名 密码 管理员账号 用户组所属账号
 gshadow最大的功能是什么
 创建组管理员
-让用户组管理员管理组员信息，但是现在可以使用什么命令代替，这个功能很少使用列
+让用户组管理员管理组员信息，但是现在可以使用什么命令代替，这个功能很少使用了
 sudo
 添加用户的命令
 useradd
 添加用户vbird
 useradd vbird
+创建系统账户vbird
+useradd -r vbird
 使用useradd命令会给更改哪些文件
 /etc/passwd /etc/shadow /etc/group /home
 查看useradd添加用户的默认值
 useradd -D
-默认值的配置文件是哪个
+创建新用户时候，默认值的配置文件是哪个
 /etc/default/useradd
+创建新用户，系统会创建一个与账号一样的用户组给用户，这是因为什么？
+私有用户组机制
 密码过期后是否会失效的设置值
 INACTIVE
 账号失效的日期
@@ -55,7 +59,9 @@ SHELL
 UID和GID还参考什么文件
 /etc/login.defs
 useradd这个程序在创建账号时，至少会参考哪些文件
-/etc/default/useradd /etc/login /etc/skel/*
+/etc/default/useradd /etc/login.defs /etc/skel/*
+创建的新用户，无法直接使用，需要进行什么操作？
+设置密码
 修改密码的命令
 passwd
 给vbird账号设置密码
@@ -74,6 +80,8 @@ passwd -u vbird
 passwd -S vbird
 更详细的查看密码信息的命令
 chage
+列出vbird的详细密码参数
+chage -l vbird
 让新建的用户vbird第一次登录时更改密码
 chage -d 0 vbird
 对账号相关数据进行微调的命令
