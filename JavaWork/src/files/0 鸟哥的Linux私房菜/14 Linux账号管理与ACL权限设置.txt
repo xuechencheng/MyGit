@@ -22,7 +22,7 @@ UID和GID
 初始用户组
 创建的文件和目录属于哪个用户组，取决于什么
 有效用户组
-查看所属的用户的命令
+查看支持的用户组的命令
 groups
 将有效用户组切换为users
 newgrp users
@@ -30,18 +30,22 @@ newgrp users
 用户组名 密码 管理员账号 用户组所属账号
 gshadow最大的功能是什么
 创建组管理员
-让用户组管理员管理组员信息，但是现在可以使用什么命令代替，这个功能很少使用列
+让用户组管理员管理组员信息，但是现在可以使用什么命令代替，这个功能很少使用了
 sudo
 添加用户的命令
 useradd
 添加用户vbird
 useradd vbird
+创建系统账户vbird
+useradd -r vbird
 使用useradd命令会给更改哪些文件
 /etc/passwd /etc/shadow /etc/group /home
 查看useradd添加用户的默认值
 useradd -D
-默认值的配置文件是哪个
+创建新用户时候，默认值的配置文件是哪个
 /etc/default/useradd
+创建新用户，系统会创建一个与账号一样的用户组给用户，这是因为什么？
+私有用户组机制
 密码过期后是否会失效的设置值
 INACTIVE
 账号失效的日期
@@ -55,7 +59,9 @@ SHELL
 UID和GID还参考什么文件
 /etc/login.defs
 useradd这个程序在创建账号时，至少会参考哪些文件
-/etc/default/useradd /etc/login /etc/skel/*
+/etc/default/useradd /etc/login.defs /etc/skel/*
+创建的新用户，无法直接使用，需要进行什么操作？
+设置密码
 修改密码的命令
 passwd
 给vbird账号设置密码
@@ -74,6 +80,8 @@ passwd -u vbird
 passwd -S vbird
 更详细的查看密码信息的命令
 chage
+列出vbird的详细密码参数
+chage -l vbird
 让新建的用户vbird第一次登录时更改密码
 chage -d 0 vbird
 对账号相关数据进行微调的命令
@@ -84,9 +92,13 @@ userdel -r username
 /etc/shadow第八个字段设置为0
 查看登录等指纹信息
 finger [-s] username
-类似于finger的命令
-chfn chsn
-查询默认或自己UID/GID等信息的命令
+查看vbird的用户相关账号属性
+figer vbird
+类似于change finger的命令
+chfn 
+类似于change shell的命令
+chsn
+查询别人或自己UID/GID等信息的命令
 id
 与用户组内容有关的两个文件
 /etc/group /etc/gshadow
@@ -96,14 +108,18 @@ groupadd
 groupmod
 删除用户组
 groupdel
+如果有用户的初始用户组使用该用户组，那么可以删除该用户组吗？
+不可以
 管理用户组的命令
 gpasswd
 gpasswd将主控权交给后面的用户管理
 A
+将testgroup用户组管理员设为vbird
+gpasswd -A vbird testgroup
 将某些账户加入这个用户组当中
-N
-将密码删除
-r
+a
+ACL主要针对哪些方面来控制权限？
+用户 用户组 默认属性
 设置ACL支持文件
 /etc/fstab
 取得某个文件/目录的ACL设置项目
@@ -112,6 +128,8 @@ getfacl
 setfacl
 使用acl设置vbird用户对于acl_test文件具有rx权限
 setfacl -m u:vbird:rx acl_test
+使用acl设置文件所有者具有rwx权限
+setfacl -m u::rwx acl_test
 查看acl_test权限
 getfacl acl_test
 使用acl设置mygroup组对于acl_test文件的rx权限
@@ -119,7 +137,9 @@ setfacl -m g:mygroup:rx acl_test
 系统日常操作使用什么账号
 一般账号
 让一般用户转变身份成为root，有哪两种方式？
-su - sudo
+su - 和 sudo
+使用su -需要什么？
+root的密码
 使用su -登入root账号使用的是什么shell？
 login-shell
 使用su登入root账号使用的是什么shell？
@@ -134,28 +154,36 @@ su
 /etc/sudoers
 sudo的参数，后面可以接想要切换的用户，若无此项就代表身份切换为root
 u
+使用sshd身份创建/tmp/mysshd文件的命令是什么？
+sudo -u sshd touch /tmp/mysshd
+su -可以切换到系统账号吗？
+不可以
 修改/etc/sudoers的命令
 visudo
 /etc/sudoers的一行内容 root ALL=(ALL) ALL 四列的含义
 用户账号 登录者的来源主机名 可切换的身份 可执行的命令
 设置用户组权限时，最左边时什么符号
 %
-设置第四个字段为免除密码输入
+把第三个字段ALL改成什么，为免除密码输入？
 NOPASSWD:ALL
-让其他用户不能执行修改密码的命令，需要设置第四列为什么
-!/usr/bin/passwd
+其他用户只能执行修改密码的命令，需要设置第三列为什么
+/usr/bin/passwd
 为了方便一次处理多个账号的sudo权限，可以使用什么功能？
 别名
+sudo搭配su使用的话，输入什么，然后输入密码就可以切换到root身份？
+sudo su-
 系统账号使用的是哪个shell？
 /sbin/nologin
 系统账号可以使用bash或其他shell来登录系统吗？
 不可以
+PAM模块中文名是什么？
+嵌入式模块
 一套验证机制，可以提供给其他程序调用
 pam
-PAM模块会去哪里寻找与程序比如passwd同名的配置文件
+PAM模块会去哪个目录寻找与程序比如passwd同名的配置文件？
 /etc/pam.d
 /etc/pam.d/passwd中一行 auth include system-auth分别是什么含义
-验证类别 控制标准 PAM模块
+验证类别 控制标准 PAM模块与模块的参数
 哪四种验证类型
 auth account session password
 哪四种验证的控制标志
@@ -168,6 +196,10 @@ w who
 lastlog
 和其他用户聊天的命令
 write
+如果想要拒收别人的消息输入什么命令？
+mesg n
+解开上一个命令
+mesg y
 给所有用户发送消息的命令
 wall
 发邮件的命令是什么
@@ -180,3 +212,8 @@ mail
 pwck
 将/etc/passwd内的账号与密码移动到/etc/shadow中的命令
 pwconv
+手工创建一个账号的步骤有哪些？
+1，新建用户组，vi /etc/group 2,使用grpconv同步/etc/group和/etc/gshadow 3,新建账号的各个属性 vi /etc/passwd 4,pwconv同步/etc/passwd和/etc/shadow
+5,新建该账号密码 passwd 6，新建用户文件夹 cp -a /etc/skel /home/accountname 7,更改用户主文件夹的属性 chown -R
+批量创建账号
+使用useradd命令编写shell script
