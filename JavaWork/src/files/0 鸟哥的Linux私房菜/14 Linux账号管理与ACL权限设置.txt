@@ -1,4 +1,4 @@
-﻿Linux主机只认识id，id和账号的对应关系在哪个文件中
+﻿Linux主机并不认识账号名称，只认识id，id和账号的对应关系在哪个文件中
 /etc/passwd
 每个登录用户至少有两个ID，用户id和用户组id，简写为什么
 UID和GID
@@ -14,18 +14,38 @@ UID和GID
 0
 系统账号UID范围
 1-499
+在Shell字段中，有一个值可以让账号无法取得shell环境的登录操作
+/sbin/nologin
 /etc/shadow的内容root:*:18037:0:99999:7:::各个字段含义
 账号名称 密码 密码更改日期 密码不可更改天数 密码需要重新更改天数 密码需要更改期限前警告天数 密码过期后宽限时间 账号失效日期 保留
+超过密码需要重新更改的天数之后，密码变成什么性质？
+过期
+密码过期后，登录系统会强制要求你干什么？
+更改密码
+密码过期之后，超过宽限天数还没有登录系统，密码会怎么样？
+失效
+无论你密码是否过期都无法使用该账号，这个字段一般用在“收费服务”系统中。
+账号失效日期
+如果root密码忘记了怎么办？
+重启进入维护模式，用passwd修改密码。或以LiveCD开机后挂载根目录区修改/etc/shadow，将root密码字段清空
 /etc/group文件结构 root:x:0:root
 用户组名称 用户组密码 GID 用户组的账号
+用户组密码已经移到哪个文件中了？
+/etc/gshadow
 用户登录时，立刻拥有的用户组称为什么
 初始用户组
+初始用户组记录在哪里
+/etc/passwd第四列
 创建的文件和目录属于哪个用户组，取决于什么
 有效用户组
 查看支持的用户组的命令
 groups
+groups输出的用户组第一个是什么？
+有效用户组
 将有效用户组切换为users
 newgrp users
+如何将一个用户加入一个用户组？
+1，root利用usermod命令；2，用户组管理员使用gpasswd
 /etc/gshadow内容 root:::root各字段含义
 用户组名 密码 管理员账号 用户组所属账号
 gshadow最大的功能是什么
@@ -40,6 +60,10 @@ useradd vbird
 useradd -r vbird
 使用useradd命令会给更改哪些文件
 /etc/passwd /etc/shadow /etc/group /home
+请以users为初始用户组，uid为700创建一个名为vbird的账号
+useradd -u 700 -g users vbird
+
+
 查看useradd添加用户的默认值
 useradd -D
 创建新用户时候，默认值的配置文件是哪个
