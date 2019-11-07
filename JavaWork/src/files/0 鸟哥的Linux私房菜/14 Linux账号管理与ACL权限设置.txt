@@ -68,20 +68,28 @@ useradd -u 700 -g users vbird
 useradd -D
 创建新用户时候，默认值的配置文件是哪个
 /etc/default/useradd
-创建新用户，系统会创建一个与账号一样的用户组给用户，这是因为什么？
+在/etc/default/useradd文件中表示新建用户使用的GID为100怎么表示？
+GROUP=100
+创建新用户，系统会创建一个与账号一样的用户组给用户，这是因为什么机制？
 私有用户组机制
 密码过期后是否会失效的设置值
 INACTIVE
-账号失效的日期
+账号失效的日期，对应于第八个字段
 EXPIRE
 默认的shell程序文件名
 SHELL
 让用户无法登陆shell，可以把SHELL设置为什么
 /sbin/nologin
-新用户的主文件夹内的东西参考哪个目录的
-/etc/skel
+新用户的主文件夹内的东西参考哪个目录的是怎么设置的？
+SKEL=/etc/skel
 UID和GID还参考什么文件
 /etc/login.defs
+shadow的456字段分别对应/etc/login.defs的那些属性？
+PASS_MIN_DAYS PASS_MAX_DAYS PASS_WARN_AGE
+指定UID和GID范围的属性字段是哪些？
+UID_MIN UID_MAX GID_MIN GID_MAX
+用户是否设置主文件夹和默认权限的属性是什么？
+CREATE_HOME UMASK
 useradd这个程序在创建账号时，至少会参考哪些文件
 /etc/default/useradd /etc/login.defs /etc/skel/*
 创建的新用户，无法直接使用，需要进行什么操作？
@@ -94,6 +102,8 @@ passwd vbird
 /etc/pam.d/passwd
 使用stdin设置vbird用户的密码为123456
 echo "123456" | passwd --stdin vbird
+查看密码什么时候过期的属性的命令是什么？
+passwd -S
 管理vbird账号，使其密码60天更改，10天失效密码设置
 passwd -x 60 -i 10 vbird
 使vbird账号失效
@@ -110,6 +120,10 @@ chage -l vbird
 chage -d 0 vbird
 对账号相关数据进行微调的命令
 usermod
+修改vbird的说明列为"VBird test"
+usermod -c "VBird test" vbird
+是用户vbird的密码在2009-12-31失效
+usermod -e "2009-12-31" vbird
 删除用户连同用户的主文件夹
 userdel -r username
 如果只是让某个用户暂时不可用修改什么文件
@@ -117,21 +131,32 @@ userdel -r username
 查看登录等指纹信息
 finger [-s] username
 查看vbird的用户相关账号属性
-figer vbird
+finger vbird
+finger列出的信息主要来自哪个文件？
+/etc/passwd
 类似于change finger的命令
 chfn 
+修改自己finger信息的命令是什么？
+chfn
 类似于change shell的命令
-chsn
+chsh
+设置自己的shell为/bin/csh
+chsh -s /bin/csh
 查询别人或自己UID/GID等信息的命令
 id
 与用户组内容有关的两个文件
 /etc/group /etc/gshadow
 新建用户组的命令
 groupadd
+新建用户组group1
+groupadd group1
 对group参数进行修改的命令
 groupmod
+将group1改名为mygroup，GID为201
+groupmod -g 201 -n mygroup group1
 删除用户组
 groupdel
+
 如果有用户的初始用户组使用该用户组，那么可以删除该用户组吗？
 不可以
 管理用户组的命令
