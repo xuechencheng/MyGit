@@ -102,8 +102,6 @@ passwd vbird
 /etc/pam.d/passwd
 使用stdin设置vbird用户的密码为123456
 echo "123456" | passwd --stdin vbird
-查看密码什么时候过期的属性的命令是什么？
-passwd -S
 管理vbird账号，使其密码60天更改，10天失效密码设置
 passwd -x 60 -i 10 vbird
 使vbird账号失效
@@ -122,14 +120,14 @@ chage -d 0 vbird
 usermod
 修改vbird的说明列为"VBird test"
 usermod -c "VBird test" vbird
-是用户vbird的密码在2009-12-31失效
+使用户vbird的密码在2009-12-31失效
 usermod -e "2009-12-31" vbird
 删除用户连同用户的主文件夹
 userdel -r username
 如果只是让某个用户暂时不可用修改什么文件
 /etc/shadow第八个字段设置为0
 查看登录等指纹信息
-finger [-s] username
+finger
 查看vbird的用户相关账号属性
 finger vbird
 finger列出的信息主要来自哪个文件？
