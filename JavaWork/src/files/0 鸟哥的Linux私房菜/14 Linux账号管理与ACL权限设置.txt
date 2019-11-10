@@ -161,13 +161,23 @@ groupdel
 gpasswd
 gpasswd将主控权交给后面的用户管理
 A
-将testgroup用户组管理员设为vbird
-gpasswd -A vbird testgroup
 将某些账户加入这个用户组当中
 a
-ACL主要针对哪些方面来控制权限？
-用户 用户组 默认属性
-设置ACL支持文件
+新建testgroup用户组
+groupadd testgroup
+给testgroup设置密码
+gpasswd testgroup
+加入用户组管理员vbird
+gpasswd -A vbird testgroup
+将vbird加入到testgroup中
+gpasswd -a vbird testgroup
+创建用户myuser1，其用户组为mygroup，帐号全名为1st user
+useradd -G mygroup -c "1st user" myuser1
+主要目的是提供传统的owner,group,others的read,write,execute权限之外的具体权限设置的是什么？
+ACL
+ACL是什么的缩写？
+Access Control List
+设置是否开启ACL支持文件
 /etc/fstab
 取得某个文件/目录的ACL设置项目
 getfacl
@@ -181,6 +191,8 @@ setfacl -m u::rwx acl_test
 getfacl acl_test
 使用acl设置mygroup组对于acl_test文件的rx权限
 setfacl -m g:mygroup:rx acl_test
+如果一个文件设置了ACL参数后，权限部分会多加一个什么号？
++
 系统日常操作使用什么账号
 一般账号
 让一般用户转变身份成为root，有哪两种方式？
@@ -197,6 +209,8 @@ exit
 su - -c
 su和sudo哪个需要知道别人的密码？
 su
+切换到dmtsai帐号
+su -l dmtsai
 哪个文件内的用户才可以执行sudo？
 /etc/sudoers
 sudo的参数，后面可以接想要切换的用户，若无此项就代表身份切换为root
@@ -205,18 +219,25 @@ u
 sudo -u sshd touch /tmp/mysshd
 su -可以切换到系统账号吗？
 不可以
+如果想要使用系统帐号执行命令使用什么命令？
+sudo
 修改/etc/sudoers的命令
 visudo
 /etc/sudoers的一行内容 root ALL=(ALL) ALL 四列的含义
 用户账号 登录者的来源主机名 可切换的身份 可执行的命令
 设置用户组权限时，最左边时什么符号
 %
-把第三个字段ALL改成什么，为免除密码输入？
+将wheel用户组内所有用户都设置成具有sudo权限
+%wheel ALL=(ALL) ALL
+把第四个字段ALL改成什么，为免除密码输入？
 NOPASSWD:ALL
-其他用户只能执行修改密码的命令，需要设置第三列为什么
+其他用户只能执行修改密码的命令，需要设置第四列为什么
 /usr/bin/passwd
 为了方便一次处理多个账号的sudo权限，可以使用什么功能？
 别名
+让pro1,pro2,pro3用户可以执行passwd命令
+User_Alias ADMPW=pro1,pro2,pro3
+ADMPW ALL=(root) /usr/bin/passwd
 sudo搭配su使用的话，输入什么，然后输入密码就可以切换到root身份？
 sudo su-
 系统账号使用的是哪个shell？
@@ -225,16 +246,23 @@ sudo su-
 不可以
 PAM模块中文名是什么？
 嵌入式模块
-一套验证机制，可以提供给其他程序调用
+一套验证机制，可以提供给其他程序调用,只要用户将验证阶段的需求告诉它，就能得到用户验证结果
 pam
 PAM模块会去哪个目录寻找与程序比如passwd同名的配置文件？
 /etc/pam.d
+/etc/pam.d/passwd文件内容的格式
+auth include system-auth
 /etc/pam.d/passwd中一行 auth include system-auth分别是什么含义
 验证类别 控制标准 PAM模块与模块的参数
+
+
+
 哪四种验证类型
 auth account session password
 哪四种验证的控制标志
 required requisite sufficient optional
+登录需要查看的pam配置文件是什么？
+/etc/pam.d/login
 查看用户的登录时间的命令
 last
 查看目前登录的用户的两个命令
@@ -243,6 +271,8 @@ w who
 lastlog
 和其他用户聊天的命令
 write
+给vbird通过pts/2发送消息
+write vbird pts/2
 如果想要拒收别人的消息输入什么命令？
 mesg n
 解开上一个命令
@@ -251,6 +281,8 @@ mesg y
 wall
 发邮件的命令是什么
 mail
+vbird的邮箱目录是什么？
+/var/spool/mail/vbird
 给vbird用户发送一份标题为hello，内容为filename内容的邮件
 mail vbird -s "hello" < filename
 收取邮件的命令是什么
@@ -260,7 +292,12 @@ pwck
 将/etc/passwd内的账号与密码移动到/etc/shadow中的命令
 pwconv
 手工创建一个账号的步骤有哪些？
-1，新建用户组，vi /etc/group 2,使用grpconv同步/etc/group和/etc/gshadow 3,新建账号的各个属性 vi /etc/passwd 4,pwconv同步/etc/passwd和/etc/shadow
-5,新建该账号密码 passwd 6，新建用户文件夹 cp -a /etc/skel /home/accountname 7,更改用户主文件夹的属性 chown -R
+1，新建用户组，vi /etc/group 
+2,使用grpconv同步/etc/group和/etc/gshadow 
+3,新建账号的各个属性 vi /etc/passwd 
+4,pwconv同步/etc/passwd和/etc/shadow
+5,新建该账号密码 passwd 
+6，新建用户文件夹 cp -a /etc/skel /home/accountname 
+7,更改用户主文件夹的属性 chown -R
 批量创建账号
 使用useradd命令编写shell script
