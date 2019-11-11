@@ -1,0 +1,8 @@
+useradd userdel usermod passwd id finger
+groupadd groupdel groupmod gpasswd groups newgrp
+
+who write mail
+su sudo
+last lastlog
+
+setfacl getfacl
