@@ -1,0 +1,133 @@
+主流引导装载程序使用什么软件？
+grub
+系统启动过程
+1，加载BIOS的硬件信息与进行自我测试，并依据设置取得第一个可启动的设备
+2，读取并执行第一个启动设备内的MBR的boot Loader
+3，依据boot loader的设置加载Kernel，kernel会开始检测硬件与加载驱动程序
+4，在硬件驱动成功后，kernel会主动调用init进程，而init会取得run-level信息
+5，init执行/etc/rc.d/rc.sysinit文件来准备软件执行的操作环境
+6，init执行run-level的各个服务的启动
+7，init执行/etc/rc.d/rc.local文件
+8，init执行终端机模拟程序mingetty来启动login进程，最后就等待用户登录
+启动整个系统首先得要让系统去加载什么？
+BIOS
+BIOS程序去加载什么的信息？
+CMOS
+通过CMOS内的设置值取得主机的各项什么？
+硬件配置
+引导加载程序BootLoader程序安装在哪里？
+启动设备的第一个扇区
+boot loader主要的功能是什么？
+提供菜单，加载内核文件，转交其他loader
+为什么要先安装windows后安装linux？
+Windows默认不具有控制权转交的功能
+内核文件在哪里？
+/boot/vmlinuz
+非必要的功能可以编译称为什么？
+模块
+内核不认识SATA磁盘，需要加载什么？
+驱动程序
+SATA的驱动程序在/lib/modules内，无法挂载到根目录，那么怎么读取驱动程序？
+虚拟文件系统
+虚拟文件系统一般使用的文件名是什么？
+/boot/initrd
+内核完整加载后，主机应该就开始正确运行了，接下来开始执行系统的第一个程序是什么？
+/sbin/init
+init的配置文件是什么？
+/etc/inittab
+Linux通过设置什么来规定系统使用不同的服务启动，让Linux的使用环境不同？
+run level
+run level七个等级的含义
+0	系统直接关机
+1	单用户维护模式
+2	类似level3，但是无NFS服务
+3 	完整含有网络功能的纯文本模式
+4	系统保留功能
+5	与level3类似，但加载使用X window
+6 	重新启动
+默认的run level在/etc/inittab文件的哪个字段？
+id:5:initdefault
+开始加载各项系统服务之前，需要先设置好整个系统环境，利用/etc/rc.d/rc.sysinit
+si::sysinit:/etc/rc.d/rc.sysinit
+要知道到底CentOS启动过程中帮我们进行了什么操作查看什么文件？
+/etc/rc.d/rc.sysinit
+/etc/rc.d/rc.sysinit主要进行哪些工作？
+1，取得网络环境与主机类型；2，测试与挂载内存设备/proc及USB设备/sys；3，决定是否启动SELinux；
+4，启动系统的随机数生成器；5，设置终端机字体；6，设置显示于启动过程中的欢迎界面
+7，设置系统时间与时区；8，接口设备的检测；9，用户自定义模块的加载；10，加载内核的相关设置
+11，设置主机名与初始化电源管理模块；12，初始化软件磁盘阵列；13，初始化LVM的文件系统功能；14，以fsck检验磁盘文件系统
+15，进行磁盘配额quota的转换；16，重新以可读写模式挂载系统磁盘；17，启动quota功能；18，驱动系统伪随机数生成器
+19，清楚启动过程中的临时文件；20，将启动相关信息加载/var/log/dmesg文件中
+启动服务根据什么配置？
+/etc/inittab中的run level
+15:5:wait:/etc/rc.d/rc 5配置用到的目录时什么？
+/etc/rc5.d/rc
+找到什么开头的文件进行stop操作
+/etc/rc5.d/K
+找到什么开头的文件进行start操作
+/etc/rc5.d/S
+文件名后面跟的数字是什么意思
+执行顺序
+启动系统之后，执行用户自定义的程序，写入什么文件？
+/etc/rc.d/rc.local
+启动终端机的命令
+mingetty
+启动过程中，读取的一些服务的相关配置文件都是记录在哪个目录下的？
+/etc/sysconfig
+/etc/sysconfig目录下，主要设置用户的身份认证的机制的文件
+authconfig
+设置Linux主机的时区的文件
+clock
+用于设置一些语系的使用方面
+i18n
+设置是否启动网络
+network
+run level的不同仅仅是什么不同而已
+/etc/rc[0-6].d里面启动的服务不同
+要每次启动都执行某个默认的run level，则需要修改什么文件的什么参数
+/etc/inittab id:5:initdefault:
+如果只是暂时更改系统的run level，使用什么更改
+init[0-6]
+如何查看目前的run level
+runlevel
+使用init进行关机和重启
+init 3 init 6
+内核一般都是什么文件，需要解压缩后才能加载到内存？
+压缩文件
+内核的目录
+/boot/vmlinuz
+内核解压所需的RAMDisk
+/boot/initrd
+内核源码目录
+/usr/src/linux
+如果有新的硬件，但是系统不支持怎么办？
+重新编译内核，加入驱动源码
+内核模块放置目录
+/lib/modules/$(uname -r)/kernel
+记录模块之间依懒性的文件是什么？
+/lib/modules/$(uname -r)/modules.dep
+查看目前内核加载了多少模块的命令
+lsmod
+会主动查找modules.dep文件内容，克服模块依赖性后，加载模块的命令
+modprobe
+不分析模块依赖性加载模块的命令
+insmod
+模块的后缀名一般是什么
+.ko
+移除模块的命令
+rmmod
+内核模块的额外参数设置文件
+/etc/modprobe.conf
+boot loader的程序代码执行与设置值加载分成哪两个阶段？
+1，执行boot loader主程序 2，主程序加载配置文件
+第二阶段加载的配置文件一般放在哪个目录？
+/boot/grub
+第一块硬盘的MBR安装处的硬盘代号是什么
+(hd0)
+第一块硬盘的第一个分区的boot sector代号是什么？
+(hd0,0)
+查看/boot/grub/menu.lst配置文件内容
+读秒时间结束前没有按键，grub默认使用哪个字段的值来启动？
+default
+读秒时间
+timeout

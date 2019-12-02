@@ -1,0 +1,79 @@
+日志文件的权限一般设置为什么？
+仅root能够读取
+crontab调度有没有实际进行的文件
+/var/log/cron
+记录系统在开机的时候内核检测过程所产生的各项信息
+/var/log/dmesg
+记录系统上面所有的账号最后一次登录系统时相关信息
+/var/log/lastlog
+记录邮件往来的信息
+/var/log/maillog
+这个文件相当重要，几乎系统发生的错误信息都会记录到这个文件
+/var/log/messages
+只要涉及到需要输入账号密码的软件，那么登录都会记录在此文件中
+/var/log/secure
+记录正确登录系统的账户信息与错误登录时使用的账户信息
+/var/log/wtmp /var/log/fiallog
+不同的网络服务会使用它们自己的日子文件来记载它们生产的各项信息，上述目录内是个别服务所定制的日志文件
+/var/log/httpd/* /var/log/news/* /var/log/samba/*
+CentOS使用什么服务来统一管理日志文件
+syslogd
+专门记录内核信息的日志文件服务是什么
+klogd
+自动化处理日子文件容量与更新的方法
+logrotate
+查看syslogd是否启动
+ps aux | grep syslog
+日志文件内容的一般格式，包含哪些数据？
+时间 主机名 服务名 实际内容
+syslog的配置文件
+/etc/syslog.conf
+服务类型
+auth cron daemon kern lpr mail news syslog user
+服务等级
+info notice warning err crit alert emerg
+将mail相关的数据写入/var/log/maillog，那么/etc/syslog.conf怎么配置？
+mail.info /var/log/maillog
+将新闻组资料以及例行性工作调度信息写入/var/log/cronnews中，警告信息记录在warn中
+news.*;cron.*	/var/log/cronnews
+news.=warn;cron.=warn	/var/log/cronnews.warn
+messages文件记录所有的信息，但是就是不要记录cron，mail和news的信息
+*.*;cron,mail.none	/var/log/messages
+想要将所有的信息额外写入到/var/log/admin.log中
+*.info /var/log/admin.log
+使用vim打开日志文件之后，使用:wq，那么日志文件会怎么样？
+不能记录日志
+想要你的linux主机可以接收来自其他主机的日志信息，需要把该主机做成什么？
+日志文件服务器
+怎么样设置为日志文件服务器
+SYSLOGD_OPTIONS="-m 0"改成SYSLOGD_OPTIONS="-m 0 -r"
+客户端设置，把日志数据传给其他主机怎么设置？
+*.* @192.168.1.100
+日志轮替程序logrotate是挂在什么下面进行的？
+cron
+记录每天要进行的日志文件替换行为的文件是哪个？
+/etc/cron.daily/logrotate
+logrotate这个程序的参数配置文件在哪里？
+/etc/logrotate.conf和/etc/logrotate.d
+它们两者的关系是什么？
+logrotate.d目录下的所有文件都会被主动读入到/etc/logrotate.conf中
+logrotate的主要功能是什么？
+将旧的日志文件移动成为旧文件，并新建新的空的文件
+设置日志文件每个礼拜进行一次rotate工作
+weekly
+保留几个日志文件
+rotate 4
+由于日志文件被重命名，因此新建一个新的来继续存储
+create
+在启动logrotate之前进行的命令
+prerotate
+在昨晚logrotate之后进行的命令
+postrotate
+执行一次logrotate看看整个流程
+logrotate -v /etc/logrotate.conf
+强制进行一次logrotate
+logrotate -vf /etc/logrotate.conf
+CentOS提供的分析日志的工具是什么
+logwatch
+比较方便的管理日志通过什么？
+shell script

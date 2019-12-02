@@ -1,0 +1,20 @@
+设置系统的工具，一般只有RedHat中才有？
+setup
+网络参数自动获取的方式称为什么？
+DHCP
+打印机的使用
+详见书本
+将分区表列出
+fdisk -l
+查看硬盘信息与测试读写速度
+hdparm
+查看内核运行过程中所显示的各项信息记录
+dmesg
+可细分系统目前的状态
+vmstat
+列出整个PC系统的PCI接口设备
+lspci
+列出各个USB端口状态
+lsusb
+与vmstat类似，列出CPU与接口设备的IO状态
+iostat
