@@ -1,0 +1,224 @@
+正则表达式处理的单位是什么？
+行
+找出/etc/init.d/*文件里含有mail单词的文件
+grep 'mail' /etc/init.d/*
+grep支持正则表达式吗？
+支持
+常见的支持正则表达式的工具有哪些？
+vi grep awk sed
+cp和ls支持正则表达式吗？
+不支持
+正则表达式分成哪两组？
+基础 扩展
+语系对正则表达式有影响吗？
+有
+代表英文大小写字符及数字
+[:alnum:]
+代表了任何英文字符
+[:alpha:]
+代表小写字符
+[:lower:]
+代表大写字符
+[:upper:]
+代表数字
+[:digit:]
+grep命令中，什么参数后面可以加数字，after的意思，除了列出该行外，后续的n行也列出来
+A
+grep命令中，什么参数后面可以加数字，before的意思，除了列出该行外，前面的n行也列出来
+B
+dmesg可以列出内核信息，显示包含eth的行，同时显示行号和颜色，并列出之前的3行和后面的2行
+dmesg | grep -n -A3 -B2 --color=auto 'eth'
+在test文件中，找出含有the的行，并显示行号
+grep -n 'the' test
+找出不含有test的行
+grep -v 'the' test
+忽略the大小写选出有关的行
+grep -i 'the' test
+查找包含test或者tast的行
+grep 't[ae]st' test
+查找包含了oo，并且oo前面没有g的行
+grep '[^g]oo' test
+查找包含了oo，并且oo前面没有小写字母的行
+grep '[^a-z]oo' test
+查找包含数字的行
+grep '[0-9]' test
+查找包含数字的行
+grep '[[:digit:]]' test
+查找the出现在行首的行
+grep '^the' test
+查找小写字母开头的行
+grep '^[a-z]' test
+^在[]内和[]外分别代表什么意思？
+反向选择和在行首
+找出行尾以.结束的行
+grep -n '\.$' test
+找出空白行
+grep -n '^$' test
+找出不是空白行和#开头的行
+grep -v '^$' test | grep -v '^#'
+代表一定有一个任意字符的意思
+.
+代表重复前一个0到无穷多次的意思
+*
+找出长度为4的g??d的字符
+grep -n 'g..d' test
+找出含有至少连续两个oo的字符串
+grep -n 'ooo*' test
+字符串开头和结尾都是g，但是两个g之间仅能存在至少一个o
+grep -n 'goo*g' test
+代表零个或多个任意字符
+.*
+g开头g结尾的字符串
+grep -n 'g.*g' test
+找出含有两个o的字符串
+grep -n 'o\{2\}' test
+找出含有2到5个o的字符串
+grep -n 'o\{2,5\}' test
+找出两个o以上的字符串
+grep -n 'o\{2,\}' test
+待查找的字符串在行首
+^word
+待查找的字符串在行尾
+word$
+代表一定有一个任意字符的字符
+.
+转义字符
+\
+重复零到无穷多个的前一个字符
+*
+从字符合集的RE字符里面找出想要选取的字符
+[list]
+从字符合集的RE字符里面找出想要选取的字符范围
+[n1-n2]
+从字符合集的RE字符里面找出不要的字符串或范围
+[^list]
+连续n到m个的前一个RE字符
+\{n,m\}
+正则表达式的*和通配符含义相同吗？
+不同
+sed可以对数据进行哪些操作？
+替换，删除，新增和选取等
+sed命令的参数，使用安静模式的参数是什么？
+n
+直接在命令行模式上进行sed编辑的参数是什么？
+e
+直接将sed的动作写在一个文件内，然后执行文件内动作的参数是什么？
+f
+sed的动作支持的是扩展型正则表达式语法的参数是什么？
+r
+直接修改读取的文件内容，而不是由屏幕输出的参数是什么？
+i
+动作说明 
+[n1,[n2]] function
+function的参数 新增 替换 删除 插入 打印 替换
+a c d i p s
+将/etc/passwd内容列出行号，同时，删除2-5行
+nl /etc/passwd | sed '2,5d'
+删除第3到最后一行
+nl /etc/passwd | sed '3,$d'
+在第二行前面增加drink tea
+nl /etc/passwd | sed '2i drink tea'
+在第二行后面增加drink tea
+nl /etc/passwd | sed '2a drink tea'
+增加多行，每一行以什么分割
+\
+将2-5行内容替换成No 2-5 number
+nl /etc/passwd | sed '2,5c No 2-5 number'
+列出5-7行
+nl /etc/passwd | sed -n '5,7p'
+用sed将oldstr替换成newstr
+sed 's/oldstr/newstr/g'
+利用/sbin/ifconfig查询ip
+/sbin/ifconfig eth0
+利用grep选取含有inet addr的一行
+/sbin/ifconfig eth0 | grep 'inet addr'
+删除IP前面的部分
+/sbin/ifconfig eth0 | grep 'inet addr' | sed 's/^.*addr://g'
+将IP后面的部分删除
+/sbin/ifconfig eth0 | grep 'inet addr' | sed 's/^.*addr://g' | sed 's/Bcast.*$//g'
+将man.config文件里MAN所在行取出来，删除掉#开头和空白行
+cat /etc/man.config | grep 'MAN' | sed 's/#.*$//g' | sed '/^$/d'
+sed可以直接修改文件，将test内每一行结尾的"."变成"!"
+sed -i 's/\.$/\!/g' test
+在test最后一行添加“#This is a test”
+sed -i '$a #This is a test' test
+使用扩展正则表达式使用什么命令
+egrep
+egrep和什么命令类似别名的关系
+grep -E
+重复一个或多个以上的前一个的RE字符
++
+在test文件中，查找god，good和goood等字符
+egrep -n 'go+d' test
+零个或一个的前一个RE字符
+?
+查找gd或god
+egrep -n 'go?d' test
+用或的方式找出字符串
+|
+使用|查找gd或good
+egrep -n 'gd|good' test
+找出组字符串
+()
+查找glad或good字符串
+egrep -n 'g(la|oo)d'
+多个重复组的判别
+()+
+找出AC中间有多个xyz的字符串
+egrep -n 'A(xyz)+C'
+格式化打印命令是什么
+printf
+n个字符
+%ns
+n个数字
+%ni
+长度为10，小数点后两位
+%10.2f
+printf '%10s %5i %5i %5i %8.2f \n' $(cat printf.txt) 有几列
+5
+awk命令格式
+awk '条件类型1{动作1} ...' filename
+取出前5行登录者的数据
+last -n 5
+取出上例数据的第一和第三列
+last -n 5 | awk '{print $1 "\t" $3}'
+第1列，第3列和整行分别用什么表示？
+$1 $3 $0
+awk一次处理单位是什么？最小的处理单位是什么？
+行 字段
+每一行拥有的字段总数
+NF
+目前awk所处理的是第几行数据
+NR
+目前的分隔符，默认是空格
+FS
+第一列显示原第一列内容，第二列显示line：行号，第三列显示columes：列数
+last -n -5 | awk '{print $1 "\t lines:" NR "\t columes:" NF}'
+使用:分隔/etc/passwd，打印第三列小于10的行里面的第1第3列
+cat /etc/passwd | awk 'BEGIN {FS=':'} $3 < 10 {print $1 "\t" $3}'
+计算工资
+cat pay.txt | awk '{if(NR==1) printf "%10s %10s %10s %10s %10s\n" $1,$2,$3,$4,"Total"} NR>=2{total =$2+$3+$4 printf "%10s %10s %10s %10s %10s\n", $1,$2,$3,$4,total}
+比较ASCII文件的不同的命令
+diff
+diff的语法
+diff [-bBi] from-file to-file
+bBi的含义
+忽略一行中仅有多个空白的区别 忽略空白行的区别 忽略大小写的区别
+diff可比较文件和什么
+目录
+diff比较的单位是什么
+行
+可以用来比较二进制文件的命令是什么
+cmp
+cmp比较单位是什么
+字节
+使用passwd.old和passwd.new制作passwd.patch
+diff -Naur passwd.old passwd.new > passwd.patch
+更新文件
+patch -pN < patch_file
+还原文件
+patch -R -pN < patch_file
+把passwd.old更新成passwd.new
+patch -p0 < passwd.patch
+打印/etc/man.config
+pr /etc/man.config
