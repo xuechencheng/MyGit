@@ -1,0 +1,110 @@
+87 结识substitute命令
+substitute是一种什么命令？
+Ex命令
+substitute的用法
+:[range]s[ubstitute]/{pattern}/{string}/[flags]
+标志位g的作用
+使得substitute命令可在全局范围内执行，即可以修改一行内所有的匹配，而不仅仅是第一处匹配
+标志位c的作用
+让我们有机会可以确认或拒绝每一处修改
+标志位n的作用
+抑制正常的替换行为，只是报告本次的substitute命令匹配的个数
+当我们执行substitue命令时，如果没有匹配到该模式，Vim会提示错误信息，用什么标志符可以屏蔽
+e
+什么标志位用于指示Vim重用上一次substitute命令所用过的标志位
+&
+
+88 在文件范围内查找并替换每一处匹配
+在缺省情况下，substitute命令作用于什么？
+当前行的第一个匹配
+启动什么选项，方便观察Vim查找过程
+:set hlsearch
+怎么样控制substitute命令在整个文件的纵轴上执行？
+在substitute命令的开头加上前缀%
+对于所有的Ex命令，都可以用什么这种方式来指定一个执行范围吗？
+可以
+哪两个标志位分别处理横轴和纵轴文本行？
+g %
+
+89 手动控制每一次替换操作
+观察并替换
+:%s/content/copy/gc
+
+90 重用上次的查找模式
+将substitute命令的查找域留空，意味着Vim会使用什么？
+上次的查找模式
+:%s/\v'(([^']|'\w)+)'/"\1"/g等同于哪两条命令
+/\v'(([^']|'\w)+)'和:%s//"\1"/g
+在命令行输入什么，可以把上次的查找内容粘贴进来
+<C-r>/
+91	用寄存器的内容替换
+通过什么命令可以把寄存器的内容插入到命令行
+<C-r>{register}
+替换成寄存器0中的内容
+:%s//<C-r>0/g 或 :%s//\=@0/g
+寄存器0是@0，什么返回无名寄存器的内容
+@
+
+92 重复上一次substitute命令
+执行:s/target/replacement/g之后，如果我们想要替换所有的内容，怎么执行？
+g&
+等效于什么命令？
+:%s//~/&
+什么命令激活可视模式，并重新将上次选中的文本高亮起来？
+gv
+什么命令重新执行替换操作
+:&&
+什么命令会作用于高亮选区
+:'<,'>&&
+作用于整个文件
+:%&&
+:%&&的快捷方式
+g&
+&&两个&的含义分别是什么？
+第一个&作为Ex命令，第二个&则会重用上次:s命令的标志位
+:s命令的同义词，用于重复上一次的替换操作
+&
+
+93 使用子匹配重排CSV文字的字段
+last name,first name,email
+neil,drew,drew@vimcats.org
+doe,john,john@example.com
+把第三列的邮箱和第一列的姓换一下的命令
+/\v^([^,]*),([^,]*),([^,]*)$
+:%s//\3,\2,\1
+
+94 在替换过程中执行算数运算
+<h2>Heading number 1</h2>
+<h3>Heading number 2</h3>
+<h4>Heading number 3</h4>
+将h2,h3,h4改成h1,h2,h3
+构造查找模式	/\v\<\/?h\zs\d
+substitute命令	:%s//\=submatch(0)-1/g
+submatch(0)函数的作用
+得到当前匹配内容
+
+95 交换两个或更多的单词
+The dog bit the man.
+交换dog和man两个单词
+:let swapper={"dog":"man","man":"dog"}
+/\v(<man>|<dog>)
+:%s//\{"dog":"man","man":"dog"}[submatch(1)]/g
+
+96 在多个文件中执行查找与替换
+替换Pragmatic Vim为Practical Vim，而Pragmatic Bookshelf不变
+/Pragmatic\ze Vim
+:%s//Practical/g
+什么命令允许我们在一组文件中运行subtitute命令
+:argdo
+把所有工程文件加到参数列表中
+:args **/*.txt
+在继续操作之前
+:set hidden
+在所有文件中执行替换命令
+:argdo %s//Practical/g
+如果出现错误信息
+:argdo %s//Practical/ge
+这种方法的弊端是什么？
+加载太多文件，占用内存太大
+点射目标的方法
+详见书本
