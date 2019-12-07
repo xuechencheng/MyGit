@@ -1,0 +1,46 @@
+108 不必离开Vim也能调用grep
+使用:grep命令之后，在什么列表可以浏览查找结果
+quickfix
+内部调用的:grep命令和外部的grep命令的关系
+是对外部的grep命令的包装
+在当前目录查找含有Waldo的文件
+:grep Waldo *
+不区分大小写的搜索Waldo
+:grep -i Waldo *
+
+109 定制grep程序
+当我们在Vim内执行:grep命令时，什么选项负责制定说调用的shell程序
+grepprg
+什么选项指示Vim如何解析来自:grep命令的输出结果
+grepformat
+它们的缺省设置是什么样的？
+grepprg="grep -n $* /dev/null"
+grepformat="%f:%l:%m,%f:%l%m,%f %l%m"
+$*表示什么？
+占位符，最终它将被提供给:grep命令的参数替代
+%f,%l,%m分别代表什么？
+文件名 行号 匹配行的文本
+什么程序作为可取代grep的程序，尤其受到程序员的青睐
+ack
+安装和链接grep和ack
+sudo apt-get install apt-grep
+sudo ln -s /usr/bin/ack-grep /usr/local/bin/ack
+采用ack代替grep最简单的方法
+:set grepprg=ack\ --nogroup\ $*
+当我们采用什么参数运行ack时，它会给出每一处匹配的行号与列号
+--column
+使用ack查找Waldo
+ack --nogroup --column *
+通过修改grepformat，可以跳转到每一处匹配的精确位置
+:set grepprg=ack\ --nogroup\ --column\ $*
+:set grepformat=%f:%l:%c:%m
+
+110 使用Vim内部的Grep
+Vim提供了一条名为什么的命令，采用的是Vim内置的查找引擎
+:vimgrep
+vimgrep的语法
+:vim[grep] [!] /{pattern}/[g][j] {file} ...
+用什么命令，把上次查找的内容粘贴至:vimgrep命令的模式域
+<C-r>/
+
+ 

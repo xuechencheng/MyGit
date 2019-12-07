@@ -1,0 +1,56 @@
+技巧104 不用离开Vim也能编译代码
+在Vim内部运行什么命令编译代码？
+:make
+运行make显示错误信息，会在什么列表中创建一项纪录
+quickfix
+运行完:make，如果有错误的话，Vim会跳转到哪里？
+quickfix列表第一项
+利用什么命令，跳转到quickfix列表下一处出错位置
+:cnext
+当我们运行:make，Vim会自动跳到第一处出错的地方，如果我们不想跳转
+:make!
+什么命令返回跳转列表的上一个位置
+<C-o>
+
+105 浏览Quickfix列表
+通过什么命令，可以找到一份详尽的命令列表，浏览quickfix列表。
+:h quickfix
+浏览Quickfix列表的命令，跳转到下一项
+:cnext
+跳转到上一项
+:prev
+跳转到第一项
+:cfirst
+最后一项
+:clast
+下一个文件第一项
+:cnfile
+下一个文件最后一项
+:cpfile
+第n项
+:cc N
+打开quickfix窗口
+:copen
+关闭quickfix窗口
+:cclose
+哪些命令会使用quickfix
+:make :grep :vimgrep
+每次间隔五项向下移动
+:5cnext
+
+106 回溯以前的Quickfix列表
+通过什么命令回溯以前的列表
+:colder
+为了从旧的quickfix列表回到比较新的列表使用什么？
+:cnewer
+
+107 定制外部编译器
+配置':make'使其调用Nodelint
+:setlocal makeprg=NODE_DISABLE_COLORS=1\ nodelint\%
+符号%是什么意思？
+当前文件所在路径
+在Vim中运行:make等于在shell中运行以下命令
+export NODE_DISABLE_COLORS=1
+nodelint ~/quickfix/fizzbuzz.js
+用NodeLint的输出结果填充Quickfix列表，用一条命令设置makeprg与errorformat
+详见书本
