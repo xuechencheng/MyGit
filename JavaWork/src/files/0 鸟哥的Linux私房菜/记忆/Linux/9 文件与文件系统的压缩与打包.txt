@@ -1,9 +1,0 @@
-﻿压缩文件命令
-tar -jcv -f filename.tar.bz2
-查看/root/etc.tar.bz2中的shadow文件
-tar -jtv -f /root/etc.tar.bz2 | grep 'shadow'
-解压缩到特定目录
-tar -jxv -f filename.tar.bz2 -C
-
-dump
-restore

@@ -1,9 +1,0 @@
-﻿fdisk
-mkfs
-fsck	badblocks
-mount umount
-
-df
-du
-dumpe2fs
-ln
