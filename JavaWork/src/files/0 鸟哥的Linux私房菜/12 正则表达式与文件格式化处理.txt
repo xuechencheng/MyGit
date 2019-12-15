@@ -121,7 +121,7 @@ nl /etc/passwd | sed '2i drink tea'
 在第二行后面增加drink tea
 nl /etc/passwd | sed '2a drink tea'
 增加多行，每一行以什么分割
-\
+\n
 将2-5行内容替换成No 2-5 number
 nl /etc/passwd | sed '2,5c No 2-5 number'
 列出5-7行
@@ -195,7 +195,7 @@ FS
 第一列显示原第一列内容，第二列显示line：行号，第三列显示columes：列数
 last -n -5 | awk '{print $1 "\t lines:" NR "\t columes:" NF}'
 使用:分隔/etc/passwd，打印第三列小于10的行里面的第1第3列
-cat /etc/passwd | awk 'BEGIN {FS=':'} $3 < 10 {print $1 "\t" $3}'
+cat /etc/passwd | awk 'BEGIN {FS=":"} $3 < 10 {print $1 "\t" $3}'
 计算工资
 cat pay.txt | awk '{if(NR==1) printf "%10s %10s %10s %10s %10s\n" $1,$2,$3,$4,"Total"} NR>=2{total =$2+$3+$4 printf "%10s %10s %10s %10s %10s\n", $1,$2,$3,$4,total}
 比较ASCII文件的不同的命令
