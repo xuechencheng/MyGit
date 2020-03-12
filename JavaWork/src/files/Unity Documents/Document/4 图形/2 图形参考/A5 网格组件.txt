@@ -1,0 +1,57 @@
+网格
+Unity 支持什么类型的多边形网格？
+三角形或四边形
+Unity将尝试通过遵循特定的搜索计划在导入时自动查找网格使用的纹理。搜索算法是什么样的？
+首先，导入器将在与网格相同的文件夹中或任何父文件夹中查找名为 Textures 的子文件夹。如果此过程失败，将对项目中的所有纹理执行穷尽搜索。
+对于每种导入的材质，Unity 将应用什么规则？
+1，如果禁用材质生成（即取消选中Import Materials），则会分配 Default-Diffuse 材质。
+2，如果启用该选项，则执行以下操作：
+Unity将根据Material Naming设置，为Unity材质选择一个名称
+Unity将尝试查找具有该名称的现有材质。材质搜索范围由Material Search设置进行定义。
+如果Unity成功找到现有材质，则会将该材质用于导入的场景，否则将生成新材质
+Unity 使用哪两种主要类型的碰撞体？
+网格碰撞体和原始碰撞体
+如果对象正在移动（例如汽车），则无法使用网格碰撞体。必须改用原始碰撞体。此情况下应禁用什么设置？
+Generate Colliders
+Unity支持什么，也称为变形目标或顶点级动画？
+BlendShape
+使用BlendShape导入的所有网格都将使用什么？
+SkinnedMeshRenderer
+BlendShape动画作为常规动画的一部分导入，仅对SkinnedMeshRenderer上的什么权重进行动画化？
+BlendShape
+有哪两种方法可以导入带法线的BlendShape？
+1.将Normals导入模式设置为Calculate，这样就会使用相同的逻辑来计算网格和BlendShape上的法线。 2.将平滑组信息导出到源文件。这样，Unity就会通过网格和BlendShape的平滑组计算法线。
+如果需要BlendShape上的切线，则应将Tangents导入模式设置为什么？
+Calculate
+尽可能将网格合并在一起，让它们共享什么？这种做法可大幅提升性能。
+材质和纹理
+Unity Editor显示太多顶点或三角形（与 3D 应用程序之类的相比）正常吗？
+正常（原因见文档）
+
+材质
+
+网格过滤器 (Mesh Filter)
+什么从资源中获取网格并将其传递给网格渲染器(Mesh Renderer)以便在屏幕上渲染？
+网格过滤器(Mesh Filter)
+导入网格资源时，如果网格带蒙皮，则Unity会自动创建什么，而如果网格不带蒙皮，则创建网格过滤器 (Mesh Filter) 及网格渲染器 (Mesh Renderer)。
+带蒙皮的网格渲染器 (Skinned Mesh Renderer)
+要在场景中查看网格，请向游戏对象添加什么？
+网格渲染器
+
+网格渲染器 (Mesh Renderer)
+参考文档：网格渲染器 (Mesh Renderer)
+
+带蒙皮的网格渲染器 (Skinned Mesh Renderer)（待续）
+Unity使用带蒙皮的网格渲染器 (Skinned Mesh Renderer)组件来渲染什么？
+骨骼动画
+什么是蒙皮网格内的不可见对象，会影响网格在动画过程中的变形方式？
+骨骼
+骨骼动画基本思想是将骨骼连接在一起形成分层的什么，并通过旋转骨架的关节使其移动来定义动画？
+骨架
+
+文本网格
+参考文档：文本网格 (Text Mesh)
+文本网格可用于渲染什么等。文本网格将文本放置在3D场景中？
+道路标志、涂鸦
+
+字体（待续）

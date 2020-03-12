@@ -1,0 +1,113 @@
+Unity提供了哪四种Shader模版供我们选择？
+Standard Surface Shader,Unlit Shader,Image Effect Shader和Compute Shader
+对于表面着色器，可以通过单击什么按钮打开一个新文件，该文件将显示Unity在背后为该表面着色器生成的顶点/片元着色器？
+Show generated code
+参考文档：Unity Shader导入面板
+计算机科学中的任何问题都可以通过增加什么来解决？
+一层抽象
+Unity为我们提供了一层抽象Unity Shader，我们和这层抽象打交道使用的是什么语言？
+ShaderLab
+在Unity中，所有的Unity Shader都是使用什么来编写的？
+ShaderLab
+参考文档：Unity Shader的基础结构
+什么语义块中包含了一系列属性，这些属性将会出现在材质面板中？
+Properties
+Properties的语义块的定义是什么样的？
+Name("display name", Property) = DefaultValue
+参考文档：Properties语义块支持的属性类型
+Unity允许我们通过什么方法，提供更多自定义的数据类型？
+重载默认的材质编辑面板
+每一个Unity Shader文件可以包含多个什么语义块，但最少要有一个？
+SubShader
+Unity需要加载这个Unity Shader时，Unity会扫描所有的SubShader语义块，然后选择哪一个能够在目标平台上运行的SubShader？
+第一个
+如果都不支持的话，Unity就会使用什么语义指定的Unity Shader？
+Fallback
+参考文档：SubShader语义块的定义
+SubShader中定义了一系列Pass以及可选的状态和标签设置，每个Pass定义了什么？
+一次完整的渲染流程
+SubShader中使用的标签和Pass中使用的标签一样吗？
+不一样
+而对于状态设置来说，其使用的语法是相同的。但是，如果我们在哪里进行了设置，那么将会用于所有Pass？
+SubShader
+参考文档：常见的渲染状态设置选项
+SubShader的标签都是键值对，它的键和值都是什么类型？
+字符串
+参考文档：SubShader的标签类型
+参考文档：pass语义块的语义结构
+通过定义Pass的名称，我们可以使用ShaderLab的什么命令直接使用来自其他UnityShader中的Pass。
+UsePass
+参考文档：Pass的标签类型
+什么Pass负责抓取屏幕并将结果存储在一张纹理中，以用于后续的Pass处理？
+GrabPass
+紧跟在各个SubShader语义块后面的，是一个什么指令？用于告诉Unity，如果上面所有的SubShader在这块显卡都不能运行，那么使用这个最低级的Shader。
+Fallback
+ShaderLab还有其他的语义吗？
+CustomEditor和Category，都是不常用的
+表面着色器的着色器代码一般写在什么语义块中？
+SubShader
+顶点/片元着色器和固定函数着色器的代码写在哪里？
+Pass语义块中
+什么着色器是Unity自己创造的一种着色器代码类型，它需要的代码量很少，Unity在背后做了很多工作，但渲染代价比较大？
+表面着色器
+Unity提供一个表面着色器的时候，它在背后仍旧把它转换成对应的什么？
+顶点/片元着色器
+CGPROGRAM和ENDCG之间的代码使用什么编写？
+Cg/HLSL
+在Unity中我们可以使用Cg/HLSL语言编写什么着色器，它们更加复杂，但灵活性更高？
+顶点/片元着色器
+较旧的设备不支持可编程管线着色器，这时候我们需要使用什么着色器？
+固定函数着色器
+Unity Shader就是真正的Shader吗？
+不是
+传统的Shader中，我们尽可以编写特定类型的Shader，例如顶点着色器、片元着色器等，而在什么中，我们可以在一个文件里同时包含这两个？
+Unity Shader
+传统的Shader，我们无法设置一些什么，例如是否开启混合、深度测试等？
+渲染设置
+我们可以在ShaderLab内部嵌套Cg/HLSL语言来编写这些着色器代码，这些代码嵌套在什么之间？
+CGPROGRAM和ENDCG
+表面着色器的本质是什么？
+顶点/片元着色器
+从本质上来讲，Unity Shader只有哪一种形式？
+顶点/片元着色器
+如果坚持使用GLSL来编写代码就必须放弃什么平台？
+Pc、Xbox这些仅支持DirectX的平台
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

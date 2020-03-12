@@ -1,0 +1,18 @@
+一，打包
+	1，使用Lz4，压缩选项ChunkBasedCompression
+	2，遍历文件夹，通过
+		AssetImporter assetImporter = AssetImporter.GetAtPath(path);
+		assetImporter.assetBundleName = assetbundleName;
+		自动分配AssetBundle
+	//3，打包完成后，载入AssetBundleManifest
+二，热更新
+	1，游戏资源目录：StreamingAssets，热更新的文件夹persistentDataPath ，第一次开启游戏后，程序将“游戏资源目录”的内容复制到“数据目录中”
+	2，比较版本号，大版本就去下载游戏，小版本就更新资源，使用Md5比较文件差异
+三，加载AssetBundle
+四，卸载AssetBundle
+	使用AssetBundle.Unload(true)的两种常用方法是：
+		在应用程序生命周期中具有明确定义的卸载瞬态 AssetBundle 的时间点，例如在关卡之间或在加载屏幕期间。
+		维护单个对象的引用计数，仅当未使用所有组成对象时才卸载 AssetBundle。
+	使用 AssetBundle.Unload(false)和Resources.UnloadUnusedAssets。
+	
+开发中使用Resources文件夹，发布后使用AssetBundle

@@ -1,0 +1,11 @@
+高级特性：
+IK，Blend Tree，动画层
+资源：
+模型和动画
+界面：
+	Animation和Animator
+组件：
+	Animator 组件
+	Animator Controller
+	动画状态
+	动画过渡

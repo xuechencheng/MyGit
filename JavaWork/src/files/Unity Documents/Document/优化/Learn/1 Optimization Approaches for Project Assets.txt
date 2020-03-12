@@ -1,0 +1,4 @@
+All 2D(Sprite and UI)graphic elements should be packed into Sprite Atlases
+All textures that are not packed in a Sprite Atlas should have dimensions that are powers of 2 in order to take advantage of memory handling optimizations on the GPU. They don’t necessarily need to be square, but being square and a power of 2 further aids optimization
+Longer audio such as background music should have its Load Type in Import Settings set to Streaming rather than Decompress on Load or Compressed in Memory
+One common solution is the adoption of object pooling.

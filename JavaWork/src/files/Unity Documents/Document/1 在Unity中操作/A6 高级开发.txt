@@ -1,0 +1,167 @@
+参考文档：性能分析器（待续）
+打开新场景并将其添加到层级视图中的当前场景列表的方法？
+1，在场景资源的上下文菜单中选择Open Scene Additive；2，将一个或多个场景从Project窗口拖动到Hierarchy窗口中。
+在播放模式下，在层级视图中有多个场景时，将显示一个额外的场景，名为什么？
+DontDestroyOnLoad
+关于常见的Editor脚本和运行时脚本分别有哪些？
+Scene和EditorSceneManager     SceneManager
+在运行时加载资源有哪两种方法？
+AssetBundle和Resources
+在Resources文件夹中找到的所有资源及其依赖项都存储在名为什么的文件中？
+resources.assets
+Unity中使用哪两种插件？
+托管插件和原生插件
+什么插件是使用Visual Studio等工具创建的托管.NET程序集，此类插件仅包含 .NET 代码，因此无法访问 .NET 库不支持的任何功能？
+托管插件
+什么插件代码和Unity脚本代码之间几乎没有用法差异，唯一的区别是插件在Unity外部编译而成，因此源代码可能不可用？
+托管插件
+什么插件是特定于平台的本机代码库，此类插件可访问操作系统调用和第三方代码库等功能；Unity无法通过其他方式使用这些功能？
+原生插件
+参考文档：Plugin Inspector
+哪些文件扩展名表示将文件视为插件？
+.dll  .so  .jar  .cpp  .cc  .c  .h  .swift等
+某些文件夹被视为单个捆绑包插件。此类文件夹中不会检测到其他插件。哪些扩展名表示将文件夹视为捆绑包插件？
+.framework  .bundle  .plugin
+DLL的中文含义是什么？
+动态链接库
+为了创建 DLL，首先需要什么？
+一个合适的编译器
+如果DLL不包含依赖于Unity API的代码，则可以使用适当的编译器选项将其直接编译为DLL如果确实想使用 Unity API，则需要什么操作？
+将Unity自己的DLL提供给编译器
+Unity DLL 的路径通常是什么？
+C:\Program Files\Unity\Editor\Data\Managed
+编译DLL的命令是什么？
+mcs -r:/Applications/Unity/Unity.app/Contents/Managed/UnityEngine.dll -target:library ClassesForDLL.cs
+实例：在Visual Studio中创建DLL并在Unity中使用该DLL。
+Unity广泛支持什么插件，即用 C、C++、Objective-C 等编写的原生代码库？
+原生插件
+实例：使用c语言编写一个函数，作为插件使用
+插件应导出什么函数来处理主要的 Unity 事件？
+UnityPluginLoad和UnityPluginUnload
+低级原生插件接口：详见文档
+选用什么内置算法来压缩AssetBundle？
+LZMA和LZ4
+“AssetBundle”可以指哪两种不同但相关的东西？
+首先是磁盘上的实际文件，其次是通过代码进行交互以便从特定存档加载资源的实际AssetBundle对象。
+AssetBundle工作流程是什么样的？
+1，为 AssetBundle 分配资源 2，构建 AssetBundle 3，将 AssetBundle 上传到场外存储 4，加载 AssetBundle 和资源
+要为AssetBundle分配指定资源，有哪些操作步骤？
+1.从Project视图中选择要为捆绑包分配的资源 
+2.在Inspector底部，应该会看到一个用于分配 AssetBundle 和变体的部分
+3.左侧下拉选单分配AssetBundle，而右侧下拉选单分配变量
+编程：编写脚本在Assets/Build AssetBundles菜单下，打包AssetBundle资源
+编程：加载AssetBundle资源
+常见的AssetBundle资源打包策略有哪些？
+1，逻辑实体分组 2，类型分组 3，并发内容分组
+无论遵循何种资源打包策略，一些比较好的做法是什么？
+1，将频繁更新的对象与很少更改的对象拆分到不同的 AssetBundle 中
+2，将可能同时加载的对象分到一组。例如模型及其纹理和动画
+3，如果发现多个 AssetBundle 中的多个对象依赖于另一个完全不同的 AssetBundle 中的单个资源，请将依赖项移动到单独的 AssetBundle。
+4，如果不可能同时加载两组对象（例如标清资源和高清资源），请确保它们位于各自的 AssetBundle 中。
+5，如果一个 AssetBundle 中只有不到 50% 的资源经常同时加载，请考虑拆分该捆绑包
+6，考虑将多个小型的（少于 5 到 10 个资源）但经常同时加载内容的 AssetBundle 组合在一起
+7，如果一组对象只是同一对象的不同版本，请考虑使用 AssetBundle 变体
+构建 AssetBundle的函数接口是什么？
+BuildPipeline.BuildAssetBundles
+参考文档： BuildPipeline.BuildAssetBundles参数
+自动找到当前设置的目标构建平台的接口是什么？
+EditorUserBuildSettings.activeBuildTarget
+对于在编辑器中指定的每个 AssetBundle，可以看到一个具有 AssetBundle 名称+什么的文件？
+.manifest
+AssetBundles目录包含的文件数量是多少？
+2（n + 1）
+包含文件内容的是什么？
+AssetBundle
+包含诸如循环冗余校验(CRC)数据和捆绑包的依赖性数据之类的信息的清单文件是什么？
+.manifest文件
+如果UnityEngine.Object包含对任何AssetBundle中未包含的 UnityEngine.Object 的引用，在构建 AssetBundle 时，会怎么办？
+捆绑包所依赖的对象的副本将复制到捆绑包中
+如果AssetBundle中包含依赖项，则在加载尝试实例化的对象之前，务必加载包含这些依赖项的捆绑包，为什么？
+Unity不会尝试自动加载依赖项。
+在从Bundle 1加载材质之前，需要将Bundle 2加载到内存中。加载Bundle 1和Bundle 2的顺序无关紧要，重要的是什么？
+在从Bundle 1加载材质之前应加载Bundle 2
+可以使用哪四种不同的API来加载AssetBundle？
+1，AssetBundle.LoadFromMemoryAsync 2，AssetBundle.LoadFromFile 3，WWW.LoadfromCacheOrDownload 4，UnityWebRequest 的 DownloadHandlerAssetBundle 
+编程：使用上述这些接口
+从AssetBundle加载资源的接口是什么？
+LoadAsset、LoadAllAssets及其各自的异步对应选项LoadAssetAsync和LoadAllAssetsAsync。
+加载 AssetBundle 清单的接口是什么？
+AssetBundle assetBundle = AssetBundle.LoadFromFile(manifestFilePath);
+AssetBundleManifest manifest = assetBundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
+获取AssetBundle的依赖项的接口是什么？
+string[] dependencies = manifest.GetAllDependencies("assetBundle"); 
+卸载从 AssetBundle 加载的所有游戏对象（及其依赖项）的接口是什么？
+AssetBundle.Unload(true) 
+通常，使用AssetBundle.Unload(false)不会带来理想情况。大多数项目应该使用什么来防止在内存中复制对象？
+AssetBundle.Unload(true)
+大多数项目应该使用AssetBundle.Unload(true)并采用一种方法来确保对象不会重复。两种常用方法是什么？
+1，在应用程序生命周期中具有明确定义的卸载瞬态 AssetBundle 的时间点，例如在关卡之间或在加载屏幕期间。
+2，维护单个对象的引用计数，仅当未使用所有组成对象时才卸载 AssetBundle。这允许应用程序卸载和重新加载单个对象，而无需复制内存。
+参考文档：AssetBundle Manager的源码
+参考文档：Unity Asset Bundle Browser源码
+减小构建的文件大小的第一步是什么？
+确定哪些资源对最终大小的影响最大
+哪里可以查看包内各种资源大小？
+执行构建后，可在Editor日志中找到此信息。
+通常什么内容占用的空间最多？
+纹理、声音和动画
+Unity将导入的资源重新编码为其自己的内部格式，因此源资源类型的选择重要吗？
+不重要
+如果项目中有一个多层Photoshop纹理，在构建之前将其展平并压缩。将纹理导出为.png文件对构建有影响吗？
+没有
+Unity在构建期间会剥离大多数未使用的资源，可以通过从项目中手动删除资源来获得任何优化效果吗？
+不可以
+唯一不会删除的资源是什么？
+脚本和Resources文件夹中的资源
+纹理通常在构建中占据最多空间，第一个解决方案是什么？
+使用压缩的纹理格式
+如果这样做不足以减小文件大小，怎么办？
+尝试减小纹理图像的物理大小（以像素为单位）
+若要在不修改实际源内容的情况下执行此操作，怎么办？
+在Inspector窗口中减小 Max Size
+如何选择适合的Max Size?
+调整Max Size，直至该纹理在Scene视图中的外观开始变差。
+更改最大纹理大小只会影响纹理在游戏中的分辨率，不会影响什么？
+纹理资源
+默认情况下，Unity在导入时会压缩所有纹理。如何修改此项？
+Unity<Preferences设置Compress Assets on Import
+无论上述设置如何，所有纹理都会在什么时候进行压缩？
+构建中
+如何启用网格压缩？
+请选择网格，然后在Inspector窗口中将Mesh Compression设置为 Low、Medium 或 High。
+网格压缩只是生成较小的数据文件，在运行时不会减少使用的什么？
+内存
+什么操作会生成较小的数据文件，并会在运行时减少使用的内存；通常应始终启用该功能？
+减少动画关键帧
+默认情况下，Unity 在构建的播放器中仅包含哪些DLL？
+mscorlib.dll，Boo.Lang.dll，UnityScript.Lang.dll和UnityEngine.dll
+应避免依赖System.dll和 System.Xml.dll，默认情况下，Unity不会在构建的播放器中包含这些文件，什么情况会包含它们？
+使用了它们的类，则会包含它们。
+大多数通用容器都包含在 mscorlib 中，只有什么位于System.dll 中，所以如果可能，应避免使用它们？
+堆栈和极少内容
+Unity 对某些移动设备支持两个.NET API哪两个兼容性级别？
+.NET 2.0 和 .NET 2.0 的子集
+在哪里设置兼容性级别？
+Player Settings 
+参考文档：Json类JsonUtility的使用
+将该类标记为什么，这是使用JSON序列化程序所必需的？
+Serializable
+Json类支持哪些类型？
+MonoBehaviour子类、ScriptableObject子类或者带有[Serializable]属性的普通类/结构
+使用什么来获取StreamingAssets文件夹的位置？
+Application.streamingAssetsPath 
+在PC，IOS和Android可分别使用什么代码获取文件的位置？
+Application.dataPath + "/StreamingAssets";
+Application.dataPath + "/Raw";
+"jar:file://" + Application.dataPath + "!/assets/";
+什么是一个数据容器，可用于保存大量数据，而与类实例无关？
+ScriptableObject
+ScriptableObjects的主要用例之一是什么？
+通过避免复制值来减少Project的内存使用量
+ScriptableObject类可以另存为什么？
+项目中的资产
+使用编辑器时，可以在编辑时和运行时将数据保存到ScriptableObjects，因为ScriptableObjects使用Editor命名空间和Editor脚本。在已部署的内部版本中，可以使用ScriptableObjects保存数据吗？
+不能
+ScriptableObjects的主要作用是什么？
+1，在编辑器会话期间保存和存储数据 2，将数据另存为项目中的资产以在运行时使用
+编程：一个使用ScriptableObject的示例

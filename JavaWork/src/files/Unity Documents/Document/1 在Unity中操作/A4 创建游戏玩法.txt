@@ -1,0 +1,146 @@
+可以一次打开多个场景进行编辑吗？
+可以
+游戏对象本身无法执行任何操作，您需要向游戏对象添加什么，然后游戏对象才能成为角色、环境或特效？
+组件
+游戏对象始终附加一个什么组件（表示位置和方向），并且无法删除此组件？
+Transform
+添加组件的两种方法？
+Component>Physics>Rigidbody和点击对象的Inspector中的Add Component按钮
+组件有哪两种主要类型的属性？
+值和引用
+组件有哪些上下文菜单？
+Reset，Remove，Move Up/down和Copy/Paste
+变换组件的位置、旋转和缩放值是相对于变换组件的父项还是世界空间测量的？
+父项
+参考文档：Transform组件
+创建脚本并将脚本附加到游戏对象时，脚本也变成了什么？
+组件
+通过将游戏对象标记为非活动来暂时从场景中移除此对象。可以使用脚本的什么属性或者使用Inspector中的激活复选框来完成此操作？
+activeSelf 
+停用父对象时，会更改子对象上 activeSelf 属性的值吗？
+不会
+无法通过读取activeSelf属性来确定子对象当前是否在场景中处于活动状态，而应该使用什么属性？
+activeInHierarchy
+可分配给一个或多个游戏对象的参考词是什么？
+标签
+查找特定标签的对象的接口是什么？
+GameObject.FindWithTag()
+什么对象的信息通常可在Editor中预先计算，因为此类对象不会因对象位置的变化而无效？
+静态对象
+可以通过将多个静态对象组合成称为什么的单个大对象来优化渲染？
+批次
+游戏对象的Inspector在右上角有一个什么复选框和菜单，用于向Unity中的各种不同系统告知该对象不会移动？
+Static
+对于每个系统，可以单独将对象标记为静态，有什么好处？
+可以选择在不能带来优势时不计算对象的静态优化
+场景的高级光照
+光照贴图 (Lightmapping)
+基于特定摄像机位置的对象可见性进行渲染优化
+遮挡物和被遮挡物 (Occluder and Occludee)
+通过将多个对象组合成一个更大的对象来进行渲染优化
+批处理 (Batching)
+使角色能够在场景中协商障碍物的系统
+导航 (Navigation)
+导航系统在场景的不连续区域之间建立的连接
+网格外链接 (Off-mesh Links)
+捕捉周围各个方向的球形视图
+反射探针 (Reflection Probe)
+什么可以充当模板，在此模板的基础之上可以创建场景中的新对象实例？
+预制件
+创建预制件的方法有哪些？
+1，Asset>Create Prefab，然后将场景中的对象拖到出现的“空”预制件资源上。
+如何创建预制件的实例？
+将预制件资源从Project视图拖动到Scene视图
+Inspector中有三个按钮对于普通对象而言是没有的
+Select、Revert和Apply
+使用Apply按钮将实例中重写的值保存回原始预制件什么值将排除在外？
+修改的变换位置
+创建cube的代码是什么？
+GameObject.CreatePrimitive(PrimitiveType.Cube)
+实例化预制件的方法是什么？
+Instantiate
+保存场景Save Scene同时会执行什么，意味着所有内容都会保存？
+Save Project
+可以在哪里创建虚拟轴和按钮？
+Input Manager
+如何添加新的虚拟轴？
+Edit>Project Settings>Input
+参考文档：每个虚拟轴的设置选项的含义
+查询虚拟轴的脚本是什么？
+value = Input.GetAxis ("Horizontal");
+轴的值介于什么范围之间？
+ –1到1
+获取按键的状态的脚本是什么？
+value = Input.GetKey ("a");
+参考文档：Input类
+可通过访问什么属性数组来检索在最后一帧期间触摸屏幕的每根手指的状态？
+Input.touches
+移动设备上建议在早期开发期间使用什么，但要尽快使用触摸输入？
+鼠标模拟
+可通过访问什么属性来检索加速度计值？
+Input.acceleration 
+使用什么函数打开键盘？
+TouchScreenKeyboard.Open()
+非一致缩放的限制有哪些？
+1，某些组件不完全支持非一致缩放 2，当子对象具有非一致缩放的父项并且相对于该父项旋转时，子对象可能看起来是倾斜或“截断”的。3，出于性能原因，如果父项非一致缩放，子对象在旋转时不会自动更新其缩放比例。
+有哪三个因素会影响对象的缩放比例？
+1，网格在3D建模应用程序中的大小；2，对象的Import Settings中的Mesh Scale Factor设置；3，变换组件的Scale值。
+什么不受变换组件的缩放比例所影响？
+粒子系统
+什么组件将游戏对象的位置、旋转或缩放与另一个游戏对象关联？
+约束组件
+旋转受约束的游戏对象以朝向关联的游戏对象。
+Aim
+使受约束的游戏对象跟随关联的游戏对象移动和旋转。
+Parent
+像关联的游戏对象一样移动受约束的游戏对象。
+Position
+像关联的游戏对象一样旋转受约束的游戏对象。
+Rotation
+像关联的游戏对象一样缩放受约束的游戏对象。
+Scale
+使用约束组件中的什么列表可指定要关联到的游戏对象？
+Sources列表
+一个约束可以关联到多个源游戏对象，约束使用其源游戏对象的什么属性？
+平均位置、旋转或缩放
+按照源游戏对象在Sources列表中出现的顺序来对源游戏对象求值。该顺序对什么组件没有影响？
+Position Constraint和Scale Constraint 
+但是，顺序会对什么组件产生影响？
+Parent Constraint、Rotation Constraint和Aim Constraint 
+使用什么属性可以改变约束的影响。权重1会使约束更新游戏对象的速度与其源游戏对象的速度相同。权重为0会完全消除约束的影响。每个源游戏对象也有一个单独的权重。
+Weight
+在Constraint Settings中，使用什么属性可以指定当 Weight 为 0 或未选中 Freeze Axes 中相应属性时要使用的 X、Y 和 Z 值？
+At Rest
+使用Constraint Settings中的什么属性可以指定约束游戏对象时要使用的 X、Y 和 Z 值？
+Offset 
+使用什么属性设置可以切换约束可以实际修改的轴？
+Freeze Axes
+有两个方面使用约束？
+激活和锁定
+通过什么可以对受约束的游戏对象的位置、旋转或缩放进行求值？
+Activate
+要手动编辑游戏对象的位置、旋转或缩放，怎么办？
+解锁约束
+保存相对于源游戏对象的当前偏移量，然后激活并锁定受约束的游戏对象的按钮是什么？
+Activate
+参考文档：
+目标约束 (Aim Constraints)
+父约束 (Parent Constraints)
+位置约束 (Position Constraints)
+旋转约束 (Rotation Constraints)
+缩放约束 (Scale Constraints)
+3D应用程序中的旋转通常以哪两种方式表示？
+四元数和欧拉角
+欧拉角的优缺点是什么？
+优点：可读，进行超过180度的旋转；缺点：受到万向锁(Gimbal Lock)的影响，当依次施加三个旋转时，第一个或第二个旋转可能导致第三个轴的方向与先前两个轴之一相同。这意味着已失去“自由度”，因为不能围绕唯一轴应用第三个旋转值。
+四元数的优缺点是什么？
+优点：不受万向锁的影响；缺点：单个四元数不能表示任何方向超过 180 度的旋转，四元数的数字表示在直观上难以理解
+创建四元数的类Quaternion的方法有哪些？
+Quaternion.LookRotation，Quaternion.AngleAxis，Quaternion.FromToRotation
+操作四元数的类Quaternion的方法有哪些？
+Quaternion.Slerp，Quaternion.Inverse，Quaternion.RotateTowards，Transform.Rotate 和 Transform.RotateAround
+参考文档：Quaternion类
+如果要加载新场景，请在脚本中使用什么脚本？
+SceneManager.LoadScene
+只有什么对象才能投射和接受阴影？
+不透明

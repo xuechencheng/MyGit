@@ -1,0 +1,74 @@
+1,Optimizing scripts in Unity games
+
+An example of this is calculating a square root. This calculation takes a CPU more time to execute than, for example, multiplying two numbers. 
+Move code out of loops when possible
+Consider whether code must run every frame
+Only run code when things change
+Use caching
+Use the right data structure
+Minimize the impact of garbage collection
+Use object pooling
+Avoiding expensive calls to the Unity API
+SendMessage() and BroadcastMessage() 
+Find()
+Transform	
+Setting the position or rotation of a transform causes an internal OnTransformChanged event to propagate to all of that transform's children. This means that it's relatively expensive to set a transform's position and rotation values, especially in transforms that have many children.
+If our code makes frequent use of Transform.position and we can use Transform.localPosition in its place, this will result in fewer CPU instructions and may ultimately benefit performance. 
+Update()
+empty Update() calls can be particularly wasteful. 
+Vector2 and Vector3
+ float calculations instead of Vector2 and Vector3
+If our game makes extensive and very frequent use of magnitude or Distance, it may be possible for us to avoid the relatively expensive square root calculation by using Vector2.sqrMagnitude and Vector3.sqrMagnitude instead. 
+Camera.main
+Running code only when it needs to run
+
+2.Optimizing garbage collection in Unity games
+Unity has access to two pools of memory: the stack and the heap (also known as the managed heap. The stack is used for short term storage of small pieces of data, and the heap is used for longer term storage and larger pieces of data.
+A heap allocation is much more complex than a stack allocation. This is because the heap can be used to store both long term and short term data, and data of many different types and sizes. Allocations and deallocations don’t always happen in a predictable order and may require very different sized blocks of memory.
+Three things can cause the garbage collector to run:
+The garbage collector runs whenever a heap allocation is requested that cannot be fulfilled using free memory from the heap.
+The garbage collector runs automatically from time to time (although the frequency varies by platform).
+The garbage collector can be forced to run manually.
+In Unity, value-typed local variables are allocated on the stack and everything else is allocated on the heap. 
+GC alloc. This column shows heap allocations that are being made in that frame. 
+We can reduce the time that the garbage collector takes to run.
+We can reduce the frequency with which the garbage collector runs.
+We can deliberately trigger the garbage collector so that it runs at times that are not performance-critical, for example during a loading screen.
+Reducing the amount of garbage created
+Caching
+Don’t allocate in functions that are called frequently
+Clearing collections
+Creating new collections causes allocations on the heap. If we find that we’re creating new collections more than once in our code, we should cache the reference to the collection and use Clear() to empty its contents instead of calling new repeatedly.
+Object pooling
+Common causes of unnecessary heap allocations
+Strings
+We should remove calls to Debug.Log() as soon as they are no longer needed for debugging purposes. Calls to Debug.Log() still execute in all builds of our game, even if they do not output to anything.
+Unity function calls
+It’s important to be aware that whenever we call code that we didn’t write ourselves, whether that’s in Unity itself or in a plugin, we could be generating garbage.
+Every time we access a Unity function that returns an array, a new array is created and passed to us as the return value. This behaviour isn’t always obvious or expected, for example, Mesh.normals
+If we use GameObject.CompareTag(), this function no longer generates any garbage:
+ Input.GetTouch() and Input.touchCount in place of Input.touches, or Physics.SphereCastNonAlloc() in place of Physics.SphereCastAll().
+Boxing
+Boxing usually occurs when we pass value-typed variables, such as ints or floats, to a function with object parameters such as Object.Equals().
+Coroutines
+Calling StartCoroutine() creates a small amount of garbage, because of the classes that Unity must create instances of to manage the coroutine. 
+使用yield return null;代替yield return 0;
+WaitForSeconds delay = new WaitForSeconds(1f);
+while (!isComplete)
+{
+    yield return delay;
+}
+代替
+while (!isComplete)
+{
+    yield return new WaitForSeconds(1f);
+}
+foreach loops
+In versions of Unity prior to 5.5, a foreach loop iterating over anything other than an array generates garbage each time the loop terminates. This is due to boxing that happens behind the scenes. 
+Function references
+References to functions, whether they refer to anonymous methods or named methods, are reference-typed variables in Unity. They will cause heap allocations. 
+LINQ and Regular Expressions
+Both LINQ and Regular Expressions generate garbage due to boxing that occurs behind the scenes. 
+Structuring our code to minimize the impact of garbage collection
+Manually forcing garbage collection
+System.GC.Collect();

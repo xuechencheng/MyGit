@@ -1,0 +1,34 @@
+参考文档：Model标签页
+Rig标签页中，对于人形 (Humanoid) 角色，进行什么设置？
+分配或创建 Avatar。
+对于非人形角色，进行什么设置？
+在骨架中确定根骨骼
+参考文档：Rig标签页
+	参考文档：Avatar Mapping 选项卡
+	参考文档：Avatar Muscle & Settings 选项卡
+	参考文档：Avatar Mask 窗口
+	参考文档：Human Template 窗口
+参考文档：Animation 选项卡
+要使用动画文件中的原始欧拉曲线值，请取消选中 Animation 选项卡中的什么选项？
+Resample Curves
+Unity按什么顺序应用Transform Inspector中出现的欧拉角？
+Z、X、Y
+如果一条曲线的名称与Animator Controller中的某个参数同名，则该参数的值将取自哪里？
+这条曲线在时间轴中每个点的值
+通过什么功能可以丢弃剪辑中的一些动画数据，从而让剪辑仅动画化对象或角色的某些部分而不是整体？
+遮罩功能
+在某些情况下，导入遮罩可能对您不适用。在这种情况下，可以怎么办？
+在Animator Controller的层设置在运行时应用遮罩。
+借助动画导入设置中的什么字段，可以使用层级弹出菜单来选择位于导入动画层级视图中的任何节点(Transform)并将其用作根运动源？
+Motion
+Unity 支持从哪两种不同类型的文件导入网格和动画？
+1，导出的 3D 文件格式，如 .fbx 或 .obj。2，专有的3D或DCC（数字内容创作）应用程序文件，例如来自3D Studio Max或 Blender的.max和.blend文件格式。
+Unity 可以从哪些3D建模软件导入专有文件？
+3D Studio Max，Maya，Blender，Cinema4D，Modo，LightWave，Cheetah3D
+Unity在导入过程中将专有文件转换为.fbx文件。但是，建议导出什么格式，而不是直接保存为工程应用中的默认格式？
+FBX
+除非在计算机上安装了什么，否则保存为.ma、.mb、.max、.c4d 或 .blend 文件的资源将无法导入？
+相应的3D建模软件
+通过哪三个步骤从头开始准备自建角色？
+建模、骨架绑定和蒙皮
+

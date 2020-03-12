@@ -1,0 +1,19 @@
+Tree Editor（树编辑器）
+
+构建第一棵树
+如何创建新的树(Tree)资源？
+GameObject > 3D Object > Tree
+Branch Group节点，我们将其称为什么？
+树干
+如何添加树枝？
+单击Add Branch Group按钮
+如何给树枝添加树叶？
+单击Add Leaf Group按钮
+为了使树看起来更逼真，我们需要为树枝和树叶添加什么？
+材质
+树枝和树叶添加的材质是什么类型？
+Nature > Tree Creator Bark
+
+树基础知识
+选中给定图标后，更改什么值将更改该层级的树枝数？
+Frequency

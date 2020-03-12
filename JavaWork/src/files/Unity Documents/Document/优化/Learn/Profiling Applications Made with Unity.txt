@@ -1,0 +1,15 @@
+Since Unity 2017.3, Deep Profile mode works not only in the Editor but also on Android and Desktop using the Mono scripting backend.
+Since Unity 2019.3, Allocation Call Stacks reporting is available for all Players and Deep Profiling support can be enabled at build time for all Platforms, including IL2CPP 
+To enable Deep Profile mode on Android, use the adb command line argument. For example:
+~$ adb shell am start -n com.company.game/com.unity3d.player.UnityPlayerActivity -e 'unity' '-deepprofiling'
+Profiling memory in the Editor is useful for understanding the general trends behind memory behavior, but not for comparing actual values on a specific target device.
+For more detailed rendering statistics, open the rendering tab of the Profiler.
+
+Android Profiling Tools
+Systrace
+Snapdragon Profiler
+Simpleperf
+Android Studio
+
+
+Intel Tools

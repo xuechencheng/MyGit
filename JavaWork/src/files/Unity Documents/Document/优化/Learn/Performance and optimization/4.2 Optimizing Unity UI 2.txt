@@ -1,0 +1,4 @@
+Scroll Views
+There are two basic approaches to populating a scroll view:
+	Fill it with all of the elements necessary to represent all of the scroll view’s content
+	Pool the elements, repositioning them as needed to represent visible content.

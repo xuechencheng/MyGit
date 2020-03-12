@@ -1,0 +1,12 @@
+Installing the Memory Profiler
+Package Manager > Advanced > Show Preview Packages
+
+Finding a Memory Leak
+To find a memory leak:
+1. Launch the player, set it as your Memory Profiler target, and take a snapshot of an empty Scene.
+2. Load the Scene you wish to test. Play through some of the Scene to load the necessary assets.
+3. Unload the Scene by either calling Resources.UnloadUnusedAssets() or by loading/creating an empty Scene twice.
+4. Take another snapshot, and exit Play Mode.
+5. In the Workbench, load the first screenshot, then the second, and click Diff. Unity will calculate the difference between the two screenshots. This could take a few seconds,depending on the size of the snapshot.
+6. In the Table view, click the header for the Diff column and select Group.
+7. Entries will be grouped: same in both snapshots, deleted from the first snapshot, and new.New entries are potential memory leaks.

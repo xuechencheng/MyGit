@@ -1,0 +1,68 @@
+泛型有哪两种形式？
+泛型类型和泛型方法
+有哪4种泛型类型约束？
+1，引用类型约束 2，值类型约束 3，构造函数类型约束 4，转换类型约束
+引用类型约束的声明是什么样的？
+struct RefSample<T> where T : class
+值类型约束的声明是什么样的？
+class ValSample<T> where T : struct
+构造函数类型约束表示为什么？必须是所有类型参数的最后一个约束，它检查类型实参是否有一个可用于创建类型实例的无参构造函数。
+T : new()
+转换类型约束
+class Sample<T,U> where T : U
+每一个值类型都有一个无参构造函数吗？
+是的
+组合约束
+class Sample<T> where T : class, IDisposable, new()
+class Sample<T,U> where T : class, IDisposable, new() where U : struct, T
+编译器允许省略T，MakeList<string>("Line 1", "Line 2");等价于什么？
+MakeList("Line 1", "Line 2")
+推断类型只能用于什么，不能用于泛型类？
+泛型方法
+T类型的默认初始值是什么？
+default(T)
+Sample<int>和Sample<string>的静态字段集是什么关系？
+互相独立
+ArrayList和List<byte>处理byte时，装箱情况？
+前者装箱 后者不装箱
+typeof可以通过两种方式作用于泛型类型
+1，获取泛型类型定义 2，获取特定的已构造类型
+获取MyClass<T1,T2,T3,T4>
+typeof(MyClass<,,,>)
+作用于已构造的类型，获取它的泛型类型定义的函数是什么？
+GetGenericTypeDefinition
+作用于泛型类型定义，返回一个已构造类型
+MakeGenericType
+和普通类型一样，任何特定的类型多几个Type对象？
+一个
+List<int>和List<string>调用GetGenericTypeDefinition，返回结果一样吗？
+一样
+哪两个方法提供了typeof的一个动态等价物？
+Type.GetType(string)和Assembly.GetType(string)
+用反射调用泛型方法
+public static void PrintTypeParameter<T>()
+Type type = typeof(Snippet);
+MethodInfo definition = type.GetMethod("PrintTypeParameter");
+MethodInfo constructed = definition.MakeGenericMethod(typeof(string));
+constructed.Invoke(null,null);
+可以将List<string>转换成List<object>吗？
+不能
+引用类型的数组可以被视为它的基类型的数组吗？
+可以
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

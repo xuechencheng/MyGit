@@ -1,0 +1,51 @@
+内存中用什么来表示null？
+全零
+C#1如何表示空值？
+1，魔值 2，引用类型包装 3，额外的布尔标志
+牺牲一个值表示空值，比如DataTime.MinValue，这个值称为什么？
+魔值
+额外的布尔标志的思路是什么？
+使用一个普通的类型的值，同时用另一个值来表示值是真正存在
+Nullable<T>其中T只能表示什么？
+值类型
+Nullable<T>最重要的部分就是它的什么属性？
+HasValue和Value
+null,0和5的HasValue和Value分别是什么？
+false 0,true 0和true 5
+将T类型转换成Nullable<T>的实例的过程盒称为什么？
+包装和拆包
+包装等于5的值
+Nullable<int> x = 5;	x = new Nullable<int>(5);
+构造没有值的实例
+x = new Nullable<int>();
+Nullable<T>是一个结构，是引用类型还是值类型？
+值类型
+拆箱空引用时，如果拆箱成普通类型会怎么样？
+抛出NullReferenceException
+对Nullable<T>进行装箱和拆箱
+Nullable<int> nullable = 5
+装箱	object boxed = nullable
+拆箱	int normal = (int)boxed 或 nullable = (Nullable<int>)boxed
+byte?等价于什么？
+Nullable<byte>
+?的用法
+int? nullable = 5 等价于 Nullable<int> x = 5;
+nullable = (int?)boxed 等价于 nullable = (Nullable<int>)boxed
+C#编译器允许使用什么在比较和赋值时表示一个可空类型的空值
+null
+假如一个非可空的值类型支持一个操作符或者一种转换，而且那个操作符或者转换只涉及其他非可空的值类型时，那么可空的值类型也支持同样的操作符或转换，并且通常是将非可空的值类型转换成为它们的可空等价物。
+意味着int?会隐式的转换为long?
+bool?可能表示哪些值？
+true false null
+在C#2之前，as操作符只能用于引用类型。而在C#2中，它也可以用于什么类型？
+可空类型
+上述理论的应用
+object o; int? nullable = o as int?;
+空合并操作符的表示方法
+??
+first ?? second的求值步骤
+1，对first进行求值；2，如果结果非空，则该结果就是整个表达式结果；3，否则求second的值，其结果作为整个表达式结果
+DetaTime lastAlive = (death == null ? DataTime.Now : death.Value)用??改写
+DetaTime lastAlive = death ?? DataTime.Now;
+first??second??third运算顺序
+first??(second??third)

@@ -1,0 +1,30 @@
+1，光与影
+灯光的三种类型：实时光，混合光和烘焙光
+阴影：
+实时光的阴影：在Shadow Distance内，实时阴影；超出Shadow Distance没有阴影
+混合光的阴影：
+Shadowmask和Distance Shadowmask的区别
+Shadowmask：投射阴影的静态游戏对象总是使用烘焙阴影
+Distance Shadowmask：Unity 使用在阴影距离 (Shadow Distance)内使用实时阴影，而在超出此距离后使用烘焙阴影
+
+2，实时光照和预计算光照以及两种探针
+光照探针和反射探针
+
+3，渲染路径与性能
+前向渲染路径：
+	Not Important的光源始终为每顶点或 SH 光源
+	最亮的方向光始终为每像素光源
+	Important的光源始终为每像素光源
+	如果上述情况导致光源数少于当前的Pixel Light Count质量设置，则按照亮度降低的顺序，更多光源采用每像素渲染方式
+
+界面和组件
+界面：	
+	Lighting Settings
+	Light Explorer
+组件：
+	Light
+	Light Probe Group
+	Light Probe Proxy Volume
+	Reflection Probe
+
+

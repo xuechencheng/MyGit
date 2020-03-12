@@ -1,0 +1,50 @@
+可以将委托类型看做定义了一个方法的接口，将委托的实例看做那个接口的什么？
+一个对象
+为了让委托做某事，必须满足哪4个条件？
+1，声明委托类型；2，让一个方法包含了要执行的代码；3，创建一个委托实例；4，调用委托实例
+声明一个委托类型的代码
+delegate void StringProcessor(string input);
+创建StringProcessor实例的方法
+StringProcessor proc1,proc2
+proc1 = new StringProcessor(StaticMethods.PrintString);
+InstanceMethods instance = new InstanceMethods();
+proc2 = new StringProcessor(instance.PrintString);
+委托实例本身不能被回收，委托实例会阻止它的目标被作为垃圾回收，造成什么？
+内存泄漏
+调用委托的方法
+proc1("Hello")或proc1.Invoke("World")
+委托实例实际上有一个操作列表与之关联，称为委托实例的什么？
+调用列表
+System.Delegate类型的什么方法负责将两个委托实例的调用连接起来
+Combine
+什么方法负责从一个委托实例中删除另一个实例的调用列表
+Remove
+很少对Delegate.Combine显示调用，一般用什么操作符？
++和+=
+如果委托的签名具有一个非void的返回类型，则Invoke的返回值是什么？
+最后一个操作的返回值
+如果调用列表中的任何操作抛出一个异常，会发生什么？
+阻止执行后续的操作
+结构struct和枚举是值类型还是引用类型？
+值类型
+局部变量的值总是存储在哪里？
+栈中
+应用类型实例类型变量和静态变量存储在哪里？
+堆中
+根据值类型创建一个对象，然后使用对这个新对象的一个引用，称为什么？
+装箱
+为什么要留意装箱和拆箱？
+可能降低性能
+C#2创建匿名委托
+EventHandler handler = delegate(object sender, EventArgs e){
+	Console.WriteLine("");
+}
+C#3使用Lambda表达式改进匿名方法
+Func<int,int,string> func = (x,y) => (x*y).ToString();
+创建匿名对象
+var jon = new { Name = "Jon", Age = 21};
+C#中动态类型的使用（慎用）
+dynamic o = "Hello";
+o = new string[]{"hi","there"};
+声明int为null
+int? x = null;

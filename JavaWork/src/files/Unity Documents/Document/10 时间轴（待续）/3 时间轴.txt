@@ -1,0 +1,19 @@
+时间轴和 Inspector 窗口
+
+设置时间轴属性
+参考文档：时间轴资源
+
+设置轨道属性
+参考文档：动画轨道(Animation Track)Inspector窗口
+参考文档：激活轨道(Activation Track)Inspector窗口
+
+设置剪辑属性
+参考文档：激活剪辑属性
+参考文档：动画剪辑公共属性
+参考文档：动画剪辑可播放资源属性
+参考文档：音频剪辑属性
+
+Playable Director 组件
+参考文档：Playable Director 组件
+
+时间轴术语表（待续）

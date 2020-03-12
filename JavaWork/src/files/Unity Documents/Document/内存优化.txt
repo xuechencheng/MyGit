@@ -1,0 +1,38 @@
+Unity监测不到的内存：
+用户分配的native内存：1，C++编写的native内存；2，lua内存
+
+Native内存
+Scene
+Audio
+--DSP buffer
+--Force to mono
+--Format 
+--Compression Format
+Code Size
+--模版泛型
+AssetBundle
+--TypeTree
+--Lz4(推荐，大30%，快10倍以上)
+--Lzma（弃用）
+--Size&count（1m到2m，或者适当加大）
+Resources文件夹(不要用)
+Texture
+--upload buffer（填满多大发送给GPU，Unity中设置）
+--r/w
+--Mip Maps(UI的关掉)
+Mesh
+--r/w
+--compression
+
+托管内存
+VM内存池
+
+GC机制考量
+--回收能力
+--暂停时长
+--碎片化
+--额外消耗
+--可扩展性
+--可移植性
+
+单例要慎用

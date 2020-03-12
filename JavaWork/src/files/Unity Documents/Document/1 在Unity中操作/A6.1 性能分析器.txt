@@ -1,0 +1,46 @@
+性能分析器概述
+
+Profiler 窗口
+使用什么按钮可以将记录的帧写入文件？
+Save
+相应地，什么按钮读取先前保存的数据？
+Load
+打开什么后，将分析所有的脚本代码，也就是说会记录所有函数调用？
+Deep Profile
+手动分析脚本代码块的开销比使用深度性能分析要小。使用什么脚本函数可启用和禁用关于代码段的性能分析？
+Profiler.BeginSample 和 Profiler.EndSample
+以固定帧率运行或与垂直空白空间同步运行时，Unity 会记录“Wait For Target FPS”中的等待时间。默认情况下，性能分析器中不会显示此时间量。要查看用于等待的时间，可切换什么？这也可用于衡量丢帧之前的余量时间。
+View SyncTime
+为了能够连接到 Unity 播放器，必须将 Unity 播放器作为什么启动？
+Development build
+实例：使用IOS和Android设备进行调试
+
+CPU 使用率性能分析器
+在层级时间数据中，什么列表示在特定函数中所用的时间量，不包括调用子函数所用的时间？
+Self
+什么列显示当前帧中已分配并稍后由垃圾回收器收集的内存量？
+GC Alloc
+参考文档：各种高级Physics Profiler标记的含义
+CPU性能分析器能够检测并警告一些常见的性能问题。查看CPU Usage时，这些问题会显示在下方面板的什么列中？
+Warning
+
+渲染性能分析器
+
+内存性能分析器
+Memory Profiler 中提供了哪两种模式来检查应用程序的内存使用情况？
+Simple和Detailed
+在Simple模式下
+Unity：本机 Unity 代码中的分配所跟踪的内存量
+Mono：托管代码使用的总堆大小和已用堆大小。此内存量是垃圾收集量
+GfxDriver：驱动程序对纹理、渲染目标、着色器和网格数据使用的估计内存量。
+FMOD：音频驱动程序的估计内存使用量
+Profiler：用于性能分析器数据的内存
+Object Count 是创建的对象总数。如果此数字随着时间的推移而上升，表明游戏创建了一些永不销毁的对象。
+在Detailed模式下
+此视图将显示各个资源和游戏对象的内存使用情况。此外还显示游戏对象位于内存中的原因。常见原因包括：
+Assets：从用户或本机代码引用的资源
+Built-in Resources：Unity Editor 资源或 Unity 默认资源
+Not Saved：标记为 DontSave 的游戏对象
+Scene Memory：游戏对象和附加的组件
+Other：未在上述类别中标记的游戏对象
+

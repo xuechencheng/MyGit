@@ -1,0 +1,30 @@
+1，UnityShader的结构
+Shader “ShaderName”｛
+	Properties｛
+	
+	｝
+	SubShader｛
+		[Tags]
+		[RenderSetup]
+		Pass{
+			[name]
+			[Tags]
+			[RenderSetup]
+			//Other Code
+		}
+	｝
+	SubShader｛
+	
+	}
+	Fallback ""
+	
+｝
+2，Properties语义块支持的属性类型
+Int	Float	Range	Color	Vector	2D Cube	3D
+3，常见的渲染状态设置选项
+Cull	ZTest	ZWrite	 Blend
+4，SubShader的标签类型
+Queue	RenderType	DisableBatching	ForceNoShadowCasting	IgnoreProjector	CanUseSpriteAtlas	PreviewType
+5，Pass的标签类型
+LightMode	RequireOptions
+

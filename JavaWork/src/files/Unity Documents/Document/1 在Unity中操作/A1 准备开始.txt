@@ -1,0 +1,16 @@
+安装Unity Editor有哪三种方法？
+1，Unity Hub 2，使用下载助手安装Editor 3，Unity下载助手离线部署
+一个独立应用程序，可简化查找、下载和管理 Unity 项目和安装内容的方式。还可以手动将已安装在计算机上的 Editor 版本添加到其中。
+Unity Hub
+Unity项目可以随时在2D和3D模式之间切换吗？
+可以
+根据2D和3D分类，项目有哪些类型？
+1，全3D 2，正交3D 3，全2D 4，包含3D图形的2D游戏玩法 5，带有透视摄像机的2D游戏玩法和图形 6，其他风格
+基于项目的共同最佳实践而提供预选的设置是什么？这些设置针对所有项目进行了优化。
+项目模板
+Unity提供的模板类型有哪些？
+2D,3D,3D With Extras,High Definition RP和Lightweight SRP
+通过哪两种方式创建新项目？
+Unity Hub和Unity Launcher
+Unity界面主要分成哪五个部分？
+Project 窗口，Scene 视图，Hierarchy 窗口，Inspector 窗口和工具栏

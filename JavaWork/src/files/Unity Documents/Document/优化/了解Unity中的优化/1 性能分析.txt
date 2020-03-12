@@ -1,0 +1,59 @@
+参考文档：Profiler
+但是，最佳数据通常来自特定于平台的工具。这些工具包括：针对iOS平台的什么？
+Instruments和XCode Frame Debugger
+针对Android平台的是什么？
+Snapdragon Profiler
+这些工具通常在能使用什么生成C++版项目的平台上利用率最高？
+IL2CPP
+Instruments跟踪的在iOS设备上运行的示例项目，什么方法执行大量内部工作，例如设置图形设备和初始化Unity的大量内部系统？
+UnityInitApplicationGraphics 
+每个什么文件夹中的每个资源文件都作为资源系统的数据？因此，初始化资源系统所需的时间与该文件夹中的文件数量呈线性关系。
+Resources
+什么方法包含加载并初始化项目的第一个场景的方法？
+UnityLoadApplication
+它包括反序列化并实例化显示第一个场景所需的所有数据，例如编译着色器、上传纹理和实例化游戏对象。此外，第一个场景中的所有MonoBehaviour都在此时执行什么方法回调？
+Awake
+对于在初始化之后的性能分析跟踪而言，最需要关注的是什么方法？这是 Unity 的主循环，该循环中的代码每帧运行一次。
+PlayerLoop
+什么是运行 Unity 渲染系统的方法。此方法进行的操作包括剔除对象、计算动态批次以及向 GPU 提交绘图指令。任何图像效果或基于渲染的脚本回调（例如 OnWillRenderObject）也在此时运行。通常情况下，当项目进行交互时，此方法应该对 CPU 时间的消耗最大。
+PlayerRender
+BaseBehaviourManager调用三个模板化版本的什么方法？这些调用的某些回调存在于当前场景中激活的游戏对象的 MonoBehaviour 中。
+CommonUpdate
+CommonUpdate<UpdateManager>调用什么回调？
+Update
+CommonUpdate<LateUpdateManager> 调用什么回调？
+LateUpdate
+CommonUpdate<FixedUpdateManager> 调用什么？（如果物理系统已勾选）
+FixedUpdate
+通常情况下，什么是最值得关注和检查的方法族，因为它是 Unity 项目中运行的大多数脚本代码的入口点。
+BaseBehaviourManager::CommonUpdate<UpdateManager>
+如果项目使用Unity UI，什么将调用几个不同的回调？包括 Unity UI 的批量计算和布局更新；这两种操作是它出现在性能分析器中的最常见原因。
+UI::CanvasManager
+什么方法运行协程？
+DelayedCallManager::Update
+什么运行PhysX 物理系统？这主要涉及运行 PhysX 的内部代码，并受当前场景中物理对象（例如刚体和碰撞体）数量的影响。但是，基于物理系统的回调也会出现在此处，例如 OnTriggerStay 和 OnCollisionStay。
+PhysicsManager::FixedUpdate
+在使用 IL2CPP 进行跨平台编译调用脚本时，应查找包含什么对象的跟踪行？它是将 Unity 的内部原生代码转换到脚本运行时以便执行脚本代码的命令
+ScriptingInvocation
+CPU 跟踪记录中也可以识别出资源加载记录。标识资源加载的主要方法是什么？
+SerializedFile::ReadObject。
+此方法将二进制数据流（从文件）通过运行名为什么的方法连接到Unity的序列化系统中？可以在所有资源类型（例如纹理、MonoBehaviour 和粒子系统）上找到该方法
+Transfer
+在大多数情况下，只有在通过SceneManager、Resources或AssetBundle API来请求同步的资源加载时，才能在主线程上找到什么方法？
+SerializedFile::ReadObject
+这种性能不稳问题的最常见的修正方式是什么？
+将资源加载异步进行（将资源消耗严重的 ReadObject 调用移到工作线程），或预加载某些大型资源
+使用Instruments进行性能分析主要包括哪些方面？
+解析启动跟踪，解析运行时跟踪，解析脚本方法，资源加载
+
+
+
+
+
+
+
+
+
+
+
+

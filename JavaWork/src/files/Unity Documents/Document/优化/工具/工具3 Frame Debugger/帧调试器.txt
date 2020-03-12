@@ -1,0 +1,40 @@
+主列表以层级视图形式显示什么（以及其他事件，例如帧缓冲区清除）的序列？
+绘制调用
+如果在选定的绘制调用中，RenderTexture发生渲染，那么该RenderTexture的内容将显示在什么视图中？
+Game视图中
+要远程使用帧调试器，播放器必须支持什么？（例如，WebGL，iOS不支持这种渲染方式，因此无法运行帧调试器），大多数 Unity 平台都支持多线程渲染，其次在构建时必须选中“Development Build”。
+多线程渲染
+信息面板的顶部是一个工具栏，可让您为 Game 视图的当前状态隔离红色、绿色、蓝色和 Alpha 通道。同样，您可以使用这些通道按钮右侧的 Levels 滑动条，根据亮度级别来隔离视图区域。这些功能仅在渲染到什么时才会启用？
+RenderTexture
+什么时候时，您可以在 Game 视图中选择显示哪个渲染目标？
+一次渲染到多个渲染目标
+此外还可构建独立平台播放器并通过以下任何方式使其运行：
+Visual Studio 图形调试器
+Intel GPA
+RenderDoc
+NVIDIA NSight
+AMD GPU PerfStudio
+Xcode GPU Frame Capture
+GPU Driver Instruments
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

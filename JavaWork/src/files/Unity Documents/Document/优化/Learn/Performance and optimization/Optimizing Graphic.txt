@@ -1,0 +1,69 @@
+If our game is CPU bound
+Sending commands to the GPU
+	Reducing the number of objects to be rendered will likely reduce both batches and SetPass calls.
+	Reducing the number of times each object must be rendered will usually reduce the number of SetPass calls.
+	Combining the data from objects that must be rendered into fewer batches will reduce the number of batches.
+Reducing the number of objects being rendered
+	Simply reducing the number of visible objects in our scene can be an effective solution. 
+	We can reduce our camera’s draw distance using the camera’s Far Clip Plane property. 
+	We can use our camera’s Layer Cull Distances property to provide custom culling distances for objects that are on separate layers. 
+	We can use a technique called occlusion culling to disable the rendering of objects that are hidden by other objects. In addition to using Unity’s occlusion culling, we can also implement our own form of occlusion culling by manually deactivating objects that we know cannot be seen by the player. 
+Reducing the number of times each object must be rendered
+	（渲染路径的研究）
+	实时光的优化
+	Baking
+	Shadow的优化
+	Reflection probes的优化
+Combining objects into fewer batches
+	Static batching 
+	Dynamic batching
+	Batching Unity’s UI elements
+	GPU instancing 
+	Texture atlasing
+	Manually combine meshes
+	We must be very careful when accessing Renderer.material in scripts. This duplicates the material and returns a reference to the new copy. Doing so will break batching if the renderer was part of a batch because the renderer no longer has a reference to the same instance of the material. If we wish to access a batched object’s material in a script, we should use Renderer.sharedMaterial.
+SkinnedMeshRenderers优化
+
+If our game is GPU bound
+Fill rate
+It’s simple to check if fill rate is causing our game to be GPU bound:
+	Profile the game and note the GPU time.
+	Decrease the display resolution in Player Settings.
+	Profile the game again. If performance has improved, it is likely that fill rate is the problem.
+If fill rate is the cause of our problem, there are a few approaches that may help us to fix the problem.
+	Complex fragment shaders are a very common cause of fill rate problems.	
+	If our game is using built-in shaders, the mobile shaders that ship with Unity are highly optimized; we should experiment with using them and see if this improves performance without affecting the look of our game. 
+	If objects in our game use Unity’s Standard Shader, it is important to understand that Unity compiles this shader based on the current material settings. 
+	If our project uses bespoke shaders, we should aim to optimize them as much as possible. （Shader优化链接）
+	Overdraw is the term for when the same pixel is drawn multiple times. The most common culprits for excessive overdraw are transparent materials, unoptimized particles and overlapping UI elements, so we should experiment with optimizing or reducing these. This article on the Unity Learn site focuses primarily on Unity UI, but also contains good general guidance on overdraw.（透明物体）
+	The use of image effects can greatly contribute to fill rate issues, especially if we are using more than one image effect.
+
+Memory bandwidth
+Memory bandwidth refers to the rate at which the GPU can read from and write to its dedicated memory. If our game is limited by memory bandwidth, this usually means that we are using textures that are too large for the GPU to handle quickly.
+To check if memory bandwidth is a problem, we can do the following:
+	Profile the game and note the GPU time.
+	Reduce the Texture Quality for the current platform and quality target in Quality Settings.
+	Profile the game again and note the GPU time. If performance has improved, it is likely that memory bandwidth is the problem.
+If memory bandwidth is our problem, there are a few ways in which we can optimize our textures.
+	Texture compression is a technique that can greatly reduce the size of textures both on disk and in memory. 
+	Mipmaps are lower resolution versions of textures that Unity can use on distant objects. 
+
+Vertex processing
+The cost of vertex processing is impacted by two things: the number of vertices that must be rendered, and the number of operations that must be performed on each vertex.
+There are a few approaches we could consider to help us reduce the number of vertices or the number of operations that we are performing on each vertex.
+	Firstly, we should aim to reduce any unnecessary mesh complexity. The simplest way to reduce the cost of vertex processing is to create meshes with a lower vertex count in our 3D art program.
+	We can experiment with a technique called normal mapping.
+	If a mesh in our game does not make use of normal mapping, we can often disable the use of vertex tangents for that mesh in the mesh’s import settings. This reduces the amount of data that is sent to the GPU for each vertex.
+	Level of detail, also known as LOD, is an optimisation technique where meshes that are far from the camera are reduced in complexity.
+	Reducing the complexity of our vertex shaders may help.
+	If our game uses built-in shaders, we should aim to use the simplest and most optimized shaders possible for the visual effect we want. As an example, the mobile shaders that ship with Unity are highly optimized; we should experiment with using them and see if this improves performance without affecting the look of our game.
+	If our project uses bespoke shaders, we should aim to optimize them as much as possible. Optimizing shaders is a complex subject, but this page of the Unity Manual and the Shader optimization section of this page of the Unity Manual contain useful starting points for optimizing our shader code.
+	
+	
+	
+	
+	
+	
+	
+	
+	

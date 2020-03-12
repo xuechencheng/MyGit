@@ -1,0 +1,69 @@
+编程：用代码构建游戏
+在Windows上，在命令提示符下输入什么命令来启动 Unity？
+C:\Program Files\Unity\Editor\Unity.exe
+在Windows上的命令提示符下输入什么命令以静默方式启动Unity？
+"C:\Program Files\Unity\Editor\Unity.exe" -quit -batchmode -serial SB-XXXX-XXXX-XXXX-XXXX-XXXX -username "JoeBloggs@example.com" -password "MyPassw0rd"
+在 Windows 上的命令提示符下输入什么命令来退回许可证？
+"C:\Program Files\Unity\Editor\Unity.exe" -quit -batchmode -returnlicense
+参考文档：各种命令行处理Unity事件的参数
+以下命令以批处理模式执行 Unity，执行 MyEditorScript.PerformBuild 方法，然后在完成时退出？
+C:\program files\Unity\Editor\Unity.exe -quit -batchmode -executeMethod MyEditorScript.PerformBuild
+编程：添加资源的文件夹而应用预设：选择与资源位于同一文件夹中的预设。如果此文件夹中没有预设，则该脚本将搜索父文件夹。如果父文件夹中没有预设，Unity 将使用 Preset Manager 指定的默认预设。
+Unity 导入资源时会发生什么？
+1.分配唯一 ID 2.创建 .meta 文件 3.处理源资源
+如果资源丢失其meta)文件，则将破坏对该资源的所有引用，Unity会怎么样处理？
+重新生成新的 .meta 文件
+实际资源文件保持不变，经过处理和转换的数据版本将存储在项目的什么文件夹中？
+Library 
+不应将什么文件夹纳入版本控制？
+Library
+什么API可用于访问项目中包含的资源，还提供了查找和加载资源的方法，以及创建、删除和修改资源的方法？
+AssetDatabase
+AssetDatabase 接口仅在什么中可用，并且在构建的播放器中没有任何函数？
+编辑器
+参考文档：AssetDatabase API文档
+编程：使用AssetDatabase的API使用
+除了默认的二进制格式，Unity 还为场景数据提供了什么格式？此格式在使用版本控制软件时非常有用，因为单独生成的文本文件比二进制文件更容易合并。
+基于文本的格式
+如何开启文本格式功能？
+Editor Settings>Asset Serialization
+Unity 的场景格式是用什么数据序列化语言实现的？
+YAML
+参考文档：一个YAML实例
+在哪里缓存导入的资源数据可以大大减少导入资源所需的时间？
+缓存服务器
+每次资源导入都基于哪些内容进行缓存？
+资源文件本身，导入设置，资源导入器版本，当前平台
+如果以上任何内容更改，都要重新导入资源，否则进行什么处理？
+从缓存服务器下载资源
+设置缓存服务器的方法？
+Edit > Preferences > Cache Server
+参考文档：设置缓存服务器
+使用脚本对资源的材质进行不可撤销的更改的方法是什么？
+renderer.sharedMaterial.shader = invincibleShader;
+上述相同的方法不仅可应用于材质。遵循该惯例的完整资源有哪些？
+材质：renderer.material 和 renderer.sharedMaterial
+网格：meshFilter.mesh 和 meshFilter.sharedMesh
+物理材质：collider.material 和 collider.sharedMaterial
+有哪两种不同的资源在修改后绝不会自动实例化，对它们的更改是永久的？
+Texture2D	TerrainData
+创建自定义编辑器窗口涉及哪些步骤？
+1，创建一个派生自 EditorWindow 的脚本。2，使用代码触发窗口自行显示。3，实现工具的 GUI 代码。
+编程：实现一个Editor窗口
+属性绘制器有哪两种用途？
+1，自定义Serializable类的每个实例的GUI；2，通过自定义的属性特性来自定义脚本成员的GUI
+编程：编写Ingredient类，并在Inspector绘制这个类
+编程：编写一个显示范围的Inspector类
+出于性能原因，什么函数不能用于属性绘制器？
+EditorGUILayout
+编程：自定义编辑器
+参考文档：TreeView的使用
+在Unity启动时立即在项目中运行一些Editor脚本代码而无需用户进行操作，如何实现？
+InitializeOnLoad属性应用于具有静态构造函数的类
+EditorApplication类有一个名为update的委托会在Editor运行时每秒调用很多次，如何使用？
+静态构造函数中EditorApplication.update += Update;
+
+
+
+
+

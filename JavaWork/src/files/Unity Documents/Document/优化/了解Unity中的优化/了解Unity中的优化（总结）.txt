@@ -1,0 +1,55 @@
+参考文档：Profiler 
+
+参考文档：Memory Profiler
+内存纹理重复的识别和AssetBundle的卸载问题
+
+
+启动协程引起的内存压力等于固定开销成本加上什么？
+如果一个协程几乎每帧都运行并且在长时间运行操作中不会暂停，那么用什么回调来替换该协程通常更合理一些？
+禁用对象时，协程不会停止，只有怎么样时才会停止？
+在处理什么操作（例如等待 HTTP 传输、资源加载或文件 I/O 完成）时，最适合使用协程？
+
+资源审核（整理）
+All 2D(Sprite and UI)graphic elements should be packed into Sprite Atlases
+All textures that are not packed in a Sprite Atlas should have dimensions that are powers of 2 in order to take advantage of memory handling optimizations on the GPU. They don’t necessarily need to be square, but being square and a power of 2 further aids optimization
+Longer audio such as background music should have its Load Type in Import Settings set to Streaming rather than Decompress on Load or Compressed in Memory
+
+
+
+了解托管堆
+许多Unity项目在每帧都有几十或几百 KB 的临时数据分配给什么？这种情况通常对项目的性能极为不利？
+在Unity的CPU 性能分析器中，Overview 表有一个什么列？此列显示了在特定帧中的托管堆上分配的字节数
+启用什么选项后，可以跟踪执行这些分配的方法？
+强烈建议所有开发人员在项目处于什么状态时最大限度减少托管堆内存分配。非交互操作（例如场景加载）期间的内存分配很少产生问题？
+有哪些基本的内存节省方法？
+集合类开放了一个Clear方法，该方法会消除集合内的值，但不会怎么样？
+匿名方法现在要求该方法能够访问方法作用域之外的变量状态，因此已成为什么？
+因此，如果打算在 IL2CPP 脚本后端上发布项目，有哪三个主要建议？
+装箱是Unity项目中最常见的非预期临时内存分配来源之一。只要怎么样就会发生装箱？
+如何识别装箱？
+装箱的一个常见原因是使用什么类型作为字典的键？声明 enum 会创建一个新值类型，此类型在后台视为整数，但在编译时实施类型安全规则。
+对于枚举键字典，每次方法调用都会导致什么？
+在 Unity 的 Mono C# 编译器版本中，使用 foreach 循环会在每次循环终止时强制什么？
+返回数组的所有Unity API每次被访问时都会怎么样？在不必要的情况下访问数组值 Unity API 是极不适宜的。
+实例：mesh.vertices和Input.touches
+
+字符串和文本
+对字符串的任何操作均会导致什么？
+如果必须在紧凑循环中或每帧期间对字符串进行连接，请使用什么执行实际连接操作？
+尽管正则表达式是匹配和操作字符串的强大方法，但它们可能怎么样？
+尽管反射在开发过程中是绝佳选择（因为它能让解析器快速适应不断变化的数据布局），但众所周知，怎么样？
+
+Resources文件夹不要用
+
+每当在Animator、Material或Shader上使用Set或Get方法时，请使用什么方法而非字符串值方法？
+什么比浮点数学更快，而浮点数学比矢量、矩阵或四元数运算更快？
+整数数学
+最好完全避免在生产代码中使用什么接口？由于此类 API 要求 Unity 遍历内存中的所有游戏对象和组件，因此它们会随着项目规模的扩大而产生性能问题。
+Object.Find 和 Object.FindObjectOfType
+在内部，Unity的Camera.main属性会调用什么（这是 Object.FindObject 的一个专用变体）？访问此属性并不比调用Object.FindObjectOfType更高效。
+Object.FindObjectWithTag
+UnityEngine.Debug日志记录API并未从非开发版中剥离出去，如果被调用，则会怎么样？
+写入日志
+
+
+

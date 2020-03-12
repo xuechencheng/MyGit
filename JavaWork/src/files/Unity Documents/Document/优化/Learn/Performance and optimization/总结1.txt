@@ -1,0 +1,119 @@
+Diagnosing Performance Problems
+Frame rate is a standard measure of performance in games. 
+Rule out VSync
+
+确定性能瓶颈
+Identifying if our game is GPU bound
+	Support this GPU profiler.
+		Look at the area in the centre of the screen where the CPU and GPU times for the currently selected frame are displayed.
+	Not Support
+		If the function Gfx.WaitForPresent is taking the longest in the CPU Usage profiler, this indicates that the CPU is waiting for the GPU. This means that our game is GPU bound at this point.
+Identifying if our game is CPU bound
+	Select the Time ms column to sort the functions by time in milliseconds.
+	If the selected function is a rendering function, the CPU profiler graph will highlight it as part of the Rendering display.
+Garbage Collection profiling
+	Select the Time ms column to sort the functions by time in milliseconds.
+	If the function GC.Collect() appears and is taking up excessive CPU time, then we have identified a garbage collection problem with our game.
+Physics profiling
+	If we have ruled out rendering and garbage collection, let’s check to see whether complex physics calculations are the cause of our performance problem.
+Slow scripts profiling
+	
+1，Optimizing scripts in Unity games
+Writing efficient code
+	Calculating a square root takes a CPU more time to execute than multiplying two numbers. 
+	Move code out of loops when possible
+	Consider whether code must run every frame
+	Only run code when things change
+	Use caching
+	Use the right data structure
+	Minimize the impact of garbage collection
+	Use object pooling
+Avoiding expensive calls to the Unity API
+	SendMessage() and BroadcastMessage() 
+	Find()
+	Remove Empty Update()
+	Vector2 and Vector3
+	Camera.main
+
+2，Optimizing garbage collection in Unity games
+	Reducing the amount of garbage created
+		Caching
+		Don’t allocate in functions that are called frequently
+		Clearing collections
+		Object pooling
+	Common causes of unnecessary heap allocations
+		Strings
+			Removing calls to Debug.Log()
+		Unity function calls
+			Every time we access a Unity function that returns an array, a new array is created and passed to us as the return value. For example, Mesh.normals
+			Use GameObject.CompareTag(), no longer generates any garbage
+			Input.GetTouch() and Input.touchCount in place of Input.touches
+		Boxing
+			Boxing usually occurs when we pass value-typed variables, such as ints or floats, to a function with object parameters such as Object.Equals().
+		Coroutines
+			Calling StartCoroutine() creates a small amount of garbage, because of the classes that Unity must create instances of to manage the coroutine. 
+			使用yield return null;代替yield return 0;
+			WaitForSeconds delay = new WaitForSeconds(1f); yield return delay;
+			代替yield return new WaitForSeconds(1f);
+		Foreach loops
+		Function references
+		LINQ and Regular Expressions
+	Manually forcing garbage collection
+		System.GC.Collect();
+
+Optimizing graphics rendering in Unity games
+We will use two tools to help us understand and fix our rendering performance problems: the Profiler window and the Frame Debugger. 
+Sending commands to the GPU
+There are, broadly, three ways of reducing the number of batches and SetPass calls. We will look more in-depth at each one of these:
+	Reducing the number of objects to be rendered will likely reduce both batches and SetPass calls.
+	Reducing the number of times each object must be rendered will usually reduce the number of SetPass calls.
+	Combining the data from objects that must be rendered into fewer batches will reduce the number of batches.
+Reducing the number of objects being rendered
+	Simply reducing the number of visible objects in our scene can be an effective solution.
+	We can reduce our camera’s draw distance using the camera’s Far Clip Plane property. 
+	Use our camera’s Layer Cull Distances property to provide custom culling distances for objects that are on separate layers. 
+	Occlusion culling
+Reducing the number of times each object must be rendered
+	渲染路径，优化：光照，阴影Shadow Distance，光照探针
+Combining objects into fewer batches
+	Static batching
+	Dynamic batching
+	GPU instancing
+	Texture atlasing
+	Manually combine meshes
+Skinned meshes
+
+If our game is GPU bound
+	Fill rate
+		Check：Decrease the display resolution in Player Settings.Profile the game and note the GPU time.
+		Fix the problem：
+			Complex fragment shaders are a very common cause of fill rate problems.
+				The mobile shaders that ship with Unity are highly optimized
+				If objects in our game use Unity’s Standard Shader, it is important to understand that Unity compiles this shader based on the current material settings. Only features that are currently being used are compiled. 
+				If our project uses bespoke shaders, we should aim to optimize them as much as possible. 
+			Overdraw is the term for when the same pixel is drawn multiple times. 
+			The use of image effects can greatly contribute to fill rate issues, especially if we are using more than one image effect. 
+Memory bandwidth
+		Check：Reduce the Texture Quality for the current platform and quality target in Quality Settings.
+		Fix the problem：
+			Texture compression
+			Mipmaps
+Vertex processing
+		Check：If our game is GPU bound isn’t limited by fill rate or memory bandwidth, then it is likely that vertex processing is the cause of the problem. 
+		Fix the problem：
+			LOD
+			Normal mapping
+			Create meshes with a lower vertex count in our 3D art program.
+			
+			The mobile shaders that ship with Unity are highly optimized
+			If objects in our game use Unity’s Standard Shader, it is important to understand that Unity compiles this shader based on the current material settings. Only features that are currently being used are compiled. 
+			If our project uses bespoke shaders, we should aim to optimize them as much as possible. 
+
+
+
+
+
+
+
+
+

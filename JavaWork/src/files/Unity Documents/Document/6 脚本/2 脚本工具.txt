@@ -1,0 +1,81 @@
+脚本工具
+
+Console 窗口
+使用什么选项时，只要从脚本调用 Debug.LogError，就会使回放暂停？
+Error Pause
+控制台选项卡菜单上的什么菜单项可访问Unity的日志文件，这些文件将记录可能未在控制台上显示的详细信息？
+Open Player Log 和 Open Editor Log
+要调整日志条目在列表中显示的行数，请单击惊叹号按钮，选择什么，然后选择行数？
+Log Entry
+可以指定在将日志消息输出到控制台或日志文件时应如何准确捕获堆栈跟踪。
+Stack Trace Logging
+
+日志文件
+要查看Editor日志，请在Unity的Console窗口中选择什么？
+Open Editor Log
+Windows下日志文件目录
+C:\Users\username\AppData\Local\Unity\Editor\Editor.log
+Windows下播放器文件目录
+C:\Users\username\AppData\LocalLow\CompanyName\ProductName\output_log.txt
+
+Unity Test Runner（待续）
+
+IL2CPP
+IL2CPP是什么的缩写？
+Intermediate Language To C++ 
+使用IL2CPP构建项目时，Unity会在为所选平台创建本机二进制文件（例如 .exe、apk、.xap）之前将脚本和程序集内的IL代码转换为什么？
+C++
+IL2CPP有哪些用途？
+提高 Unity 项目的性能、安全性和平台兼容性
+
+使用IL2CPP来构建项目
+如何使用IL2CPP来构建项目？
+PlayerSettings > Configuration > Scripting Backend > IL2CPP
+选择 IL2CPP 后，单击Build。Unity开始将C#代码和程序集转换为C++，然后为目标平台生成什么文件？
+二进制
+
+编译器选项
+使用IL2CPP脚本后端时，可以控制il2cpp.exe如何生成 C++ 代码。具体来说，可使用C#属性启用或禁用什么？
+运行时检查
+有哪些运行时检查？
+Null checks，Array bounds checks和Divide by zero checks
+可使用什么属性在 C# 代码中启用或禁用运行时检查？
+Il2CppSetOptions
+要使用此属性，请在计算机上的Unity Editor安装中的IL2CPP目录中找到什么源文件？（在Windows上位于Data\il2cpp）。将此源文件复制到项目中的Assets文件夹中。
+Il2CppSetOptionsAttribute.cs
+编程：使用脚本设置运行时检查
+
+Windows 运行时支持（了解）
+Unity包含对通用什么平台上的IL2CPP 的 Windows 运行时支持？
+Windows 平台和 Xbox One 平台
+通过使用什么，可直接从托管代码（脚本和 DLL）调用本机系统Windows运行时API以及自定义的.winmd文件？
+Windows运行时支持
+如何在IL2CPP中自动启用Windows运行时支持？
+PlayerSettings>Configuration>Api Compatibility Level设置为.NET 4.6
+
+IL2CPP 的工作原理
+使用 IL2CPP 开始构建时，Unity 会自动执行以下步骤：
+1.Unity Scripting API 代码编译为常规 .NET DLL（托管程序集）。
+2.所有不属于脚本的托管程序集（如插件和基类库）都由名为“未用字节码剥离器”(Unused Bytecode Stripper) 的 Unity 工具进行处理，该工具会查找所有未使用的类和方法，并将它们从这些 DLL（动态链接库）中删除。此步骤可显著减小构建的游戏大小。
+3.所有托管程序集随后转换为标准 C++ 代码。
+4.生成的 C++ 代码和 IL2CPP 的运行时部分由本机平台编译器进行编译。
+5.最后，代码链接到可执行文件或 DLL，具体取决于目标平台。
+
+优化 IL2CPP 构建时间
+使用 IL2CPP 构建项目时，项目构建时间可能会大幅延长。但是，有几种方法可以显著缩短构建时间：
+使用增量构建
+使用增量构建时，C++ 编译器仅重新编译自上次构建以来已更改的文件。要使用增量构建，请将项目构建到先前的构建位置（不删除目标目录）。
+从反恶意软件的软件扫描中排除项目和目标构建文件夹
+可在构建项目之前禁用反恶意软件，从而缩短构建时间。（Unity Technologies 测试发现，在全新安装的 Windows 10 系统上禁用 Windows Defender 后，构建时间减少了 50–66%。）
+将项目和目标构建文件夹存储在固态硬盘 (SSD) 上
+与传统硬盘驱动器 (HDD) 相比，固态硬盘 (SSD) 具有更快的读/写速度。将 IL 代码转换为 C++ 并对其进行编译的过程涉及大量的读/写操作。更快的存储设备可加快此过程。
+
+使用 IL2CPP 进行托管字节码剥离（待续）
+什么从托管程序集 (DLL) 中删除未使用的代码？
+托管字节码剥离
+对于给定的Unity播放器构建而言，根程序集是Unity Editor从脚本代码编译的程序集（例如，Assembly-CSharp.dll）。从脚本代码编译的任何程序集都不会被剥离，但其他程序集将被剥离。这些程序集包括：
+您添加到项目的程序集
+Unity 引擎程序集
+.NET 类库程序集（如 mscorlib.dll、System.dll）
+什么选项将替换为名为Strip Engine Code的布尔值选项。如果启用此选项，则还将删除Unity引擎代码中未使用的模块和类。
+Stripping Level

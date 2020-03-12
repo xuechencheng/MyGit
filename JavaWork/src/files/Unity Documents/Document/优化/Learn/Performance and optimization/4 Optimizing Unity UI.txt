@@ -1,0 +1,159 @@
+Optimizing Unity UI
+1.A guide to optimizing Unity UI
+The core tension when optimizing any Unity UI is the balancing of draw calls with batching costs.
+There are four common classes of problems encountered by users of Unity UI:
+	Excessive GPU fragment shader utilization (i.e. fill-rate overutilization)
+	Excessive CPU time spent rebuilding a Canvas batch
+	Excessive numbers of rebuilds of Canvas batches (over-dirtying)
+	Excessive CPU time spent generating vertices (usually from text)
+2.Fundamentals of Unity UI
+Sub-canvases isolate their children from their parent; a dirty child will not force a parent to rebuild its geometry, and vice versa. 
+The updates of Layout and Graphic components is called a rebuild.
+The important thing to remember from a performance standpoint is that each pixel rasterized from a polygon will be sampled, even if it is wholly covered by other, opaque polygons. On mobile devices, this high level of overdraw can rapidly exceed the fill-rate capacity of the GPU.
+The Batch building process (Canvases)
+	The batch building process is the process whereby a Canvas combines the meshes representing its UI elements and generates the appropriate rendering commands to send to Unity’s graphics pipeline. The results of this process are cached and reused until the Canvas is marked as dirty, which occurs whenever there is a change to one of its constituent meshes.
+	The meshes used by the Canvas are taken from the set of Canvas Renderer components attached to the Canvas but not contained in any Sub-canvas.	
+The rebuild process (Graphics)
+	The Rebuild process is where the layout and meshes of Unity UI’s C# Graphic components are recalculated. This is performed in the CanvasUpdateRegistry class. 
+	PerformUpdate runs a three-step process:
+		Dirty Layout components are requested to rebuild their layouts, via the ICanvasElement.Rebuild method.
+		Any registered Clipping components (such as Masks) are requested to cull any clipped components. This is done via ClippingRegistry.Cull.
+		Dirty Graphic components are requested to rebuild their graphical elements.
+3.Unity UI Profiling Tools(待续)
+There are several profiling tools useful for analyzing Unity UI’s performance. The key tools are:
+	Unity Profiler
+	Unity Frame Debugger
+	Xcode’s Instruments or Intel VTune
+	Xcode’s Frame Debugger or Intel GPA
+Unity Profiler
+	To analyze this, watch the Canvas.BuildBatch and Canvas.SendWillRenderCanvases lines in the profiler’s output.
+
+4.Fill-rate, Canvases and input
+Remediating fill-rate issues
+Eliminating invisible UI
+	Disable elements that are not visible to the player. 
+Simplify UI structure
+Disabling invisible camera output
+	Therefore, if a completely full-screen UI is opened, disabling any and all of the obscured world-space cameras will help reduce GPU stress by simply eliminating the useless work of rendering the 3D world.
+Majority-obscured cameras
+	Many “full-screen” UIs do not actually obscure the entire 3D world, but leave a small portion of the world visible. In these cases, it may be more optimal to capture just the portions of the world that are visible into a render texture. If the visible portion of the world is “cached” in a render texture, then the actual world-space camera can be disabled, and the cached render texture can be drawn behind the UI screen to provide an impostor version of the 3D world.
+Composition-based UIs
+	If a large UI is discovered to be fill-rate bound, the best recourse is to create specialized UI sprites that merge as many of the decorative/invariant elements of the UI into its background texture. This reduces the number of elements that must be layered atop one another to achieve the desired design, but is labor-intensive and increases the size of the project’s texture atlases.
+UI shaders and low-spec devices	
+	实例：如果觉得内置默认的shader复杂，可以自己手写一个简单的
+
+UI Canvas rebuilds
+Canvas rebuilds can become performance problems for two primary reasons:
+	the number of drawable UI elements on a Canvas is large, then calculating the batch itself becomes very expensive. 
+	If the Canvas is dirtied frequently, then excessive time may be spent refreshing a Canvas that has relatively few changes.
+Child order
+	Batches are built by walking the hierarchy top-to-bottom and collecting all objects which use the same material, the same texture and do not have intermediate layers.
+	An “intermediate layer” is a graphical object with a different material, whose bounding box overlaps two otherwise-batchable objects and is placed in the hierarchy between the two batchable objects. Intermediate layers force batches to be broken.
+	This problem most commonly occurs when text and sprites are located near one another: the text’s bounding box can invisibly overlap nearby sprites, because much of a text glyph’s polygon is transparent. 
+Splitting Canvases
+	In all but the most trivial cases, it is generally a good idea to split up a Canvas, either by moving elements to a Sub-canvas or to a sibling Canvas.
+	While it may seem at first glance that it is a best practice to subdivide a UI into many Sub-canvases, remember that the Canvas system also does not combine batches across separate Canvases. Performant UI design requires a balance between minimizing the cost of rebuilds and minimizing wasted draw calls.
+	
+	General guidelines
+		Because a Canvas rebatches any time any of its constituent drawable components changes, it is generally best to split any non-trivial Canvas into at least two parts. 
+		On one Canvas, place all elements that are static and unchanging, such as backgrounds and labels.
+		On the second Canvas, place all of the “dynamic” elements – the ones that change frequently. This will ensure that this Canvas is rebatching primarily dirty elements. If the number of dynamic elements grows very large, it may be necessary to further subdivide the dynamic elements into a set of elements that are constantly changing (e.g. progress bars, timer readouts, anything animated) and a set of elements that change only occasionally.	
+		Many UIs on mobile devices can now be made performant with as few as two or three Canvases.
+Input and raycasting in Unity UI
+	By default, Unity UI uses the Graphic Raycaster component to handle input events, such as touch events and pointer-hover events. This is generally handled by the Standalone Input Manager component. 
+	The Graphic Raycaster is a relatively straightforward implementation that iterates over all Graphic components that have the ‘Raycast Target’ setting set to true. For each Raycast Target, the Raycaster performs a set of tests. If a Raycast Target passes all of its tests, then it is added to the list of hits.
+	Raycast implementation details
+	The tests are:
+		If the Raycast Target is active, enabled and is drawn (i.e. has geometry)
+		If the input point lies within the RectTransform to which the Raycast Target is attached
+		If the Raycast Target has, or is a child (at any depth) of, any ICanvasRaycastFilter component, and that Raycast Filter component permits the Raycast.
+	Raycasting optimization tips
+		Given that all Raycast Targets must be tested by the Graphic Raycaster, it is a best practice to only enable the ‘Raycast Target’ setting on UI components that must receive pointer events. The smaller the list of Raycast Targets, and the shallower the hierarchy that must be traversed, the faster each Raycast test will be.
+		For composite UI controls that have multiple drawable UI objects that must respond to pointer events, such as a button that wishes to have its background and text both change colors, it is generally better to place a single Raycast Target at the root of the composite UI control. When that single Raycast Target receives a pointer event, it can then forward the event to each interested component within the composite control.
+
+5.Optimizing UI Controls
+UI text
+When adding text to a UI, always remember that the text glyphs are actually rendered as individual quads, one per character. 
+These quads tend to have a significant amount of empty space surrounding the glyph, depending on its shape, and it is very easy to position text in such a way that it unintentionally breaks the batching of other UI elements.
+Text mesh rebuilds
+	One major issue is the rebuilding of UI text meshes. Whenever a UI Text component is changed, the text component must recalculate the polygons used to display the actual text. This recalculation also occurs if a text component, or any of its parent GameObjects, is simply disabled and re-enabled without changes to the text.
+	This behavior is problematic for any UI that displays large numbers of textual labels, with the most common being leaderboards or statistics screens. As the most common way to hide and show a Unity UI is to enable/disable a GameObject containing the UI, UIs with large numbers of text components will often cause undesirable frame-rate hiccups whenever they are displayed.
+Dynamic fonts and font atlases
+	From a performance perspective, the most important thing to understand is that Unity UI’s dynamic fonts maintain one glyph in the font’s texture atlas for each distinct combination of size, style & character. That is, if a UI contains two text components, both displaying the letter ‘A’, then:
+		If the two Text components share the same size, the font atlas will have one glyph in it.
+		If the two Text components do not share the same size (e.g. one is 16-point, the other 24-point), then the font atlas will contain two copies of the letter ‘A’ at different sizes.
+		If one Text component is bold and the other is not, then the font atlas will contain a bold 'A' and a regular 'A'.
+	
+	
+Other UI Optimization Techniques and Tips
+It is strongly recommended that all World Space and Camera Space Canvases have their Camera properties assigned at design-time or initialization time.
+This issue does not occur for Overlay Canvases.
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

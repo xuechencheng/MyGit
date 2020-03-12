@@ -1,0 +1,19 @@
+1.Rendering
+2.Camera
+
+Clear
+Unity takes care of the details, so you only have to set the clear flags on the Camera and avoid using the "Don’t Clear" flag when targeting mobile devices. 
+On mobile, avoid Unity’s default Skybox (appropriately named Default-Skybox), which is computationally expensive and which is enabled by default in all new Scenes. To disable Skybox rendering completely, set the Camera.clearFlags to SolidColor. Then go to the Lighting Settings (menu: Window > Lighting > Settings) window, remove the Skybox Material, and set the Ambient Source to Color.
+
+Culling
+The two types of culling are frustum and occlusion culling:
+	Frustum Culling is performed automatically on every Unity Camera
+	Occlusion culling is controlled by the developer
+Frustum Culling
+Frustum Culling makes sure that GameObjects outside of the Camera frustum are not rendered to save rendering performance.
+Occlusion Culling
+When you enable Occlusion Culling, Unity does not render GameObjects if the Camera cannot see them. For example, rendering another room is unnecessary if a door is closed and the Camera cannot see the room.
+如果启用了遮挡剔除，则可以显着提高性能，但是它占用更多的磁盘空间和RAM，因为Unity Umbra集成会在构建期间烘焙遮挡数据，并且在加载场景时Unity需要将其从磁盘加载到RAM。
+Per-Layer culling distances
+You can set per-layer culling distances manually on the Camera via Scripts. Setting the cull distance is useful for culling small GameObjects that do not contribute to the Scene when the Camera views them from a given distance.
+

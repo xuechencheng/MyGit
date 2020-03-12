@@ -1,0 +1,30 @@
+常见的资源类型有哪些？
+图像文件，FBX和模型，网格和动画，音频文件，其他资源类型
+如果将分层的Photoshop（.psd）文件保存到Assets文件夹中，Unity会将它们导入为什么？
+展平的图像
+Unity可以选择各种方式来压缩、修改或以其他方式处理资源，但Unity 都不会修改原始的源文件，为什么？
+导入过程会读取源文件，并在内部创建一个可直接用于游戏的资源表示，与所选的导入设置相匹配。
+如果修改资源的导入设置，或者对 Asset 文件夹中的源文件进行更改，则会导致什么？
+Unity再次重新导入资源
+Unity内的原始对象类型有哪些？
+立方体(Cube)，球体(Sphere)，胶囊体(Capsule)，圆柱体(Cylinder)，平面(Plane)和四边形(Quad)
+Unity没有什么模型的原始碰撞体？
+圆柱体
+平面和四边形哪个泛用性更广？
+四边形
+四边形和平面各包含多少个三角形？
+两个和两百个
+四边形的应用场景有哪些？
+用作图像或电影的显示屏幕，简单的GUI和信息显示面板，粒子、精灵和“冒充者”图像
+Unity常使用哪两种类型的资源包？
+1，AssetStore的资源包 2，Package Manager窗口获取的包
+导入资源包的方法是什么？
+Asset>Import Package
+Unity自带2D、Cameras、Characters、CrossPlatformInput、Effects、Environment、ParticleSystems、Prototyping、Utility、Vehicles等被称为什么？
+标准资源包
+在升级Editor时会自动升级标准资源吗？
+不会
+导出资源包的方法是什么？
+Assets>Export Package
+从Asset Store下载的文件的路径是什么？
+C:\Users\accountName\AppData\Roaming\Unity\Asset Store

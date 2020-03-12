@@ -1,0 +1,10 @@
+Text Layout更新
+1，递归查找最外层含有ScrollRect，GridLayoutGroup，HorizontalLayoutGroup和VerticalLayoutGroup组件的父节点（ILayoutGroup）
+2，自身含有以上组件和AspectRatioFitter以及ContentSizeFitter组件（ILayoutController）
+
+LayoutRebuildQueue的Update
+GridLayoutGroup，HorizontalLayoutGroup和VerticalLayoutGroup的
+CalculateLayoutInputHorizontal方法
+
+ScrollRect，ContentSizeFitter和GridLayoutGroup，HorizontalLayoutGroup和VerticalLayoutGroup的
+SetLayoutHorizontal

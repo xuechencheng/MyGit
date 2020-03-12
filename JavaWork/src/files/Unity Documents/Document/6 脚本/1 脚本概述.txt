@@ -1,0 +1,240 @@
+脚本概述
+
+创建和使用脚本
+类名和文件名必须怎么样才能使脚本组件附加到游戏对象？
+必须相同
+如果尝试为脚本组件定义什么函数，将会干扰Unity的正常运行，并可能导致项目出现重大问题？
+构造函数
+
+变量和 Inspector
+
+
+使用组件来控制游戏对象
+如何使用父游戏对象的变换组件来检索所有子游戏对象？
+foreach(Transform t in transform)
+可以使用什么函数按名称查找特定子对象？
+Transform.Find
+使用什么函数按名称检索各个对象？
+GameObject.Find
+可以使用什么函数按标签来查找对象？
+GameObject.FindWithTag
+
+事件函数
+可在什么类的脚本参考页面中找到事件函数的完整列表以及详细的事件函数用法说明？
+MonoBehaviour
+在渲染帧之前以及计算动画之前都会调用什么函数？
+Update
+在每次物理更新之前都会调用一个称为什么的单独事件函数？
+FixedUpdate
+由于物理更新和帧更新不会以相同频率进行，所以如果将物理代码放在什么函数而不是 Update 中，此代码将产生更准确的结果？
+FixedUpdate
+摄像机应该聚焦于目标对象；必须在目标对象移动后才能调整摄像机的方向，可使用什么函数来处理这些类型的情况？
+LateUpdate
+虽然各种对象的Start和Awake函数的调用顺序是任意的，但在调用第一个Start之前，所有Awake都要完成。这意味着Start函数中的代码可以利用先前在什么阶段执行的其他初始化？
+Awake 
+Unity有一个系统用于渲染场景中主要操作的GUI控件，并响应对这些控件的点击。此代码置于定期调用的什么函数中？
+OnGUI
+借助一系列什么事件函数（例如 OnMouseOver、OnMouseDown）可以让脚本对用户的鼠标操作做出反应？
+OnMouseXXX
+在进行接触、保持接触和中断接触时，将调用什么函数？
+OnCollisionEnter、OnCollisionStay 和 OnCollisionExit 
+对象的碰撞体配置为触发器（即，碰撞体只检测某物何时进入而不进行物理反应）时，将调用相应的什么函数？
+OnTriggerEnter、OnTriggerStay 和 OnTriggerExit
+
+时间和帧率管理
+游戏的帧率不是恒定的，并且什么函数调用之间的时间长度也不是恒定的？
+Update
+可从什么属性读取的帧时间来缩放移动距离大小？
+Time.deltaTime
+与主帧更新不同，Unity的什么系统会工作到固定的时间步长，这对于模拟的准确性和一致性很重要？
+物理系统
+可从Time Manager中更改固定时间步长的大小，并可使用什么属性从脚本中读取该值？
+Time.fixedDeltaTime
+如果帧更新花费的时间超过什么属性设置，则物理引擎将“让时间停止”并让帧处理赶上。一旦帧更新完成，物理引擎将恢复，就好像让时间停止后没有流逝一样。
+Maximum Allowed Timestep 
+Unity有一个什么属性可以控制游戏时间相对于实时时间的进展速度？
+Time Scale
+时间标度实际上并不会降低执行速度，而只是更改了通过什么报告给Update和FixedUpdate函数的时间步长？
+Time.deltaTime 和 Time.fixedDeltaTime 
+当游戏时间减慢时，调用Update函数的频率可能高于平常，但每帧报告的什么步长将会缩短？其他脚本函数不受时间标度的影响，因此您可以在游戏暂停时显示具有正常交互的 GUI。
+deltaTime
+编程：使用Capture Framerate截屏
+
+创建和销毁游戏对象
+可以使用什么函数来创建游戏对象？该函数可以生成现有对象的新副本。
+Instantiate
+还有一个什么函数，该函数将在帧更新完成后或选择在短时间延迟后销毁对象？
+Destroy
+Destroy(this)这种情况下实际只会销毁调用该函数的什么，而不是销毁附加脚本的游戏对象？
+脚本组件
+
+协程
+什么就像一个函数，能够暂停执行并将控制权返还给 Unity，然后在下一帧继续执行？
+协程
+编程：使用协程，编写一个淡出效果
+什么代码是暂停执行并随后在下一帧恢复的点？
+yield return
+要将协程设置为运行状态，必须使用什么函数？
+StartCoroutine
+使用什么函数来引入时间延迟？
+WaitForSeconds
+禁用 MonoBehaviour 时，不会停止协程，仅在明确销毁 MonoBehaviour 时才会停止协程。可以使用什么函数来停止协程？销毁 MonoBehaviour 时，也会停止协程。
+MonoBehaviour.StopCoroutine 和 MonoBehaviour.StopAllCoroutines
+
+命名空间
+什么就是类的集合；引用集合中的类时需要在类名中使用所选的前缀？
+命名空间
+
+特性 (Attribute) 
+什么是可以放在脚本中的类、属性或函数上方来指示特殊行为的标记？
+特性 (Attribute) 
+
+事件函数执行顺序
+始终在任何 Start 函数之前并在实例化预制件之后调用此函数。
+Awake
+在启用对象后立即调用此函数。在创建 MonoBehaviour 实例时会执行此调用。
+OnEnable
+执行此函数可告知游戏已加载新关卡
+OnLevelWasLoaded
+调用Reset可以在脚本首次附加到对象时以及使用 Reset 命令时初始化脚本的属性。
+Reset
+仅当启用脚本实例后，才会在第一次帧更新之前调用 Start。
+Start
+在帧的结尾处调用此函数。在调用该函数之后，将发出一个额外帧，从而允许游戏显示图形来指示暂停状态。
+OnApplicationPause
+在 FixedUpdate 内应用运动计算时，无需将值乘以 Time.deltaTime。这是因为 FixedUpdate 的调用基于什么？
+可靠的计时器（独立于帧率）
+三个更新方法
+FixedUpdate Update LateUpdate
+在摄像机剔除场景之前调用。剔除操作将确定摄像机可以看到哪些对象。正好在进行剔除之前调用 OnPreCull。
+OnPreCull
+对象变为对任何摄像机可见/不可见时调用。
+OnBecameVisible/OnBecameInvisible
+如果对象可见，则为每个摄像机调用一次。
+OnWillRenderObject
+在摄像机开始渲染场景之前调用。
+OnPreRender
+所有常规场景渲染完成之后调用。此时，可以使用 GL 类或 Graphics.DrawMeshNow 来绘制自定义几何形状。
+OnRenderObject
+在摄像机完成场景渲染后调用。
+OnPostRender
+在场景渲染完成后调用以允许对图像进行后处理，请参阅后期处理效果。
+OnRenderImage
+每帧调用多次以响应 GUI 事件。首先处理布局和重新绘制事件，然后为每个输入事件处理布局和键盘/鼠标事件。
+OnGUI
+用于在场景视图中绘制辅助图标以实现可视化。
+OnDrawGizmos
+在下一帧上调用所有 Update 函数后，协程将继续。
+yield 
+在为帧调用所有 Update 函数后，在指定的时间延迟后继续协程
+yield WaitForSeconds 
+在所有脚本上调用所有 FixedUpdate 后继续协程
+yield WaitForFixedUpdate 
+在 WWW 下载完成后继续。
+yield WWW 
+将协程链接起来，并会等待 MyFunc 协程先完成。 
+yield StartCoroutine 
+对象存在的最后一帧完成所有帧更新之后，调用此函数（可能应 Object.Destroy 要求或在场景关闭时销毁该对象）。
+OnDestroy
+在退出应用程序之前在所有游戏对象上调用此函数。在编辑器中，用户停止播放模式时，调用函数。
+OnApplicationQuit
+行为被禁用或处于非活动状态时，调用此函数。
+OnDisable
+参考文档：脚本生命周期流程图
+
+了解自动内存管理
+创建对象、字符串或数组时，用于存储它的内存是从称为什么的中央池分配的？
+堆
+在参数传递期间直接存储和复制的类型称为什么类型？
+值类型
+在堆上分配后再通过指针访问的类型称为什么类型？
+引用类型
+定位和释放未使用的内存的过程称为什么？
+垃圾收集（或简称 GC）
+如果需要将大量字符串连接在一起，那么 Mono 库的什么类将是更好的选择？
+System.Text.StringBuilder
+常见的产生GC的情况
+重复的字符串连接
+如何快速和频繁进行垃圾收集的小堆？
+if (Time.frameCount % 30 == 0)
+{
+   System.GC.Collect();
+}
+在许多情况下，通过减少创建和销毁的对象数量即可避免生成垃圾。
+可重用的对象池
+
+平台相关的编译
+参考文档：Unity支持对脚本使用的平台#define指令
+选择要测试预编译代码的平台，然后单击什么向Unity告知您所需的目标平台？
+Switch Platform
+如何向内置的#define指令集合中添加您自己的指令？
+Player Settings>Other Settings>Scripting Define Symbols
+您可以定义自己的预处理器指令来控制在编译时包含的代码。为此，必须将包含额外指令的文本文件添加到Assets文件夹。文件名取决于您使用的语言。扩展名为什么？
+.rsp
+
+特殊文件夹和脚本编译顺序
+无法引用在当前阶段之后的阶段编译的任何内容。在当前阶段或早期阶段编译的所有内容则是怎么样的？
+可用的
+编译阶段如下：
+第 1 阶段：名为 Standard Assets、Pro Standard Assets 和 Plugins 的文件夹中的运行时脚本。
+第 2 阶段：名为 Editor 的文件夹（位于名为 Standard Assets、Pro Standard Assets 和 Plugins 的顶层文件夹中的任意位置）中的 Editor 脚本。
+第 3 阶段：不在名为 Editor 的文件夹中的所有其他脚本。
+第 4 阶段：其余所有脚本（位于名为 Editor 的文件夹中的脚本）。
+
+脚本编译和程序集定义文件
+可使用什么根据文件夹中的脚本来定义您自己的托管程序集？
+程序集定义文件
+请将项目脚本分成具有明确定义的依赖项的多个程序集，以确保在脚本中进行更改时仅重新构建所需的程序集。这样可以减少什么？
+编译时间
+程序集定义文件是通过Assets > Create > Assembly Definition创建的资源文件。这些文件的扩展名是什么？
+.asmdef
+将一个程序集定义文件添加到Unity项目中的某个文件夹，即可将该文件夹中的所有脚本编译为什么？
+一个程序集
+添加对项目其他程序集定义文件的引用，请单击什么部分下的 + 图标，然后选择您的文件？
+References
+强烈建议怎么处理？否则，程序集定义文件每次重新编译时，不使用程序集定义文件的脚本也会始终重新编译。
+要么对项目中的所有脚本使用程序集定义文件，要么根本不使用
+
+.NET 配置文件支持
+如何更改.NET配置文件？
+Player Settings>Other Settings>Api Compatibility Level
+默认情况下，大多数Unity 项目应使用什么配置文件？
+.NET Standard 2.0
+
+引用其他类库程序集
+
+稳定脚本运行时：已知限制
+Player Settings中，启用Strip Engine Code。此选项会静态分析项目中的托管代码，并删除所有未使用的代码。注意：只有什么脚本后端才附带此选项？
+IL2CPP
+
+通用函数
+
+脚本限制
+任何依赖于在目标设备上即时(JIT)编译的托管代码都将失败。相反，我们需要什么编译所有托管代码？
+提前(AOT)编译
+AOT平台无法实现什么命名空间中的任何方法？请注意，System.Reflection 的其余部分是可接受的，只要编译器可以推断通过反射使用的代码需要在运行时存在。
+System.Reflection.Emit
+有些平台不支持使用什么，因此任何使用 System.Threading 命名空间的托管代码都将在运行时失败？
+线程
+
+脚本序列化（待续）
+什么是将数据结构或对象状态转换为 Unity 可存储并在以后可重构的格式的自动过程？
+序列化
+
+UnityEvent
+借助什么可让用户驱动的回调从编辑时间一直持续到运行时，无需进行额外的编程和脚本配置？
+UnityEvent
+使用 UnityEvent
+如何要在Editor中配置回调？
+0.确保脚本导入/使用 UnityEngine.Events。
+1.选择 + 图标为回调添加字段
+2.选择要接收回调的 UnityEngine.Object（可使用对象选择器进行选择）
+3.选择要调用的函数
+4.可为事件添加多个回调
+
+什么是 Null 引用异常
+通过编写代码在访问对象之前检查null或使用什么代码块，可避免 NullReferenceException？
+try/catch代码块
+
+矢量说明书
+

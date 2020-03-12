@@ -1,0 +1,89 @@
+函数的返回类型不能是数组类型或函数类型，但可以是指向数组或函数的指针。
+只存在于块执行期间的对象称为自动对象。形参是一种自动对象。
+对于局部变量对应的自动对象来说，如果变量本身没有初始值，就执行默认初始化。内置类型的未初始化局部变量将产生未定义的值。
+定义成static的局部变量的生命周期贯穿函数调用及之后的时间。
+函数只能定义一次，但可以声明多次。函数的声明可以省略参数名字。
+函数应该在头文件中声明，在源文件中定义。
+定义函数的源文件应该把含有函数声明的头文件包含进来，编译器负责验证函数的定义和声明是否匹配。
+如果形参是引用类型，它将绑定到对应的实参上，否则，将实参的值拷贝后赋给形参。
+熟悉C语言的程序员常常使用指针类型的形参访问函数外部的对象。在C++语言中，建议使用引用类型的形参替代指针。
+拷贝打的类类型对象或者容器对象比较低效，甚至有的类类型（包括IO类型）根本不支持拷贝操作。只能通过引用形参访问该类型的对象。
+一个函数只能返回一个值，优势函数需要同时返回多个值，引用形参为我们返回多个结果提供了有效的途径。
+当用实参初始化形参时会忽略掉顶层const，形参的顶层const被忽略掉了。当形参有顶层const时，传给它常量对象或者非常量对象都是可以的。
+尽量使用常量引用。
+find_char(string str);find_char("Hello")会报错。
+不允许拷贝数组，数组使用时会被转换成指针。当我们为函数传递一个数组时，实际上传递的是指向数组首元素的指针。
+void print(const int*)和void print(const int[])等价。
+main可以接受命令行选项。int main(int argc,char *argv[])
+为了编写能处理不同数量实参的函数的三种方法：1，如果实参类型相同，使用initializer_list；2，实参类型不同，使用过可变参数模版；3，使用省略符
+
+3 返回类型和return语句
+不要返回局部对象的引用或指针。
+如果函数返回的是列表，那么返回值类型是vector<T>。
+main函数可以没有return语句。
+因为数组不能拷贝，所以函数不能返回数组。不过可以返回数组的指针或引用。数组的维度必须跟在函数名后面。
+int (*func(int i ))[10];
+尾置返回类型 auto func(int) -> int(*)[10];
+
+4 函数重载
+一个拥有顶层const的形参无法和另一个没有顶层const的形参区分开来：比如
+lookup(Phone)和lookup(const Phone)	lookup(Phone*)和lookup(Phone* const)
+底层const是可以重载的：
+lookup(Account&)和lookup(const Account&)	lookup(Account*)和lookup(const Account*)
+const_cast可以将const string&转换成string &
+
+5 特殊用途语言特性
+默认实参，一旦某个形参被赋予了默认值，它后面的所有形参都必须有默认值。
+调用函数一般比求等价表达式的值要慢一些，内联函数可避免函数调用的开销，它会在调用点上“内联地”展开。
+在函数的返回类型前面加上关键字inline，这样就可以将它声明为内联函数。
+一般来说，内联机制用于优化规模较小，流程直接，频繁调用的函数。很多编译器都不支持内联递归函数。
+constexpr是指能用于常量表达式的函数。该函数的返回类型及所有形参的类型都得是字面值类型，而且函数体中必须有且只有一条return语句。
+constexpr被隐式的指定为内联函数。
+constexpr size_t scale(size_t cnt){return new_sz() * cnt;} scale(2)是常量表达式；int i = 2;scale(i)不是常量表达式。
+内联函数和constexpr函数通常定义在头文件中。
+assert是一种预处理宏，所谓预处理宏其实是一个预处理变量，它的行为类似于内联函数。
+assert(expr)首先对expr求值，如果表达式为假，assert输出信息并终止程序的执行。
+assert宏定义在cassert头文件中，预处理名字由预处理器而非编译器管理，因此我们可以直接使用预处理名字而无须提供using声明，使用assert而不是std::assert。
+assert的行为依赖于一个名为NDEBUG的预处理变量的状态。如果定义了NDEBUG，则assert什么都不做。
+使用__func__输出当前调试的函数的名字。它是一个静态数组。
+预处理器还定义了另外4个对于程序测试很有用的名字：
+__FILE__存放文件名的字符串字面值；__LINE__存放当前行的整型字面值；__TIME__存放文件编译时间的字符串字面值；__DATA__存放编译日期。
+
+6 函数匹配
+
+7 函数指针
+函数的类型由它的返回类型和新参类型共同决定，与函数名无关。
+函数类型bool(const string &, const string &)的指针bool (*pf)(const string &, const string &);
+当我们把函数名作为一个值使用时，该函数自动转换成指针。pf = lengthCompare或者pf = &lengthCompare
+我们还能直接使用指向函数的指针调用该函数，无须提前解引用指针pf("Hello","Hi")或者(*pf)("Hello","Hi")
+可以直接把函数作为实参使用，此时它会自动转换成指针。
+直接使用函数指针类型显得冗长而烦琐，类型别名和decltype能让我们简化使用函数指针的代码。
+typedef bool Func(const string&, const string&)
+typedef decltype(lengthCompare) Func2
+typedef bool(*FuncP)(const string&, const string&)
+typedef decltype(lengthCompare) *FuncP2
+以上都是等价的
+要想声明一个返回函数指针的函数，最简单的办法是使用类型别名：using PF = int(*)(int*, int);
+将decltype作用于某个函数时，它返回函数类型而非指针类型。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

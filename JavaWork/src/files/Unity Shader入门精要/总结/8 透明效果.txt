@@ -1,0 +1,10 @@
+实践：透明度测试
+Chapter8-AlphaTest
+透明度混合
+Chapter8-AlphaBlend
+开启深度写入的半透明效果
+Chapter8-AlphaBlendZWrite
+透明度测试的双面渲染
+Chapter8-AlphaTestBothSided
+透明度混合的双面渲染
+Chapter8-AlphaBlendBothSided

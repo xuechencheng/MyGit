@@ -1,0 +1,106 @@
+性能分析器概述
+比较什么的性能分析结果，由此衡量改进情况？
+代码更改前后
+
+Profiler 窗口
+性能分析器不会保留所有记录的帧，因此第一帧的概念应该是什么？
+仍然保留在内存中的最早的帧
+使用什么按钮可以将记录的帧写入文件？相应地，Load 按钮读取先前保存的数据。
+Save
+打开什么后，将分析所有的脚本代码，也就是说会记录所有函数调用？这有助于了解游戏代码中的确切时间使用情况。
+Deep Profile
+手动分析脚本代码块的开销比使用深度性能分析要小。使用什么脚本函数可启用和禁用关于代码段的性能分析？
+Profiler.BeginSample 和 Profiler.EndSample
+以固定帧率运行或与垂直空白空间同步运行时，Unity会记录什么中的等待时间？
+Wait For Target FPS
+默认情况下，性能分析器中不会显示此时间量。要查看用于等待的时间，可切换什么？
+View SyncTime
+时间轴包含几个区域：CPU Usage、Rendering和Memory。单击面板中的关闭按钮可删除这些区域，而使用性能分析器控件栏中的什么下拉选单可重新添加这些区域？
+Add Area
+标签区域中的彩色方块可以控制是否显示关联的时间轴。要从显示中删除样本，请单击什么。该键将变暗，且数据将从图表中删除。此功能很有用，例如，可用于找出 CPU 图中产生尖峰的原因。
+颜色键
+为了能够连接到 Unity 播放器，必须将Unity播放器作为什么（菜单：File > Build Settings）启动？
+Development build
+
+CPU 使用率性能分析器 (CPU Usage Profiler)
+什么列表示在特定函数中所用的时间量，不包括调用子函数所用的时间？
+Self
+什么列显示当前帧中已分配并稍后由垃圾回收器收集的内存量？将此值保持为零可防止垃圾回收器造成帧率不稳。
+GC Alloc
+CPU 性能分析器的什么部分记录不属于 Rendering、Scripts、Physics、Garbage Collection 或 VSync 的所有方面的总和？此部分包括 Animation、AI、Audio、Particles、Networking、Loading 和 PlayerLoop。
+Others
+参考文档：Physics Profiler 标记的含义
+CPU性能分析器能够检测并警告一些常见的性能问题。查看CPU Usage时，这些问题会显示在下方面板的哪里？
+Warning列中
+
+渲染性能分析器 (Rendering Profiler)
+
+内存性能分析器 (Memory Profiler)
+参考文档：Simple模式下各个参数的含义
+Detailed视图用于创建当前状态的快照。使用什么按钮可捕获详细的内存使用情况？
+Take Sample
+参考文档：Detailed模式下各个参数的含义
+
+音频性能分析器 (Audio Profiler)
+
+物理性能分析器 (Physics Profiler)
+当出现需要很长时间的复杂逻辑或图形帧时，Physics Profiler必须每帧多次调用物理模拟。这意味着已经占用大量资源的帧会占用更多的时间和资源，这很容易导致物理模拟因为什么值（可在Edit > Project Settings > Time中设置）而暂时停止？
+Maximum Allowed Timestep
+可在项目中检测到这一点，方法是选择 CPU Usage Profiler 并在 Overview 部分中检查什么函数的调用次数？
+Physics.Processing 或 Physics.Simulate
+在此示例图中，什么列中的值 1 表示物理模拟在最后一个逻辑帧上被调用一次？调用计数接近 10 可能表示存在问题。
+Calls
+
+GPU 性能分析器 (GPU Profiler)
+
+全局光照性能分析器 (Global Illumination Profiler)
+
+UI 性能分析器 (UI Profiler)
+用户与UI交互（单击按钮、更改滑动条值等）时将记录标记，然后绘制（如果启用）为图表上的垂直线和标签。
+标记 (Marker)
+UI 系统尝试批量处理绘制调用。两个对象无法一起批处理的原因有很多。
+批次 (Batch)
+批次中断原因
+不与画布共面：
+批处理需要对象的矩形变换与画布共面（未旋转）。
+画布注入索引：
+CanvasGroup 组件存在并强制新建批次，即在其余部分上显示组合框的下拉列表时。
+不同的材质实例、矩形裁剪、纹理、A8 纹理用法：
+只有具有相同材质、遮罩、纹理、纹理 Alpha 通道用法的对象才能一起批处理。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

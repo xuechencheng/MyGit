@@ -1,0 +1,77 @@
+要在2D或3D模式之间更改模式，需要执行什么操作？
+Edit>Project Settings>Editor菜单调出Editor Settings Inspector。将Default Behavior Mode设置为2D或3D。
+2D模式下和3D模式不同的地方？
+1，导入的任何图像都被假定为2D图像并设置为精灵模式；
+2，启用Sprite Packer
+3，Scene视图设置为2D
+4，默认游戏对象没有实时方向光。
+5，摄像机设置为Orthographic。
+6，Lighting的一些属性
+新场景将禁用Skybox。
+Ambient Source设置为Color。（颜色设置为深灰色：RGB：54,58,66。）
+Precomputed Realtime GI设置为off。
+Baked GI设置为off。
+Auto-Building设置为off。
+参考文档：Unity > Preferences 偏好设置
+使用什么可在多个组件和资源之间重用属性设置，还可指定新组件的默认属性以及资源的导入设置？
+预设
+可使用哪里查看和选择要用于默认设置的预设？
+Preset Manager
+要将设置保存到预设，执行什么操作？
+单击Inspector窗口右上角的 Preset图标。在Select Preset窗口中单击 Save current to。
+要将预设应用于设置管理器、现有组件或资源导入设置，执行什么操作？
+1.在Inspector中，单击Preset图标；2.在Select Preset窗口中，搜索并选择要应用的预设。
+参考文档：Building Settings界面设置
+参考文档：Project Settings界面设置
+Project Settings
+	Input Manager
+	Tags and Layers
+	Audio Manager
+	Time Manager
+	Player Settings
+	Physics Manager
+	Physics 2D Settings
+	Quality Settings
+	Graphics Settings
+	Network Manager
+	Editor Settings
+	Script Execution Order 设置
+	Preset Manager
+选择模拟较慢的互联网连接速度，从而测试低带宽地区用户的游戏体验的功能是什么？
+网络仿真
+如何启用网络仿真功能？
+Edit>Network Emulation
+网络仿真仅影响什么类，不会改变或模拟用.NET套接字编写的专用网络代码？
+Network和NetworkView
+什么会自动创建和维护.sln和.csproj文件，每当在Unity中添加/重命名/移动/删除文件时都会重新生成.sln和.csproj文件？
+Unity
+如果不想向Unity发送匿名分析数据，可以禁用什么？
+Editor Analytics
+Editor中的Project窗口的内容直接对应于什么文件夹的内容？
+Assets
+放在什么文件夹中的脚本不是运行时脚本，只在开发期间向Editor添加功能，并在运行时在构建中不可用？
+Editor
+Editor脚本可以使用通过什么函数按需加载的资源文件？
+EditorGUIUtility.Load 
+此函数在名为什么的文件夹中查找资源文件？
+Editor Default Resources
+只能有一个Editor Default Resources文件夹，且必须将其放在哪里？
+项目的根目录，直接位于Assets文件夹中。
+什么函数在场景中放置一个图标，作为特殊对象或位置的标记？
+Gizmos.DrawIcon
+必须将用于绘制此图标的图像文件放在名为什么的文件夹中？
+Gizmos
+只能有一个Gizmos文件夹，且必须将其放在哪里？
+项目的根目录
+插件是通常是什么格式？
+用C/C++编写而成的DLL
+将插件放在名为什么的文件夹中，这样才能被Unity检测到？
+Plugins 
+可从脚本中按需加载资源，而不必在场景中创建资源实例以用于游戏。为此，应将资源放在什么的文件夹中？
+Resources
+如果Resources文件夹是Editor的子文件夹，则其中的资源可通过Editor脚本加载，但会从构建中会怎么样？
+剥离
+将一个文件放在名为什么的文件夹中，就会将其按原样复制到目标计算机，然后就能从特定文件夹中访问该文件？
+StreamingAssets
+只能有一个StreamingAssets文件夹，且必须将其放在哪里？
+项目的根目录

@@ -1,0 +1,163 @@
+界面
+功能界面
+Rendering
+	Lighting Settings
+	Light Explorer
+	Occlusion Culling
+Animation
+	Animation
+	Animator
+Audio
+	Audio Mixer
+Sequencing
+	Timeline
+Analysis
+	Profiler
+	Frame Debugger
+	Physics Debugger
+2D
+	Sprite Editor
+	Sprite Packer
+AI
+	Navigation
+
+设置界面
+Build Settings
+Preferences
+Project Settings系列界面设置
+	Input Manager
+	Tags and Layers
+	Audio Manager
+	Time Manager
+	Player Settings
+	Physics Manager
+	Physics 2D Settings
+	Quality Settings
+	Graphics Settings
+	Editor Settings
+	Script Execution Order
+	Preset Manager
+
+资源导入
+模型与动画，图片，声音
+
+
+
+控件
+Effects
+	Halo
+	Lens Flare
+	Line Renderer
+	Particle System
+	Projector
+	Trail Renderer
+Event
+	Event System
+	Event Trigger
+	Graphic Raycaster
+	Physics 2D Raycaster
+	Physics Raycaster
+	Standlone Input Module
+	Touch Input Module
+Layout
+	Aspect Ratio Fitter
+	Canvas
+	Canvas Group
+	Canvas Scaler
+	Content Size Fitter
+	Grid Layout Group
+	Layout Element
+	Rect Transform
+	Vertical Layout Group
+Mesh
+	Mesh Filter
+	Mesh Renderer
+	Skinned Mesh Renderer
+	Text Mesh
+	TextMeshPro
+Miscellaneous
+	Aim Constraint
+	Animation
+	Animator
+	Billboard Renderer
+	Grid
+	Look At Constraint
+	Parent Constraint
+	Particle System Force Field
+	Position Constraint
+	Rotation Constraint
+	Scale Constraint
+	Sprite Mask
+	Sprite Shape Renderer
+	Terrain
+	Wind Zone
+Navigation
+	Nav Mesh Agent
+	Nav Mesh Obstacle
+	Off Mesh Link
+Physics
+	Box Collider
+	Capsule Collider
+	Character Controller
+	Character Joint
+	Cloth
+	Configurable Joint
+	Constant Force
+	Fixed Joint
+	Hinge Joint
+	Mesh Collider
+	Rigidbody
+	Sphere Collider
+	Spring Joint
+	Terrain Collider
+	Wheel Collider
+Playable Director
+
+	
+动画
+Timeline
+物理
+声音
+导航
+UI
+
+灯光
+粒子
+优化
+AssetBundle
+Shader
+	
+	
+环境
+地形和树木，灯光，粒子，Shader，
+
+
+
+战斗
+动画，Timeline，物理，寻路，UI，声音
+
+
+底层
+AssetBundle，优化
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

@@ -1,0 +1,111 @@
+声明变量name，属性的set设置为private
+string name;
+public string Name{
+	get{return name;}
+	private set {name = value;}
+}
+不声明变量直接使用属性
+public string Name{get; private set;}
+声明变量只读，不能更改
+readonly string name;
+对Product列表进行排序
+class ProductNameComparer : IComparer<Product>{
+	public int Compare(Product x, Product y){
+		return x.Name.CompareTo(y.Name);
+	}
+}
+products.Sort(new ProductNameComparer());
+使用delegate进行排序
+products.Sort(delegate(Product x, Product y){
+	return x.Name.CompareTo(y.Name);
+});
+使用Lambda表达式进行排序
+products.Sort((x,y) => x.Name.CompareTo(y.Name));
+使用扩展方法进行排序
+foreach(Product product in products.OrderBy(p => p.Name)){
+	Console.WriteLine(product);
+}
+打印价格大于10的商品
+Predicate<Product> test = delegate(Product p){return p.Price >10;};
+List<Product> mathes = products.FindAll(test);
+Action<Product> print = Console.WriteLine;
+mathes.ForEach(print);
+将上述语句合并
+products.FindAll(delegate(Product p){return p.Price > 10;}).ForEach(Console.WriteLine);
+使用Lambda表达式
+foreach(Product product in products.where(p => p.Price > 10)){
+	Console.WriteLine(product);
+}
+值类型变量声明为空的方法
+decimal? price;
+public decimal? Price{
+	get{return price;}
+	private set { price = value;}
+}
+显示未知价格的商品
+foreach(Product product in products.Where(p=> p.Price == null)){
+	Console.WriteLine(product.Name);
+}
+使用delegate进行改写
+products.FindAll(delegate(Product p){return p.Price == null;}).ForEach(Console.WriteLine);
+创建一个参数的构造函数的方法
+public Product(string name, decimal? price = null)
+LINQ是什么意思？
+语言集成查询
+C#3几乎所有特性都是为了构建什么？
+LINQ
+使用LINQ查询价格大于10的商品
+var filtered = from Product p in products
+			   where p.Price > 10
+			   select p;
+添加供应商类Supplier
+var filtered = from p in products
+			   join s in suppliers
+			    on p.SupplierID equals s.SupplierID
+			   where p.Price > 10
+			   orderby s.Name,p.Name
+			   select new {SupplierName = s.Name, ProductName = p.Name}
+使用LINQ读取XML内容
+XDocument doc = XDocument.Load("data.xml");
+var filtered = from p in doc.Descendants("Product")
+			   join s in doc.Descendants("Supplier")
+				   on (int)p.Attribute("SupplierID")
+				   equals (int)s.Attribute("SupplierID")
+			   where (decimal)p.Attribute("Price") > 10
+			   orderby (string)s.Attribute("Name"),
+					   (string)p.Attribute("Name")
+			   select new{SupplierName = (string)s.Attribute("Name"),ProductName = (string)s.Attribute("Name")};
+使用LINQ查询数据库
+using(LinqDemoDataContext db = new LinqDemoDataContext())
+{
+	var filtered = from p in db.Products
+				   from s in db.Suppliers
+				       on p.SupplierID equals s.SupplierID
+				   Where p.Price > 10
+				   orderby s.Name, p.Name
+				   select new{SupplierName = s.Name, ProductName = p.Name}
+}
+C#4最重要的主题是什么？
+互操作性
+使用COM将数据保存到Excel中
+var app = new Application{Visible = false};
+Workbook workbook = app.Workbooks.add();
+Worksheet worksheet = app.ActiveSheet;
+int row = 1;
+foreach(var product in Product.GetSampleProducts().Where(p=> p.Price != null)){
+	worksheet.Cells[row,1].Value = product.Name;
+	worksheet.Cells[row,2].Value = product.Price;
+}
+workbook.SaveAs(Filename:"dome.xls",FileFormat:XlFileFormat.xlWorkbookNormal);
+app.Application.Quit();
+与Python语言就行交互
+ScriptEngine engine = Python.CreateEngine();
+ScriptEngine scope = engine.ExecuteFile("FindProducts.py");
+dynamic products = scope.GetVariable("products");
+Windows Forms中的线程有两条金科玉律
+1，不能阻塞UI线程 2，不能在任何其他线程访问UI元素
+使用什么表达式进行异步代码？
+await
+本书会提到哪三种特性？
+C#语言本身特性，运行时特性以及.NET框架库的特性
+

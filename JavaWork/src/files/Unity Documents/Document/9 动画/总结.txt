@@ -1,0 +1,13 @@
+动画层（复用状态机）
+StateMachineBehaviour脚本
+子状态机
+目标匹配
+反向运动学
+混合树
+Animator Override Controller
+重定向人形动画
+Animator 组件 (Animator Component)
+Animator Controller
+创建AnimatorController
+动画状态
+动画过渡

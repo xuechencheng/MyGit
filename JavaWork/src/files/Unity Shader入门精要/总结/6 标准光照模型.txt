@@ -1,0 +1,12 @@
+标准光照模型包含的光照内容：
+自发光，高光反射，漫反射和环境光
+
+实践：漫反射逐顶点光照
+	  逐像素光照
+	  兰伯特模型
+实践：逐顶点的高光反射
+	  逐像素的高光反射
+	  Blinn-Phong光照模型
+
+总结性：
+Chapter6-BlinnPhongUseBuildInFunctions

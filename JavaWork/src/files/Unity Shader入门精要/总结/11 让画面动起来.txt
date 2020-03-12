@@ -1,0 +1,10 @@
+实践：序列帧动画
+Chapter11-ImageSequenceAnimation
+滚动的背景
+Chapter11-ScrollingBackground
+流动的河流
+Chapter11-Water
+广告牌
+Chapter11-Billboard
+带阴影的动画
+Chapter11-VertexAnimationWIthShadow

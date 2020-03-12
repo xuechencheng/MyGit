@@ -1,0 +1,57 @@
+Unity不使用字符串名称对什么属性进行内部寻址？为了加快速度，所有属性名称都经过哈希处理为属性ID，实际上正是这些ID用于寻址属性。
+Animator、Material和Shader
+每当在Animator、Material或Shader上使用Set或Get方法时，请使用什么方法而非字符串值方法？
+整数值方法
+什么函数是用于Animator属性名称的对应 API？
+Animator.StringToHash
+什么函数是用于Material和Shader属性名称的对应 API？
+Shader.PropertyToID
+将RaycastAll调用替换为什么？将SphereCastAll调用替换为 SphereCastNonAlloc，以此类推。
+RaycastNonAlloc
+Mono和IL2CPP运行时以特定方式处理从什么类派生的类的实例？在实例上调用方法实际上是调用引擎代码，此过程必须执行查找和验证以便将脚本引用转换为对原生代码的引用。
+UnityEngine.Object
+将此类型变量与Null进行比较的成本虽然低，但远高于与什么类进行比较的成本？因此，请避免在紧凑循环中或每帧运行的代码中进行此类Null比较。
+纯C#类
+什么比浮点数学更快，而浮点数学比矢量、矩阵或四元数运算更快？
+整数数学
+对于必须在HTML格式的颜色字符串(#RRGGBBAA)与Unity的原生Color及Color32格式之间进行转换的应用程序来说，使用什么？
+ColorUtility
+最好完全避免在生产代码中使用什么接口？由于此类 API 要求 Unity 遍历内存中的所有游戏对象和组件，因此它们会随着项目规模的扩大而产生性能问题。
+Object.Find 和 Object.FindObjectOfType
+在内部，Unity的Camera.main属性会调用什么（这是 Object.FindObject 的一个专用变体）？访问此属性并不比调用Object.FindObjectOfType更高效。
+Object.FindObjectWithTag
+如果代码必须寻址主摄像机，强烈建议您执行以下两项操作之一：
+访问 Start 或 OnEnable 回调中的 Camera.main，并缓存所产生的引用。
+构造一个可提供或添加活动摄像机引用的Camera Manager类。
+UnityEngine.Debug日志记录API并未从非开发版中剥离出去，如果被调用，则会怎么样？
+写入日志
+通过使用什么属性来修饰这些方法，Conditional 属性所使用的一个或多个定义将决定被修饰的方法是否包含在已编译的源代码中。
+[Conditional]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

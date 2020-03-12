@@ -1,0 +1,44 @@
+1.A guide to optimizing Memory
+2.Managed Memory
+The Unity runtime doesn't return managed memory to the operating system for reuse until the user terminates the application. 
+Due to this unpredictable behavior, it is critical to know how Assets occupy managed memory:
+	Use Destroy(myObject) to destroy an Object and release its memory. Setting a reference to a Object to null does not destroy it.
+	You should set persistent (long-term) objects as classes and ephemeral (short-term) objects as structs. Structs are not allocated on the heap and thus not garbage collected.
+	Reuse temporary work buffers to keep temporary garbage low, instead of allocating frequently.
+	An Enumerator does not clean up its memory until it exits.
+	You should avoid never-ending Coroutines, especially when allocating large amounts of managed memory within on, as Coroutines hold onto stack allocations on the heap until the Coroutine ends.
+3.IL2CPP & Mono
+Benefits and drawbacks of different Scripting Backends
+	IL2CPP
+		Code generation is heavily improved compared to Mono.
+		Debugging Script code in C++ from top to bottom is possible.
+		You can enable Engine code stripping to reduce code size.
+		Build times are longer than with Mono.
+		Only supports Ahead of Time (AOT) compilation.
+	Mono
+		Faster build times than IL2CPP.
+		Supports more managed libraries due to Just In Time compilation (JIT).
+		Supports runtime code execution.
+		Must ship managed assemblies (.dll files that mono- or .net- produces).
+Tip: You should use IL2CPP to both develop and ship your Project. If iteration times end up being too slow using IL2CPP, switch temporarily to the Mono Scripting Backend during development to improve iteration speed.
+
+Code stripping in Unity
+Managed code stripping
+Unity strips managed code at the method level. To change the Stripping Level, go to the Player Settings window, scroll down to the Other Settings section, locate the Stripping Level drop-down menu and select Strip Assemblies .
+Native code stripping
+Unity enables Strip Engine Code by default in the Player Settings and enables native code stripping. Enable Strip Engine Code to remove unused modules and classes in the native Unity engine code. Disable Strip Engine Code to preserve all of the modules and classes in the native Unity engine code.
+
+4.Native Memory
+
+
+
+
+
+
+
+
+
+
+
+
+

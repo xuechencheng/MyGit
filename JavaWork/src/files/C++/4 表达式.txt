@@ -1,0 +1,13 @@
+当一个对象被用作右值的时候，用的是对象的值（内容）；当对象被用作左值的时候，用的是对象的身份（在内存中的位置）。
+除非必须，否则不用递增递减运算符的后置版本。
+ptr->mem等价于(*ptr).mem。
+位运算符提供检查和设置二进制位的功能。
+位运算符：~位求反，<<左移，>>右移，&位与，^位异或，|位或。
+sizeof运算符返回一条表达式或一个类型名字所占的字节数。
+命名的强制类型转换包含了static_cast,dynamic_cast,const_cast和reinterpret_cast。
+任何具有明确定义的类型转换，只要不包含底层const，都可以使用static_cast。
+cosnt_cast只能改变运算对象的底层const。
+reinterpret_cast通常为运算对象的位模式提供较低层次上的重新解释。
+旧式的强制类型转换有两种形式：type(expr)和(type)expr
+根据所涉及的类型不同，旧式的强制类型分别具有与const_cast,static_cast或reinterpret_cast相似的行为。
+
