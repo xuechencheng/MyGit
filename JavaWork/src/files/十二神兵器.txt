@@ -1,7 +1,7 @@
 UnityDoc
 设计模式
 
-C++ primer				838		560
+C++ primer				838		270
 Effective C++			300
 More Effective C++		300
 
@@ -14,4 +14,4 @@ UnityShader入门精要
 OpenGL编程指南			664
 OpenGL超级宝典			700
 
-4404 
+4110

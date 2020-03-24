@@ -6,6 +6,7 @@ iostream定义了用于读写流的基本类型，fstream定义了读写命名�
 不能拷贝或对IO对象赋值。
 IO操作一个与生俱来的问题是可能发生错误，一些错误是可恢复的，其他错误则发生在系统深处。
 参考文档：IO库条件状态
+4种IO库条件状态：strm::badbit,failbit,eofbit,goodbit
 确定一个流的状态的最简单的方法是将它当作一个条件来使用while(cin >> word)。
 IO库定义了一个与机器无关的iostate类型，它提供了表达流状态的完整功能。IO库定义了4个iostate类型的constexpr值表示特定的位模式。
 badbit表示系统级错误，failbit表示可恢复错误，比如期望读取数值却读出一个字符等错误。如果到达文件结束位置，eofbit和failbit都会被置位。
@@ -30,9 +31,9 @@ ifstream从一个给定文件读取数据，ofstream向一个给定文件写入�
 可以定义一个空文件流对象，然后调用open将它与文件关联起来。
 调用open可能会失败，进行open是否成功的检测通常是一个好习惯。
 当一个fstream对象被销毁时，close会自动调用。
-每个流都有一个关联的文件模式，用来之处如何使用文件。
+每个流都有一个关联的文件模式，用来指出如何使用文件。
 参考文档：文件模式
-默认情况下，当我们打开一个ofstream时，文件的内容会被丢弃，阻止一个ofstream清空给定文件内容的方法是同时制定app模式。
+默认情况下，当我们打开一个ofstream时，文件的内容会被丢弃，阻止一个ofstream清空给定文件内容的方法是同时指定app模式。
 例子：ofstream out("file1", ofstream::out | ofstream::trunc)
 
 3 string流

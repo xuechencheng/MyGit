@@ -1,0 +1,6 @@
+条款1：视C++为一个语言联邦
+为了理解C++，你必须认识其主要的次语言，总共有四个：C，Object-Oriented C++,Template C++和STL。
+
+条款2：尽量以const,enum,inline替换#define
+使用const double AspectRatio = 1.653代替#define ASPECT_RATIO 1.653
+string对象通常比其前辈char*合宜。
