@@ -1,0 +1,42 @@
+1，基本内置类型
+类型选择
+	unsigned
+	int, long long
+	double, long double
+2，变量
+	extern
+
+3，复合类型
+
+4，const限定符
+	const
+	顶层const：int *const curErr = &errNumb;
+	底层const：const int* curErr = &errNumb;
+	constexpr
+
+5 处理类型
+	类型别名：typedef和using
+	auto：推断会忽略引用和底层const
+	decltype
+
+6，自定义数据结果
+	头文件保护
+		预处理命令：#define #ifdef #ifndef #endif
+		#ifndef SALES_DATA_H
+		#define SALES_DATA_H
+		#include <string>
+		struct Sales_data{};
+		#endif
+		使用#pragma once可以获得相同的效果。但是，这种方式不支持跨平台！
+
+
+
+
+
+
+
+
+
+
+
+

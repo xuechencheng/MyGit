@@ -1,0 +1,21 @@
+1，使用关联容器
+	两个主要的关联容器：map和set。
+	按关键字有序保存元素：map,set,multimap和multiset
+	无序集合：unordered_map,unordered_set,unordered_multimap和unordered_multiset
+	查询set元素 exclude.find(word) == exclude.end()
+
+2 关联容器概述
+
+对于有序容器，map,set,multimap和multiset的关键字类型必须定义元素比较的方法。
+如果Sales_data类没有定义<运算符，但是有一个compareIsbn函数，那么可以如下方法进行定义：
+	multiset<Sales_data, decltype(compareIsbn)*> bookstore(CompareIsbn);
+
+3 关联容器操作
+	map和set都支持begin和end操作。
+	关联容器的insert成员向容器添加一个元素或一个元素范围。
+	关联容器删除元素的方法erase。
+	查找一个特定元素是否在容器中，使用find方法。
+
+4 无序容器
+	无序关联容器不是使用比较运算符来组织元素，而是使用一个哈希函数和关键字类型的==运算符。
+	在关键字的元素没有明显的序关系情况下，无序容器是非常有用的。

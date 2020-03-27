@@ -1,0 +1,95 @@
+类型选择
+	unsigned
+	int, long long
+	double, long double
+头文件保护
+	预处理命令：#define #ifdef #ifndef #endif
+类型转换
+	static_cast,dynamic_cast,const_cast和reinterpret_cast。
+	任何具有明确定义的类型转换，只要不包含底层const，都可以使用static_cast。
+	const_cast只能改变运算对象的底层const。
+尾置返回类型 auto func(int) -> int(*)[10];	
+函数指针
+
+IO
+	iostream定义了用于读写流的基本类型
+	fstream定义了读写命名文件类型
+	sstream定义了读写内存string对象的类型	
+顺序容器
+	六种顺序容器：vector,deque,list,forward_list,array,string
+	顺序容器适配器：stack,queue和priority_queue
+泛型算法
+	find sort unique 
+	lambda表达式：[capture list](parameter list) -> return type{function body}
+	bind：auto g = bind(f, a, b, _2, c, _1);调用g( _1, _2)映射为f( a, b, _2, c, _1)
+使用关联容器
+	两个主要的关联容器：map和set。
+	有序无序，可重复不可重复
+	insert，erase，find
+动态内存
+	动态内存的管理通过new和delete。
+	两种智能指针：shared_ptr和unique_ptr。
+	weak_ptr指向shared_ptr所管理的对象。
+拷贝控制
+	拷贝构造函数
+		Sales_data::Sales_data(const Sales_data& rhs) {}
+	拷贝赋值运算符
+		Sales_data& Sales_data::operator=(const Sales_data &rhs){}
+	移动构造函数
+		Sales_data::Sales_data(Sales_data&& rhs) noexcept{}
+	移动赋值运算符
+		Sales_data& Sales_data::operator=(Sales_data &&rhs) noexcept{}
+	析构函数
+		Sales_data::~Sales_data()
+	=default
+	=delete
+	noexcept
+重载运算符与类型转换
+	输入和输出运算符
+	算术和关系运算符
+		赋值运算符
+		下标运算符
+		递增和递减运算符
+		成员访问运算符
+	函数调用运算符
+	function<int(int,int)>
+面向对象程序设计
+	虚函数：virtual	ovveride，动态绑定，基类通常都应该定义一个虚析构函数，纯虚函数（抽象基类）
+	基类三种访问说明符：public，protected或者private。
+	final
+	动态绑定只有当我们通过指针或引用调用虚函数时才会发生。
+	派生类的拷贝控制成员
+模板与泛型编程
+	函数模版
+		template <typename T>
+		int compare(const T &v1, const T &v2){}
+	编写泛型代码的两个重要原则：1，模版中的函数参数是const的引用；2，函数体中的条件判断仅使用<比较运算
+	类模版
+		template <typename T> class Blob{}
+	默认模版实参
+	显示实例化
+	尾置返回类型与类型转换：脱去引用
+	可变参数模板
+	模板特例化
+
+	
+	
+关键字
+	assert和NDEBUG
+	const
+		顶层const，底层const，const函数声明，const形参
+	constexpr
+		constexpr函数不一定返回常量表达式。
+	extern
+	sizeof
+		求数组中元素的个数constexpr size_t sz = sizeof(ia) / sizeof(*ia);
+	using
+		using Hello=int
+		using namespace::name
+	inline
+		
+	auto
+	decltype
+	typedef
+
+	friend

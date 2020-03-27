@@ -1,0 +1,61 @@
+1，动态内存与智能指针
+自动管理：
+	静态内存：局部static对象，类static数据成员和定义在任何函数外的变量
+	栈内存：定义在函数内的非static对象
+手动管理：
+	堆：动态分配的对象	
+动态内存的管理通过new和delete。
+两种智能指针：shared_ptr和unique_ptr。
+weak_ptr指向shared_ptr所管理的对象。
+
+make_shared函数。
+例子：shared_ptr<int> p3 = make_shared<int>(42);
+当进行拷贝或赋值操作时，每个shared_ptr都会记录有多少个其他shared_ptr指向相同的对象。
+
+使用new和delete管理动态内存存在三个常见问题：
+1，忘记delete内存；2，使用已经释放掉的内存；3，同一块内存释放两次
+
+使用new创建智能指针
+shared_ptr<int> p1 = new int(1024);//错误 shared_ptr<int> p2(new int(1024))//正确
+当我们创建shared_ptr时，可以传递一个（可选的）指向删除器函数的参数：shared_ptr<connection> p(&c, end_connection)
+
+
+
+2 动态数组
+大多数应用应该使用标准库容器而不是动态分配的数组。动态数组并不是数组类型。
+int *pia = new int[get_size()];//get_size必须返回整型，但不必是常量。
+
+标准库allocator类帮助我们将内存分配和对象构造分离开来。
+
+
+3 使用标准库：文本查询程序
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

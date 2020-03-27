@@ -1,0 +1,28 @@
+1，基础
+
+2，算术运算符
+
+3，逻辑和关系运算符
+
+4，赋值运算符
+
+5，递增和递减运算符
+
+6，成员访问运算符
+
+7，条件运算符
+
+8，位运算符
+	位运算符：~位求反，<<左移，>>右移，&位与，^位异或，|位或。
+
+9，sizeof运算符
+	sizeof
+	求数组中元素的个数constexpr size_t sz = sizeof(ia) / sizeof(*ia);
+
+10，逗号运算符
+
+11，类型转换
+	static_cast,dynamic_cast,const_cast和reinterpret_cast。
+	任何具有明确定义的类型转换，只要不包含底层const，都可以使用static_cast。
+	const_cast只能改变运算对象的底层const。
+12，运算符优先级表

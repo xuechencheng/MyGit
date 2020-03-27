@@ -1,0 +1,51 @@
+1 顺序容器概述
+六种顺序容器：vector,deque,list,forward_list,array,string
+	string和vector：连续的内存空间，由下标来计算地址是非常快速的，但是在中间位置添加或删除元素就会非常耗时。
+	list和forward_list：任何位置的添加和删除操作都很快速，不支持元素的随机访问。
+	deque支持快速的随机访问。在deque的中间位置添加或删除元素代价很高。但是，在deque的两端添加或删除元素很快。
+	array是一种更安全，更容易使用的数组类型。
+
+2 容器库概览
+	begin和end有多个版本：带r的版本返回反向迭代器。begin,rbegin,cbegin和crbegin。
+	交换c1和c2：swap(c1, c2)或者c1.swap(c2)，swap通常比从c2向c1拷贝元素快很多。
+
+3 顺序容器操作
+	添加的方法：push，insert和emplace
+	删除的方法：pop_back(),pop_front(),erase(),clear()
+
+4 vector对象是如何增长的
+
+5 额外的string操作
+
+6 容器适配器
+	除了顺序容器外，标准库还定义了三个顺序容器适配器：stack,queue和priority_queue。
+	stack和queue都是基于deque实现的，priority_queue实在vector之上实现的。
+	stack可以使用除了array和forward_list之外的任何容器类型来构造。
+	queue可以构造于list和deque上，但不能基于vector构造。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

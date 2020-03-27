@@ -1,0 +1,19 @@
+1 IO类
+参考文档：IO库类型和头文件
+iostream定义了用于读写流的基本类型，fstream定义了读写命名文件类型，sstream定义了读写内存string对象的类型
+4种IO库条件状态：strm::badbit,failbit,eofbit,goodbit
+参考文档：导致缓冲刷新的原因
+
+2 文件输入输出
+文件模式
+
+3 string流
+
+
+
+
+
+
+
+
+
