@@ -1,0 +1,4 @@
+Jobs
+	要利用多个线程，可以使用[C# JobSystem]。
+	ECS提供了SystemBase类以及Entities.ForEach和IJobChunk Schedule（）和ScheduleParallel（）方法，用于在主线程之外转换数据。
+	ForEach是最简单的使用方法，通常需要更少的代码行来实现。对于Entities.ForEach无法处理的更复杂的情况，可以使用IJobChunk。
