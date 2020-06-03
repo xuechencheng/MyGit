@@ -1,0 +1,14 @@
+关键词：
+Package
+Package Manager
+
+
+
+Packages are newer, more tightly integrated versions of Asset packages
+How Unity works with packages
+When Unity opens a Project, the Unity Package Manager reads the Project manifest
+ (1) to figure out what packages to load in the Project. Then it sends a request (2) to the registry server (3) for each package that appears as a dependency in the manifest. The registry server sends the requested information and data back to the Package Manager (4), which then installs those packages (5) in the Project. Each Project has its own manifest which lists the packages to load as “dependencies” of the Project.
+ If you want to include a package in your Project, you must update the Project manifest to include it in the list of dependencies. If you want to, you can modify the Project manifest directly, but it is safer and easier to let the Package Manager do that. For more information on using the user interface, see the documentation for the Package Manager window.
+ 
+ How to use the Package Manager
+The Package Manager uses three interfaces to communicate with users, manifests, and registries:

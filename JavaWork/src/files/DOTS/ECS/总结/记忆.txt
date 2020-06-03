@@ -1,0 +1,124 @@
+Component：
+ECS中的组件是一个实现以下“接口”之一的结构体：
+		IComponentData
+		IBufferElementData
+		ISharedComponentData
+		ISystemStateComponentData
+		ISharedSystemStateComponentData
+
+Entity：
+Create entities:
+		1，设置ECS在运行时将放置在场景中的游戏对象和预设的游戏对象转换为实体。
+		2，在作业中创建多个实体的生成系统
+		3，使用EntityManager.CreateEntity
+			逐个创建实体：
+			创建多个实体：
+Entity queries：
+	EntityQuery m_Query = GetEntityQuery(typeof(RotationQuaternion), ComponentType.ReadOnly<RotationSpeed>());
+EntityQueryDesc:
+	var query = new EntityQueryDesc{
+	   None = new ComponentType[]{ typeof(Frozen) },
+	   All = new ComponentType[]{ typeof(RotationQuaternion), ComponentType.ReadOnly<RotationSpeed>()}}
+	EntityQuery m_Query = GetEntityQuery(query);
+
+Defining filters
+How：
+	两种筛选器：
+	Shared component filter：
+		m_Query.SetFilter(new SharedGrouping { Group = 1 });
+	Change filter：
+		m_Query.SetFilterChanged(typeof(Translation));
+
+Executing the query
+	EntityQuery执行其查询的方法：
+		ToEntityArray() 
+		ToComponentDataArray<T>
+		CreateArchetypeChunkArray()
+
+System：
+World Group System
+System types：
+	SystemBase
+	EntityCommandBufferSystem
+	ComponentSystemGroup
+	GameObjectConversionSystem
+	ComponentSystem and JobComponentSystem are phased out
+Create：
+	实习抽象类SystemBase
+	实现每帧调用的OnUpdate方法
+	OnCreate() OnStartRunning() OnStopRunning() OnDestroy()都是可选的。
+Entities.ForEach:
+	Entities.ForEach((ref Translation translation,in Velocity velocity) =>{
+                translation.Value += velocity.Value;}).Schedule();
+Job.WithCode:
+	Job.WithCode(() =>{for (int i = 0; i < randomNumbers.Length; i++){
+                randomNumbers[i] = randomGen.NextFloat();}}).Schedule();
+IJobChunk jobs:
+	[BurstCompile]
+	struct RotationSpeedJob : IJobChunk
+	{
+		public float DeltaTime;
+		public ArchetypeChunkComponentType<Rotation> RotationType;
+		[ReadOnly] public ArchetypeChunkComponentType<RotationSpeed> RotationSpeedType;
+		public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+		{
+			var chunkRotations = chunk.GetNativeArray(RotationType);
+			var chunkRotationSpeeds = chunk.GetNativeArray(RotationSpeedType);
+			for (var i = 0; i < chunk.Count; i++)
+			{
+				var rotation = chunkRotations[i];
+				var rotationSpeed = chunkRotationSpeeds[i];
+				if (chunk.Has<OptionalComp>(OptionalCompType))
+				{//...}
+			}
+		}
+	}
+System Update Order
+How：
+	可以使用System的类声明上的[UpdateInGroup]属性将系统放置在组中。
+	然后可以使用[UpdateBefore]和[UpdateAfter]属性指定组内的更新顺序。
+	
+Archetypes：
+What：
+	组件类型的一个不同的组合称为原型。
+
+Memory Chunks
+What:
+	ECS以“块”的形式分配内存，每个块由一个ArchetypeChunk对象表示。块始终包含一种原型的实体。
+World
+
+EntityCommandBuffer
+EntityCommandBuffer（ECB）类解决了两个重要问题：
+	在一个job中，你不能访问EntityManager。
+	执行结构更改（如创建entity）时，将创建同步点，并且必须等待所有作业完成。
+	EntityCommandBuffer抽象允许您将更改（来自作业或主线程）排队，以便它们稍后在主线程上生效。
+	ECS规定，以下行为都不能在Job中处理：
+		创建实体（Create Entities）
+		销毁实体（Destroy Entities）
+		给实体添加组件（Add Components）
+		删除实体的组件（Remove Components）
+	上面的四种行为都不能在Job中处理，于是，就有了EntityCommandBufferSystem。
+	EntityCommandBufferSystem可以让我们在Job里添加一些任务队列，然后在主线程中执行这些任务。
+	
+	
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

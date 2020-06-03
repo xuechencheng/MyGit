@@ -1,0 +1,60 @@
+第7章 迭代器与泛型for
+
+7.1 迭代器与closure
+所谓迭代器就是一种可以遍历一种集合中的所有元素的机制。
+在Lua中，通常将迭代器表示为函数，每调用一次函数，即返回集合中的下一个元素。
+例子：
+function values(t) local i = 0 return function() i = i + 1; return t[i] end end
+通常使用Lua编程的最终用户不会去订购一迭代器，而只是使用那些程序提供的迭代器。
+编程：编写allworlds迭代器
+
+7.2 泛型for的语义
+上述的迭代器都有一个缺点，就是需要为每个新的循环都创建一个新的closure。
+泛型for在循环过程内部保存了迭代器函数。实际上它保存着3个值：一个迭代器函数，一个恒定状态和一个控制变量。
+for var_1, ..., var_n in <explist> do <block> end等价于
+do 
+	local _f,_s,_var = <explist>
+	while true do
+		local var_1, ..., var_n = _f(_s,_var)
+		_var =var_1
+		if _var = nil then break end
+		<block>
+	end
+end
+
+7.3 无状态的迭代器
+无状态的迭代器自身不保存任何状态的迭代器，可以避免创建新的closure开销。一个典型的例子就是ipairs。
+编程：ipairs的实现
+函数pair和ipair类似，也是用于遍历一个table中的所有元素。不同的是，它的迭代器函数是Lua中的一个基本函数next。
+function pairs(t)
+	return next,t,nil
+end
+有些用户不喜欢通过pairs调用而直接使用next:
+for k,v in next,t do <loop body> do
+Lua会自动将for循环中表达式的结果调整为3个值。因此上例中得到了next,t和nil。
+编程：编写遍历链表的迭代器
+
+7.4 具有复杂状态的迭代器
+通常迭代器保存许多状态，可是泛型for却只提供一个恒定状态和一个控制变量用于状态的保存。
+一个简单的解决方法就是使用closure，或者还可以将迭代器所需的所有状态打包为一个table，保存在恒定状态中。
+编程：重写allwords迭代器
+尽可能地尝试编写无状态的迭代器，如果不行就应该尝试使用closure。通常一个基于closure实现的迭代器会比一个使用table的迭代器更为高效。
+
+7.5 真正的迭代器
+编程：使用迭代器风格重写allwords迭代器。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
