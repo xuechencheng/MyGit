@@ -1,0 +1,10 @@
+Image
+Image Type：
+1）Simple
+默认选项，就是Image显示为一张图片，图片会在rect范围内显示，恢复图片的默认尺寸，直接按下 Set Native Size
+2）Sliced
+切图需要设置图片的属性，九宫格
+3）Tiled
+这个模式很好理解，就是平铺的。
+4）Filled
+它这个填充的模式比较有意思

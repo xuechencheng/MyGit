@@ -1,0 +1,14 @@
+1，Render Mode
+1.1 Screen Space-Camera
+此模式我们需要一个Camera，这个相机的作用就是把它所投射获取到的界面当做UI界面。
+一般情况下，UI界面只是一个二维平面，所以把相机的投影设置为Orthographic，即正交投影，Culling　Mask设置为UI，表示只显示跟UI层相关的信息。
+接着再调整一下相机的Size，让他的大小与Canvas的保持一致，最后再设置一下相机的Z值，保证Canvas在相机之前就搞定了。
+模型显示在UI界面上，可以为模型新增一个Model层，然后UICamera的CullingMask增加Model　Layer，这样模型就可以被UICamera获取了，
+这时候只要把模型的Z轴值设置的比Canvas更靠近UICamera，就可以显示在普通UI界面上方了。
+
+1.2 Screen Space -OverLay
+可以理解为Unity为你自动设置好了UICamera，而且这个相机的Depth值是大于100的（相机能设置的最大Depth值为100），所以永远显示在最前面。
+此模式UICamera的Z值应该是-1000，所以Z值只要大于-1000并在UICamera的正交投影范围内，就有可能显示的UI界面上。
+
+1.3 World Space
+World Space就更简单了，就是把UI当做三维物体来处理。

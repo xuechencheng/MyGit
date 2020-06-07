@@ -1,0 +1,6 @@
+Text
+Align By Geometry：使用字形几何的范围来执行水平对齐，实际就是不勾选的时候，内容和rect上边会由一点距离，勾选之后就没有了。
+Horizontal Overflow：Wrap（包裹）：就是显示内容会被包裹在Text的Rect内
+　　				 Overflow（溢出）：就是内容不受rect限制，这样的话，所有内容都会在一行显示
+Best Fit：勾选的话，会把内容适应到rect内，全部显示出来，自动控制大小，你可以通过Min和Max属性，控制显示的最大和最小字体。
+Raycast Target：用来控制这个UI是否接收事件的开关

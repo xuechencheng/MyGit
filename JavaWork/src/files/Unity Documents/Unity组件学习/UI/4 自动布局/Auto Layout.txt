@@ -1,0 +1,26 @@
+The basic principles for how layout elements in a layout group are sized is as follows:
+First minimum sizes are allocated.
+If there is sufficient available space, preferred sizes are allocated.
+If there is additional available space, flexible size is allocated.
+
+Any Game Object with a Rect Transform on it can function as a layout element. They will by default have minimum, preferred, and flexible sizes of 0. Certain components will change these layout properties when added to the Game Object.
+
+Layout Element Component
+If you want to override the minimum, preferred, or flexible size, you can do that by adding a Layout Element component to the Game Object.
+
+Understanding Layout Controllers
+A layout controller may control its own layout element (the same Game Object it is on itself) or it may control child layout elements.
+A component that functions as a layout controller may also itself function as a layout element at the same time.
+
+Content Size Fitter
+The Content Size Fitter functions as a layout controller that controls the size of its own layout element. The simplest way to see the auto layout system in action is to add a Content Size Fitter component to a Game Object with a Text component.
+If you set either the Horizontal Fit or Vertical Fit to Preferred, the Rect Transform will adjust its width and/or height to fit the Text content.
+
+Aspect Ratio Fitter
+The Aspect Ratio Fitter functions as a layout controller that controls the size of its own layout element.
+It can adjust the height to fit the width or vice versa, or it can make the element fit inside its parent or envelope its parent. The Aspect Ratio Fitter does not take layout information into account such as minimum size and preferred size.
+
+Layout Groups
+A layout group doesn't control its own size. Instead it functions as a layout element itself which may be controlled by other layout controllers or be set manually.
+
+

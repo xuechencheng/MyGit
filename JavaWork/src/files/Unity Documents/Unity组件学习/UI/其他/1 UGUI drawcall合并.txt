@@ -1,0 +1,41 @@
+UGUI drawcall合并
+##一、 概念篇
+在学习本篇之前，你需要了解以下几个名词。
+
+bottomUI
+A是B的bottomUI需要满足：(单条只是必要条件，1、2、3合起来才是充分条件）
+B的mesh构成的矩形和A的mesh构成的矩形有相交，注意不是RectTransform的矩形相交，这点需要认真理解一下，下面给出一组案列帮助大家理解。
+A.siblingIndex < B.siblingIndex (即在Hierachy里A在B之上）
+如果B有多个UI满足1、2条规则，则B的bottomUI应取siblingIndex差值的绝对值最小的那个（有点绕哈，depth的案例有这种情况）
+
+合批
+当两个UI控件的材质球的instanceId（材质球的instanceId和纹理）一样，那么这两个UI控件才有可能合批
+
+depth
+depth是UGUI做渲染排序的第一参考值，它是通过一些简单的规则计算出来的。 在理解了bottomUI的基础上，depth就很好算了。先给出计算规则：见图
+1，按照树的深度遍历顺序来挨个遍历Hierachy下的UI节点
+2，如果该控件的bottomUI为空，那么该控件的depth为0
+3，如果不为空，与bottomUI是否能够合批，如果可以合批该UI控件的depth等于bottomUI的depth
+4，否则该UI控件的depth等于bottomUI的depth+1
+
+不要以为 I2 和 R2 的控件类型不一样就不能合批了，UGUI的渲染引擎不会去考虑两个UI控件类型是否一样，它只考虑两个UI控件的材质球及其参数是否一样，如果一样，就可以合批，否则不能合批。
+
+材质球ID
+材质球的 InstanceID
+
+纹理ID
+纹理的InstanceID
+
+二、排序and计算drawcall数
+有了上面的数据，UGUI会对所有的UI控件(CanvasRenderer)按depth、材质球ID、纹理ID做一个排序，那么这些字段的排序优先级也是有规定的：
+1，先按depth升序排序；2，如果depth相同，按材质球ID升序排序；3，如果材质球ID相同，按纹理ID降序排序；
+4，如果纹理ID相同，按siblingIndex升序排序。
+
+步骤一：先算各个UI控件的depth值
+步骤二：排序 把所有的UI控件都排好序了，得到了所谓的 VisibleList = {I2,R1,I1,T1}
+步骤三：合批。对depth相等的连续相邻UI控件进行合批（注意只有depth相等的才考虑合批，如果depth不相等，即使符合合批条件，也不能合批）。
+步骤四：计算drawcall。合批步骤完成后就可以计算drawcall数了，渲染顺序（就是我们最终排好序的顺序）只要打开 Window > Frame Debugger 窗口就可以轻松验证。
+
+合批策略有两点：1，中间层破坏合批 2，合图的策略（待续）
+
+https://blog.csdn.net/akak2010110/article/details/80953370

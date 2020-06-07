@@ -1,0 +1,6 @@
+Canvas Group
+Alpha	此组中的 UI 元素的不透明度。该值介于0和1之间，其中0表示完全透明，1表示完全不透明。
+		请注意，UI 元素也会保留自己的透明度，因此画布组的 Alpha 值将与各个元素的 Alpha 值彼此相乘。
+Interactable	确定此组件是否接受输入。当设置为 false 时，禁用交互。
+Block Raycasts	此组件是否作为射线投射的碰撞体？需要在连接到画布的图形射线投射器上调用 RayCast 函数。这_不_适用于 Physics.Raycast。
+Ignore Parent Groups	此组还会受到游戏对象层级视图中更上层的画布组 (Canvas Group) 组件中的设置所影响，还是会忽略并因此覆盖这些设置？
