@@ -1,1 +1,1 @@
-cd D:; cd MyGit;git add .;git ci -m "1";git push
+cd D:; cd work; cd MyGit;git add .;git ci -m "1";git push

@@ -1,0 +1,40 @@
+Controlling a tween
+You have 3 ways to manipulate a tween. All of them share the same method names, except for shortcut-enhanced ones which have an additional DO prefix.
+
+A. Via static methods and filters
+The DOTween class contains many static methods that allow you to control tweens.
+Each of them comes both in an "All" version (like DOTween.KillAll), which applies to all existing tweens, and a simple version (DOTween.Kill(myTargetOrId)) with a parameter that allows you to filter operations by a tween's id or target (id is set manually via SetId, while target is set automatically when creating a tween via a shortcut).
+Static methods additionally return an int, which represents all the tweens that were actually able to perform the requested operation.
+	﻿﻿﻿﻿﻿DOTween.PauseAll();
+	﻿﻿﻿﻿﻿DOTween.Pause("badoom");
+	﻿﻿﻿﻿﻿DOTween.Pause(someTransform);
+B. Directly from the tween
+instead of using static methods you can just call the same methods from your tween's reference.
+	myTween.Pause();
+C. From a shortcut-enhanced reference
+Same as above, but you can call those same methods from a shortcut-enhanced object. Remember that in this case the method names have an additional DO prefix to distinguish them from the regular object methods.
+	transform.DOPause();
+
+Control methods
+Again, remember that all these method names are shared by all manipulation ways, but that in case of object shortcuts there's an additional DO prefix.
+IMPORTANT: remember that to use these methods on a tween after it has ended, you have to disable its autoKill behaviour, otherwise a tween is automatically killed at completion.
+	CompleteAll/Complete(bool withCallbacks = false)
+	FlipAll/Flip()
+	GotoAll/Goto(float to, bool andPlay = false)
+	KillAll/Kill(bool complete = true, params object[] idsOrTargetsToExclude)
+	PauseAll/Pause()
+	PlayAll/Play()
+	PlayBackwardsAll/PlayBackwards()
+	PlayForwardAll/PlayForward()
+	RestartAll/Restart(bool includeDelay = true, float changeDelayTo = -1)
+	RewindAll/Rewind(bool includeDelay = true)
+	SmoothRewindAll/SmoothRewind()
+	TogglePauseAll/TogglePause()
+
+
+Special control methods
+Common for all tweens
+	ForceInit()
+Type-specific
+These are special control methods that work only on some specific type of tweens
+	GotoWaypoint(int waypointIndex, bool andPlay = false)

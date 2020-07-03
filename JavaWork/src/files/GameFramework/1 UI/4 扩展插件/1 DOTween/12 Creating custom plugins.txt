@@ -1,0 +1,2 @@
+Creating custom plugins
+The sample UnityPackage from the examples page shows, among other things, how to create custom plugins.

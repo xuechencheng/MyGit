@@ -1,0 +1,13 @@
+Sprite Packer Modes
+To enable or disable the Sprite Atlas default packing behavior, open the Editor settings (menu: Edit > Project Settings > Editor) and navigate to Sprite Packer > Mode . Select the Sprite Packer Mode to determine how Unity uses the Sprite Atlas within the Editor.
+
+
+Disabled: Sprite Atlas packing is disabled in the Project. Sprite Atlases are not built when the Project enters Play Mode or when a build is published. Pack Preview is also disabled.
+
+Enabled for Builds (Legacy Sprite Packer): Selecting this mode enables the legacy Sprite Packer and disables the Sprite Atlas, as they cannot be enabled at the same time. Unity packs Sprites with the legacy Sprite Packer for published builds only. The Editor and Play Mode reference the original source Texture instead of the Texture within the packed Atlas.
+
+Always Enabled (Legacy Sprite Packer): Selecting this mode enables the legacy Sprite Packer and disables the Sprite Atlas, as they cannot be enabled at the same time. Unity packs selected Textures into Atlases with the legacy Sprite Packer, and Sprites reference the packed Textures during run time. However, Sprites will reference the original unpacked Textures during Edit Mode.
+
+Enabled for Builds: Unity packs Sprites into the Sprite Atlas for published builds only. The Editor and Play Mode reference the original source Texture instead of the Texture within the Sprite Atlas.
+
+Always Enabled: This option is enabled by default. Unity packs selected Textures into Sprite Atlases, and Sprites reference the packed Textures during run time. However, Sprites will reference the original unpacked Textures during Edit Mode.

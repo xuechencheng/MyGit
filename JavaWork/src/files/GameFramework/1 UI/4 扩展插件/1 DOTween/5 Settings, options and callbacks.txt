@@ -1,0 +1,97 @@
+Settings, options and callbacks
+DOTween uses a chaining approach when it comes to applying settings to a tween. 
+Or you can change the global default options that will be applied to all newly created tweens.
+
+Global settings
+General settings
+	static LogBehaviour DOTween.logBehaviour
+	static bool DOTween.maxSmoothUnscaledTime
+	static bool DOTween.nestedTweenFailureBehaviour
+	static bool DOTween.onWillLog<LogType,object>
+	static bool DOTween.showUnityEditorReport
+	static float DOTween.timeScale
+	static bool DOTween.useSafeMode
+	static bool DOTween.useSmoothDeltaTime
+	static DOTween.SetTweensCapacity(int maxTweeners, int maxSequences)
+
+
+Settings applied to all newly created tweens
+	static bool DOTween.defaultAutoKill
+	static AutoPlay DOTween.defaultAutoPlay
+	static float DOTween.defaultEaseOvershootOrAmplitude
+	static float DOTween.defaultEasePeriod
+	static Ease DOTween.defaultEaseType
+	static LoopType DOTween.defaultLoopType
+	static bool DOTween.defaultRecyclable
+	static bool DOTween.defaultTimeScaleIndependent
+	static UpdateType DOTween.defaultUpdateType
+
+
+Tweener and Sequence settings
+	Instance properties
+	float timeScale
+
+Chained settings
+These settings can be chained to all types of tweens.
+You can also chain them while a tween is running (except for SetLoops and SetAs)
+	SetAs(Tween tween \ TweenParams tweenParams)
+	SetAutoKill(bool autoKillOnCompletion = true)
+	SetEase(Ease easeType \ AnimationCurve animCurve \ EaseFunction customEase)
+	SetId(object id)
+	SetLink(GameObject target, LinkBehaviour linkBehaviour = LinkBehaviour.KillOnDestroy)
+	SetLoops(int loops, LoopType loopType = LoopType.Restart)
+	SetRecyclable(bool recyclable)
+	SetRelative(bool isRelative = true)
+	SetTarget(object target)
+	SetUpdate(UpdateType updateType, bool isIndependentUpdate = false)
+
+Chained callbacks
+	OnComplete(TweenCallback callback)
+	OnKill(TweenCallback callback)
+	OnPlay(TweenCallback callback)
+	OnPause(TweenCallback callback)
+	OnRewind(TweenCallback callback)
+	OnStart(TweenCallback callback)
+	OnStepComplete(TweenCallback callback)
+	OnUpdate(TweenCallback callback)
+	OnWaypointChange(TweenCallback<int> callback)
+By the way, callbacks attached to nested tweens will still work in the correct order.
+If you want to use a callback with parameters, lambdas come to the rescue:
+	﻿﻿﻿﻿﻿﻿transform.DOMoveX(4, 1).OnComplete(MyCallback);
+	﻿﻿﻿﻿﻿﻿transform.DOMoveX(4, 1).OnComplete(()=>MyCallback(someParam, someOtherParam));
+
+
+Tweener-specific settings and options
+These settings are specific to Tweeners, and will have no effect on Sequences.
+Apart from SetEase, chaining these settings while a tween is running will have no effect.
+	From(bool isRelative = false)
+	From(T fromValue, bool setImmediately = true)
+	SetDelay(float delay)
+	SetSpeedBased(bool isSpeedBased = true)
+
+SetOptions
+Some Tweeners have specific special options that will be available to you depending on the type of thing you're tweening. It's all automatic: if a Tweener has specific options you'll see a specific SetOptions methods present for that Tweener, otherwise you won't. It's magic!
+Note that these options are usually available only when creating tweens via the generic way, while shortcuts have the same options already included in their main creation method.
+The important thing to remember is that, while all other settings can be chained together in any order, SetOptions must be chained immediately after the tween creation function, or it won't be available anymore.
+	Generic Tweens Specific Options (already included in the corresponding tween shortcuts)
+	Color tween ➨ SetOptions(bool alphaOnly)
+	float tween ➨ SetOptions(bool snapping)
+	Quaternion tween ➨ SetOptions(bool useShortest360Route)
+	Rect tween ➨ SetOptions(bool snapping)
+	String tween ➨ SetOptions(bool richTextEnabled, ScrambleMode scrambleMode = ScrambleMode.None, string scrambleChars = null)
+	Vector2/3/4 tween ➨ SetOptions(AxisConstraint constraint, bool snapping)
+	Vector3Array tween ➨ SetOptions(bool snapping)
+	DOPath Specific Options
+	Path tween ➨ SetOptions(bool closePath, AxisConstraint lockPosition = AxisConstraint.None, AxisConstraint lockRotation = AxisConstraint.None)
+	Path tween ➨ SetLookAt(Vector3 lookAtPosition/lookAtTarget/lookAhead, Vector3 forwardDirection, Vector3 up = Vector3.up)
+
+TweenParams
+If you used HOTween previously, you will know TweenParms (now called TweenParams): they're used to store settings that you can then apply to multiple tweens. The difference from HOTween is that they're not necessary at all, since now settings chaining is done directly on a tween. Instead they're here only as an extra utility class.
+To use it, create a new TweenParams instance or Clear() an existing one, then add settings like you do with regular tween chaining. To apply them to a tween you then use SetAs.
+	﻿﻿﻿﻿﻿TweenParams tParms = new TweenParams().SetLoops(-1).SetEase(Ease.OutElastic);
+	﻿﻿﻿﻿﻿transformA.DOMoveX(15, 1).SetAs(tParms);
+	﻿﻿﻿﻿﻿transformB.DOMoveY(10, 1).SetAs(tParms);
+
+More on chaining
+Just to be clear, you don't need to chain one thing at a time and you can do this instead:
+transform.DOMoveX(45, 1).SetDelay(2).SetEase(Ease.OutQuad).OnComplete(MyCallback);

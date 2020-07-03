@@ -1,0 +1,10 @@
+Late Binding
+Late Binding is the name of a process in which you load or swap in the desired Sprite Atlas at run time via the Sprite Atlas API. This is necessary when the build does not automatically load a prepared Sprite Atlas at run time (for example, when no Sprite Atlases are included in the build.
+
+Sprites enumeration at run time
+To retrieve the contents of a Sprite Atlas at run time, follow these steps:
+
+Create a custom component that takes SpriteAtlasas a public variable.
+Assign a Sprite Atlas to the field.
+Enter the Editor’s Play Mode.
+Access the variable and call the property .GetSprites to retrieve the array of Sprites packed in the selected Atlas.

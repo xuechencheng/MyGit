@@ -1,0 +1,11 @@
+Additional methods
+Static methods (DOTween)
+	static DOTween.Clear(bool destroy = false)
+	static DOTween.ClearCachedTweens()
+	static DOTween.Validate()
+	static DOTween.ManualUpdate(float deltaTime, float unscaledDeltaTime)
+Instance methods (Tween/Tweener/Sequence)
+Tweener
+	ChangeEndValue(newEndValue, float duration = -1, bool snapStartValue = false)
+	ChangeStartValue(newStartValue, float duration = -1)
+	ChangeValues(newStartValue, newEndValue, float duration = -1)

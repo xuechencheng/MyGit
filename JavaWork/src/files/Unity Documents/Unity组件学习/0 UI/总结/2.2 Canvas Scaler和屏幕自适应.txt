@@ -1,0 +1,14 @@
+Canvas Scaler
+Canvas Scale指的是UI Canvas整体的缩放比例。
+这个值在Canvas 的Render Mode为 Screen Space – Overlay 的情况下默认为1。
+在Canvas的Render Mode为Screen Space – Camera的情况下则不一定为1，会受到渲染UI的摄像机 参数影响（如果为Perspective相机，会受到Field Of View影响，如果是Orthographic相机，会受到Size影响）。
+
+Canvas最终大小的计算分两步：
+1，使用Canvas Scaler进行计算，得出一个和目标分辨率横纵比一样大小的分辨率：根据Canvas Scaler的Reference Resolution和Screen Match Mode计算出Canvas的大小
+2，设置Canvas的Scale值。
+
+UI Scale Mode设置为：Scale With Screen Size
+Screen Math Mode为：Expand，Shrink或者Match Height Or Width。
+
+
+

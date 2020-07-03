@@ -1,0 +1,15 @@
+Nomenclature
+Tweener: A tween that takes control of a value and animates it.
+Sequence: A special tween that, instead of taking control of a value, takes control of other tweens and animates them as a group.
+Tween: A generic word that indicates both a Tweener and a Sequence.
+Nested tween: A tween contained inside a Sequence.
+
+Prefixes
+DO Prefix for all tween shortcuts. Also the prefix of the main DOTween class.
+	transform.DOMoveX(100, 1);
+	﻿﻿﻿﻿﻿﻿﻿﻿transform.DORestart();
+	﻿﻿﻿﻿﻿﻿﻿﻿DOTween.Play();
+Set Prefix for all settings that can be chained to a tween.
+	myTween.SetLoops(4, LoopType.Yoyo).SetSpeedBased();
+On Prefix for all callbacks that can be chained to a tween.
+	myTween.OnStart(myStartFunction).OnComplete(myCompleteFunction);

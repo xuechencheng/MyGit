@@ -1,0 +1,6 @@
+精灵图集
+Unity normally issues a draw call for each Texture in the Scene.
+A Sprite Atlas is an Asset that consolidates several Textures into a single combined Texture. 
+Unity can call this single Texture to issue a single draw call instead of multiple draw calls to access the packed Textures all at once at a smaller performance overhead. 
+In addition, the Sprite Atlas API provides you with control over how to load the Sprite Atlases at your Project’s run time.
+参考文档：精灵图集Inspector

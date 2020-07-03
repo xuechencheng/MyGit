@@ -1,0 +1,233 @@
+1 计算机科学
+计算机基础
+	计算机程序的构造和解释	
+	深入理解计算机系统
+	计算机体系结构
+	现代操作系统
+算法
+	算法
+	算法导论
+计算机数学
+	具体数学
+	Computational Science and Engineering
+
+2 编程语言
+C
+	C程序设计语言
+Lua
+	LUA程序设计
+	Lua Programming Gems
+C#
+	Visual C#
+	深入理解C#
+	CLR via C#
+C++
+	17本C++
+
+3 软件开发
+实践
+	程序设计实践
+	重构
+	代码大全
+	C++ API设计
+	编码整洁之道
+	修改代码的艺术
+设计模式
+	Head First 设计模式
+	敏捷软件开发
+	设计模式
+UML
+	UML精粹
+	UML用户指南
+	面向对象分析与设计
+
+4 游戏程序员的数学课
+游戏编程数学初阶
+	Foundations of Game Engine Development, Volume 1: Mathematics
+	3D游戏与计算机图形学中的数学方法
+	3D Math Primer for Graphics and Game Development
+	Essential Mathematics for Games and Interactive Applications
+游戏编程数学进阶
+	Geometric Algebra for Computer Science
+	计算机图形学几何工具算法详解
+	Visualizing Quaternions
+	散度、旋度、梯度释义
+	计算几何
+
+5 游戏编程
+Unity
+	Introduction to Game Design, Prototyping, and Development
+	Unity 5实战
+中级游戏编程
+	游戏编程算法与技巧
+	游戏编程模式
+	Game Programming Golden Rules
+	Cross Platform Game Programming
+	Android NDK Game Development Cookbook
+	Building an FPS Game with Unity
+	Unity Virtual Reality Projects
+	Augmented Reality: Principles and Practice
+	Practical Augmented Reality
+游戏编程文选
+	Beginning Game Programming
+	Best of Game Programming Gems
+	Advanced Game Programming
+	游戏编程精粹1--7
+	Game Programming Gems 8 
+
+6 游戏引擎开发
+游戏引擎开发新手
+	游戏引擎架构
+	3D Game Engine Architecture
+	3D Game Engine Design
+游戏引擎文选
+	Game Engine Gems 1--3
+脚本引擎
+	游戏脚本高级编程
+	编程语言实现模式
+	垃圾回收算法手册：自动内存管理的艺术
+优化
+	Video Game Optimization
+	Unity 5 Game Optimization
+	算法心得：高效算法的奥秘
+	Modern X86 Assembly Language Programming
+	GPGPU Programming for Games and Science
+	Vector Games Math Processors
+工具开发
+	Game Development Tools
+	Designing the User Experience of Game Development Tools
+
+7. 计算机图形学
+游戏图形学初级
+	Real-Time 3D Rendering with DirectX and HLSL
+	DirectX 9.0 3D游戏开发编程基础
+	OpenGL编程指南(原书第8版)
+图形学理论初级
+	计算机图形学
+	计算机图形学原理及实践:C语言描述
+	Principles of Digital Image Synthesis
+	数字图像处理
+实时渲染
+	3D游戏编程大师技巧
+	实时计算机图形学
+	Real-Time Volume Graphics
+	实时阴影技术
+	Graphics Programming Methods
+	ShaderX 1--7
+	GPU精粹 1--3
+	GPU Pro 1--7
+	GPU Zen
+Direct3D
+	Practical Rendering and Computation with Direct3D 11
+OpenGL
+	OpenGL Super Bible 7th Ed
+	图形着色器
+	OpenGL着色语⾔言
+	OpenGL ES 3.0编程指南
+	OpenGL Insights
+	Vulkan Programming Guide
+离线渲染
+	光线跟踪算法技术
+	Physically Based Rendering
+	Advanced Global Illumination
+	Production Volume Rendering
+图形学技术
+	Texturing and Modeling
+	Polygon Mesh Processing
+	Isosurfaces
+	Level of Detail for 3D Graphics
+	3D Engine Design for Virtual Globes
+	Non-Photorealistic Rendering
+	Non-Photorealistic Computer Graphics
+图形学文选
+	Graphics Gems 1--5
+	Jim Blinn's Corner:A Trip Down the Graphics Pipeline
+	Jim Blinn's Corner:Dirty Pixels
+	Andrew Glassner's Notebook
+	Jim Blinn's Corner:Notation, Notation,Notation
+	Andrew Glassner's Other Notebook
+	The Magic of Computer Graphics
+
+
+8 游戏音效
+Game Audio Programming
+Getting Started with C++ Audio Programming for Game Development
+
+9. 游戏物理和动画
+游戏动画初阶
+	Character Animation	with Direct3D
+	Real-time 3D Character Animation with Visual C++
+	代码本色：用编程模拟自然系统
+	Computer Animation
+游戏物理初阶
+	Physics for Game Programmers
+	游戏开发物理学
+	Physics Modeling for Game Programmers
+游戏动画进阶
+	Physics Based Animation
+	Game Inverse Kinematics
+	Real-Time Cameras
+游戏物理进阶
+	Foundations of Physically
+	Based Modeling and	Animation
+	Game Physics Pearls
+	Collision Detection in Interactive 3D Environments
+	实时碰撞检测算法技术
+	游戏物理引擎开发
+	Game Physics 2nd Ed
+流体动画/模拟
+	Fluid Engine Development
+	The Art of Fluid Animation
+	Fluid Simulation for Computer Graphics
+
+10. 游戏人工智能（AI）
+游戏AI初阶
+	Artificial Intelligence for Games
+	游戏开发中的人工智能
+	游戏人工智能编程案例精粹
+	Unity人工智能游戏开发
+中级游戏AI
+	人工智能
+	Behavioral Mathematics for Game AI
+游戏AI文选
+	AI Game Programming Wisdom 1--4
+	Game AI Pro 1--3
+	
+11. 多人游戏编程
+多人游戏编程文选
+	大型多人在线游戏开发
+	Massively Multiplayer Game Development 2
+服务器编程
+	POSIX多线程程序设计
+	UNIX环境高级编程
+	Linux系统编程
+
+网络协议
+	TCP/IP详解卷1：协议 1--3
+
+网络编程
+	UNIX网络编程卷1：套接字联网API 
+	UNIX网络编程卷2：进程间通信深入理解
+	LINUX网络技术内幕
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

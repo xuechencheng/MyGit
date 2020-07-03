@@ -1,0 +1,73 @@
+Creating a Sequence
+Sequences are like Tweeners, but instead of animating a property or value they animate other Tweeners or Sequences as a group.
+Sequences can be contained inside other Sequences without any limit to the depth of the hierarchy.
+The sequenced tweens don't have to be one after each other. You can overlap tweens with the Insert method.
+A tween (Sequence or Tweener) can be nested only inside a single other Sequence, meaning you can't reuse the same tween in multiple Sequences.
+Also, the main Sequence will take control of all its nested elements, and you won't be able to control nested tweens separately.
+
+To create a Sequence, you follow these two steps:
+1. Grab a new Sequence to use and store it as a reference
+	static DOTween.Sequence()
+2. Add tweens, intervals and callbacks to your Sequence
+Note that all these methods need to be applied before the Sequence starts (usually the next frame after you create it, unless it's paused), or they won't have any effect.
+Also note that any nested Tweener/Sequence needs to be fully created before adding it to a Sequence, because after that it will be locked.
+Delays and loops (when not infinite) will work even inside nested tweens.
+
+Append(Tween tween)
+Adds the given tween to the end of the Sequence.
+	mySequence.Append(transform.DOMoveX(45, 1));
+
+AppendCallback(TweenCallback callback)
+Adds the given callback to the end of the Sequence.
+	mySequence.AppendCallback(MyCallback);
+
+AppendInterval(float interval)
+Adds the given interval to the end of the Sequence.
+	mySequence.AppendInterval(interval);
+
+Insert(float atPosition, Tween tween)
+Inserts the given tween at the given time position, thus allowing you to overlap tweens instead of just placing them one after each other.
+	mySequence.Insert(1, transform.DOMoveX(45, 1));
+
+InsertCallback(float atPosition, TweenCallback callback)
+Inserts the given callback at the given time position.
+	mySequence.InsertCallback(1, MyCallback);
+
+Join(Tween tween)
+Inserts the given tween at the same time position of the last tween or callback added to the Sequence.
+// The rotation tween will be played together with the movement tween
+	﻿﻿﻿﻿﻿﻿﻿mySequence.Append(transform.DOMoveX(45, 1));
+	﻿﻿﻿﻿﻿﻿﻿mySequence.Join(transform.DORotate(new Vector3(0,180,0), 1));
+
+Prepend(Tween tween)
+Adds the given tween to the beginning of the Sequence, pushing forward in time the rest of the contents.n
+	mySequence.Prepend(transform.DOMoveX(45, 1));
+
+PrependCallback(TweenCallback callback)
+Adds the given callback to the beginning of the Sequence.
+	mySequence.PrependCallback(MyCallback);
+
+PrependInterval(float interval)
+Adds the given interval to the beginning of the Sequence, pushing forward in time the rest of the contents.
+	mySequence.PrependInterval(interval);
+TIP: You can create Sequences made only of callbacks and use them as timers or stuff like that.
+
+Examples
+	Creating a Sequence
+	// Grab a free Sequence to use
+	﻿﻿﻿﻿﻿Sequence mySequence = DOTween.Sequence();
+	﻿﻿﻿﻿﻿// Add a movement tween at the beginning
+	﻿﻿﻿﻿﻿mySequence.Append(transform.DOMoveX(45, 1));
+	﻿﻿﻿﻿﻿// Add a rotation tween as soon as the previous one is finished
+	﻿﻿﻿﻿﻿mySequence.Append(transform.DORotate(new Vector3(0,180,0), 1));
+	﻿﻿﻿﻿﻿// Delay the whole Sequence by 1 second
+	﻿﻿﻿﻿﻿mySequence.PrependInterval(1);
+	﻿﻿﻿﻿﻿// Insert a scale tween for the whole duration of the Sequence
+	﻿﻿﻿﻿﻿mySequence.Insert(0, transform.DOScale(new Vector3(3,3,3), mySequence.Duration()));
+	
+Same as the previous example but with chaining (plus line breaks to make things clearer):
+Sequence mySequence = DOTween.Sequence();
+﻿﻿﻿﻿﻿mySequence.Append(transform.DOMoveX(45, 1))
+﻿﻿﻿﻿﻿  .Append(transform.DORotate(new Vector3(0,180,0), 1))
+﻿﻿﻿﻿﻿  .PrependInterval(1)
+﻿﻿﻿﻿﻿  .Insert(0, transform.DOScale(new Vector3(3,3,3), mySequence.Duration()));

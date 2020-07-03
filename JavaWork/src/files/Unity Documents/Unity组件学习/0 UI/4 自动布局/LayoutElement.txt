@@ -1,0 +1,14 @@
+自动布局系统主要基于layout elements和layout controllers两种概念。
+
+Layout Element
+Layout Element具有广义和狭义的区别。狭义：一种可选的UI组件；广义：指一切附加有Rect Transform以及其他任意数量的UI组件的GameObject。 
+每个UI GameObject都可以在其对应的Inspector面板中找到自身的Layout Properties参数。
+如果对UI GameObject自带的布局属性不满意，我们也可以通过手动添加一个Layout Element组件来修改其中的任何一项属性，该组件设置的属性优先于Text，Image等内置组件。
+Layout Element具有一个UI GameObject动态布局时所需要的特定信息，但是它本身并不会负责设置这些信息。
+Layout Controller就是负责读取 Layout Element包含的信息，然后控制一个UI元素实际的大小的。
+
+Layout Controller
+如果没有手动添加Layout controller派系的组件，UI GameObject上的Layout Element完全就是摆设。
+Layout Controller包括Aspect Ratio Fitter，Content Size Fitter和各种Layout Group组件。
+Layout Controller可以控制它自己的Layout Element（与它自己所在的GameObject相同），也可以控制子Layout Element。
+充当Layout Controller的组件本身也可以同时充当Layout Element元素。

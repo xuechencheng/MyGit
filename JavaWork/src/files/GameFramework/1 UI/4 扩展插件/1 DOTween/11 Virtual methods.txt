@@ -1,0 +1,5 @@
+Virtual methods
+NOTE: virtual methods can't be placed inside Sequences.
+	static Tweener DOVirtual.Float(float from, float to, float duration, TweenCallback<float> onVirtualUpdate)
+	static float DOVirtual.EasedValue(float from, float to, float lifetimePercentage, Ease easeType \ AnimationCurve animCurve)
+	static Tween DOVirtual.DelayedCall(float delay, TweenCallback callback, bool ignoreTimeScale = true)

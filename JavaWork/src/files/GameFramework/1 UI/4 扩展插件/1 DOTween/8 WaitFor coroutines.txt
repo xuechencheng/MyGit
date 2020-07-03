@@ -1,0 +1,9 @@
+WaitFor coroutines
+Tweens come with a useful set of YieldInstructions which you can place inside your Coroutines, and that allow you to wait for something to happen.
+If you're on Unity 5.3 or later, all these methods will have an optional bool parameter that allows to return a CustomYieldInstruction.
+	WaitForCompletion()
+	WaitForElapsedLoops(int elapsedLoops)
+	WaitForKill()
+	WaitForPosition(float position)
+	WaitForRewind()
+	WaitForStart()

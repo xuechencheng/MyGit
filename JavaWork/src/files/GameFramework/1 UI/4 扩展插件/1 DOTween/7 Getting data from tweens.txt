@@ -1,0 +1,27 @@
+Getting data from tweens
+Static methods (DOTween)
+	static List<Tween> PausedTweens()
+	static List<Tween> PlayingTweens()
+	static List<Tween> TweensById(object id, bool playingOnly = false)
+	static List<Tween> TweensByTarget(object target, bool playingOnly = false)
+	static bool IsTweening(object idOrTarget, bool alsoCheckIfPlaying = false)
+	static int TotalPlayingTweens()
+
+Instance methods (Tween/Tweener/Sequence)
+	float fullPosition
+	int CompletedLoops()
+	float Delay()
+	float Duration(bool includeLoops = true)
+	float Elapsed(bool includeLoops = true)
+	float ElapsedDirectionalPercentage()
+	float ElapsedPercentage(bool includeLoops = true)
+	bool IsActive()
+	bool IsBackwards()
+	bool IsComplete()
+	bool IsInitialized()
+	bool IsPlaying()
+	int Loops()
+Instance methods ➨ Path tweens
+	Vector3 PathGetPoint(float pathPercentage)
+	Vector3[] PathGetDrawPoints(int subdivisionsXSegment = 10)
+	float PathLength()

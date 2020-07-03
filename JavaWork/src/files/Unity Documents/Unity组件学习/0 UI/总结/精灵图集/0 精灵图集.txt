@@ -1,0 +1,10 @@
+精灵图集
+A 2D Project uses Sprites and other graphics to create the visuals of its Scenes. 
+This means a single Project might contain many Texture files. 
+Unity normally issues a draw call for each Texture in the Scene; however, in a Project with many Textures, 
+multiple draw calls become resource-intensive and can negatively impact the performance of your Project.
+
+A Sprite Atlas is an Asset that consolidates several Textures into a single combined Texture. 
+Unity can call this single Texture to issue a single draw call instead of multiple draw calls to access the packed 
+Textures all at once at a smaller performance overhead. In addition, the Sprite Atlas API provides you with control over 
+how to load the Sprite Atlases at your Project’s run time.

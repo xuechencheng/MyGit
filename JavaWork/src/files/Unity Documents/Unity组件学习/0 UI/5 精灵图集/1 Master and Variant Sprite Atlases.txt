@@ -1,0 +1,6 @@
+Master and Variant Sprite Atlases
+
+The Type property defines whether a Sprite Atlas is a ‘Master’ or a ‘Variant’. 
+
+A Variant Atlas requires a Master type Sprite Atlas to be set in its Master Atlas property. 
+The Variant Atlas receives a copy of the Master Atlas’s contents to use as its own. 

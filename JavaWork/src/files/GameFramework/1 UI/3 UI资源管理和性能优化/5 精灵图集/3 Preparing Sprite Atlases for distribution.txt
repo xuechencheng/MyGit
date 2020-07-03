@@ -1,0 +1,11 @@
+Preparing Sprite Atlases for distribution
+A Project can have multiple Sprite Atlases for different purposes (for example, Variant Atlases with lower-resolution Textures for hardware with different limitations). If you enable all available Sprite Atlases, you might encounter conflicts (refer to Resolving different Sprite Atlas scenarios for more information).
+
+To prevent these issues, properly prepare Sprite Atlases for distribution with the following steps:
+
+Disable ‘Include in Build’ in the Sprite Atlas properties.
+Choose a method to distribute the Atlas.
+Load the Atlas via Late Binding with a script.
+
+Disable ‘Include in Build’
+If ‘Include in Build’ is disabled, Unity still packs the Sprite Atlas into a *.spriteatlas file in the Project’s Assets folder. However, Sprites which reference Textures in an disabled Sprite Atlas appear invisible as the reference Texture is not available or loaded. Unity does not include the disabled Sprite Atlas in the Project’s published build, and does not automatically load it at run time. To do so, a script is required to load the Sprite Atlas via Late Binding.

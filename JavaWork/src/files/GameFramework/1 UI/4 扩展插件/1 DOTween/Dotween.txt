@@ -1,0 +1,182 @@
+Dotween
+命令规则
+Tweener : A tween that takes control of a value and animates it.
+Sequence : A special tween that, instead of taking control of a value, takes control of other tweens and animates them as a group.
+Tween : A generic word that indicates both a Tweener and a Sequence.
+Nested tween : A tween contained inside a Sequence.
+
+前缀
+Prefixes are important to use the most out of IntelliSense, so try to remember these:
+DO Prefix for all tween shortcuts (operations that can be started directly from a known object, like a transform or a material). 
+Also the prefix of the main DOTween class.
+	transform.DOMoveX(100, 1);
+	﻿﻿﻿﻿﻿﻿﻿﻿transform.DORestart();
+	﻿﻿﻿﻿﻿﻿﻿﻿DOTween.Play();
+Set Prefix for all settings that can be chained to a tween (except for From, since it's applied as a setting but is not really a setting).
+	myTween.SetLoops(4, LoopType.Yoyo).SetSpeedBased();
+On Prefix for all callbacks that can be chained to a tween.
+	myTween.OnStart(myStartFunction).OnComplete(myCompleteFunction);
+
+DOTween.Init
+The first time you create a tween, DOTween will initialize itself automatically, using default values.
+If instead you prefer to initialize it yourself (recommended), call this methods once, BEFORE creating any tween (calling it afterwards will have no effect).
+Consider that you can still change all init settings whenever your want, by using DOTween's global settings
+Optionally, you can chain SetCapacity to the Init method, which allows to set the max Tweeners/Sequences initial capacity (it's the same as calling DOTween.SetTweensCapacity later).
+static DOTween.Init(bool recycleAllByDefault = false, bool useSafeMode = true, LogBehaviour logBehaviour = LogBehaviour.ErrorsOnly)
+Initializes DOTween. Call it without any parameter to use the preferences you set in DOTween's Utility Panel (otherwise they will be overrided by any eventual parameter passed).
+recycleAllByDefault If TRUE all new tweens will be set for recycling, meaning that when killed they won't be destroyed but instead will be put in a pool and reused rather than creating new tweens. This option allows you to avoid GC allocations by reusing tweens, but you will have to take care of tween references, since they might result active even if they were killed (since they might have been respawned and might now be in use as other completely different tweens).
+If you want to automatically set your tween references to NULL when a tween is killed you can use the OnKill callback like this:
+.OnKill(()=> myTweenReference = null)
+You can change this setting at any time by changing the static DOTween.defaultRecyclable property, or you can set the recycling behaviour for each tween separately, using SetRecyclable
+useSafeMode If set to TRUE tweens will be slightly slower but safer, allowing DOTween to automatically take care of things like targets being destroyed while a tween is running.
+WARNING: on iOS safeMode works only if stripping level is set to "Strip Assemblies" or Script Call Optimization is set to "Slow and Safe", while on Windows 10 WSA it won't work if Master Configuration and .NET are selected.
+logBehaviour Depending on the chosen mode DOTween will log only errors, errors and warnings, or everything plus additional informations.
+// EXAMPLE A: initialize with the preferences set in DOTween's Utility Panel
+﻿﻿﻿﻿﻿DOTween.Init();
+﻿﻿﻿﻿﻿// EXAMPLE B: initialize with custom settings, and set capacities immediately
+﻿﻿﻿﻿﻿DOTween.Init(true, true, LogBehaviour.Verbose).SetCapacity(200, 10);
+
+Creating a Tweener
+Tweeners are the working ants of DOTween. They take a property/field and animate it towards a given value.
+As of now DOTween can tween these types of values:
+float, double, int, uint, long, ulong, Vector2/3/4, Quaternion, Rect, RectOffset, Color, string
+(some of these values can be tweened in special ways)
+Also, you can create custom DOTween plugins to tween custom value types
+There are 3 ways to create a Tweener: the generic way, the shortcuts way and additional generic ways.
+A. The generic way
+This is the most flexible way of tweening and allows you to tween almost any value, either public or private, static or dynamic (just so you know, the shortcuts way actually uses the generic way in the background).
+As with shortcuts, the generic way has a FROM alternate version. Just chain a From to a Tweener to make the tween behave as a FROM tween instead of a TO tween.
+Collapse all
+static DOTween.To(getter, setter, to, float duration)
+Changes the given property from its current value to the given one.
+getter A delegate that returns the value of the property to tween. Can be written as a lambda like this: ()=> myValue
+where myValue is the name of the property to tween.
+setter A delegate that sets the value of the property to tween. Can be written as a lambda like this: x=> myValue = x
+where myValue is the name of the property to tween.
+to The end value to reach.
+duration The duration of the tween.
+Examples
+// Tween a Vector3 called myVector to 3,4,8 in 1 second
+﻿﻿﻿﻿﻿﻿﻿DOTween.To(()=> myVector, x=> myVector = x, new Vector3(3,4,8), 1);
+﻿﻿﻿﻿﻿﻿﻿// Tween a float called myFloat to 52 in 1 second
+﻿﻿﻿﻿﻿﻿﻿DOTween.To(()=> myFloat, x=> myFloat = x, 52, 1);
+B. The shortcuts way
+DOTween includes shortcuts for some known Unity objects, like Transform, Rigidbody and Material. You can start a tween directly from a reference to these objects (which will also automatically set the object itself as the tween target), like:
+transform.DOMove(new Vector3(2,3,4), 1);
+﻿﻿﻿﻿﻿rigidbody.DOMove(new Vector3(2,3,4), 1);
+﻿﻿﻿﻿﻿material.DOColor(Color.green, 1);
+Each of these shortcuts also has a FROM alternate version except where indicated. Just chain a From to a Tweener to make the tween behave as a FROM tween instead of a TO tween.
+IMPORTANT: when you assign a FROM to a tween, the target will immediately jump to the FROM position (immediately as in "the moment you write that line of code", not "the moment the tween starts").
+transform.DOMove(new Vector3(2,3,4), 1).From();
+﻿﻿﻿﻿﻿rigidbody.DOMove(new Vector3(2,3,4), 1).From();
+﻿﻿﻿﻿﻿material.DOColor(Color.green, 1).From();
+
+C. Additional generic ways
+These are additional generic methods that allow to tween values in specific ways.
+These too have FROM alternate versions except where indicated. Just chain a From to a Tweener to make the tween behave as a FROM tween instead of a TO tween.
+Expand all
+static DOTween.Punch(getter, setter, Vector3 direction, float duration, int vibrato, float elasticity)
+static DOTween.Shake(getter, setter, float duration, float/Vector3 strength, int vibrato, float randomness, bool ignoreZAxis)
+static DOTween.ToAlpha(getter, setter, float to, float duration)
+static DOTween.ToArray(getter, setter, float to, float duration)
+static DOTween.ToAxis(getter, setter, float to, float duration, AxisConstraint axis)
+Virtual Tween
+static DOTween.To(setter, float startValue, float endValue, float duration)
+
+Creating a Sequence
+Sequences are like Tweeners, but instead of animating a property or value they animate other Tweeners or Sequences as a group.
+
+Sequences can be contained inside other Sequences without any limit to the depth of the hierarchy.
+
+The sequenced tweens don't have to be one after each other. You can overlap tweens with the Insert method.
+
+A tween (Sequence or Tweener) can be nested only inside a single other Sequence, meaning you can't reuse the same tween in multiple Sequences. Also, the main Sequence will take control of all its nested elements, and you won't be able to control nested tweens separately (consider the Sequence as a movie timeline which becomes fixed once it starts up the for the very first time).
+
+IMPORTANT: don't use empty Sequences.
+
+To create a Sequence, you follow these two steps:
+
+1. Grab a new Sequence to use and store it as a reference
+Expand all
+static DOTween.Sequence()
+2. Add tweens, intervals and callbacks to your Sequence
+Note that all these methods need to be applied before the Sequence starts (usually the next frame after you create it, unless it's paused), or they won't have any effect.
+
+Also note that any nested Tweener/Sequence needs to be fully created before adding it to a Sequence, because after that it will be locked.
+
+Delays and loops (when not infinite) will work even inside nested tweens.
+
+Collapse all
+Append(Tween tween)
+Adds the given tween to the end of the Sequence.
+mySequence.Append(transform.DOMoveX(45, 1));
+AppendCallback(TweenCallback callback)
+Adds the given callback to the end of the Sequence.
+mySequence.AppendCallback(MyCallback);
+AppendInterval(float interval)
+Adds the given interval to the end of the Sequence.
+mySequence.AppendInterval(interval);
+Insert(float atPosition, Tween tween)
+Inserts the given tween at the given time position, thus allowing you to overlap tweens instead of just placing them one after each other.
+mySequence.Insert(1, transform.DOMoveX(45, 1));
+InsertCallback(float atPosition, TweenCallback callback)
+Inserts the given callback at the given time position.
+mySequence.InsertCallback(1, MyCallback);
+Join(Tween tween)
+Inserts the given tween at the same time position of the last tween or callback added to the Sequence.
+// The rotation tween will be played together with the movement tween
+﻿﻿﻿﻿﻿﻿﻿mySequence.Append(transform.DOMoveX(45, 1));
+﻿﻿﻿﻿﻿﻿﻿mySequence.Join(transform.DORotate(new Vector3(0,180,0), 1));
+Prepend(Tween tween)
+Adds the given tween to the beginning of the Sequence, pushing forward in time the rest of the contents.n
+mySequence.Prepend(transform.DOMoveX(45, 1));
+PrependCallback(TweenCallback callback)
+Adds the given callback to the beginning of the Sequence.
+mySequence.PrependCallback(MyCallback);
+PrependInterval(float interval)
+Adds the given interval to the beginning of the Sequence, pushing forward in time the rest of the contents.
+mySequence.PrependInterval(interval);
+TIP: You can create Sequences made only of callbacks and use them as timers or stuff like that.
+Examples
+Creating a Sequence
+
+// Grab a free Sequence to use
+﻿﻿﻿﻿﻿Sequence mySequence = DOTween.Sequence();
+﻿﻿﻿﻿﻿// Add a movement tween at the beginning
+﻿﻿﻿﻿﻿mySequence.Append(transform.DOMoveX(45, 1));
+﻿﻿﻿﻿﻿// Add a rotation tween as soon as the previous one is finished
+﻿﻿﻿﻿﻿mySequence.Append(transform.DORotate(new Vector3(0,180,0), 1));
+﻿﻿﻿﻿﻿// Delay the whole Sequence by 1 second
+﻿﻿﻿﻿﻿mySequence.PrependInterval(1);
+﻿﻿﻿﻿﻿// Insert a scale tween for the whole duration of the Sequence
+﻿﻿﻿﻿﻿mySequence.Insert(0, transform.DOScale(new Vector3(3,3,3), mySequence.Duration()));
+Same as the previous example but with chaining (plus line breaks to make things clearer):
+
+Sequence mySequence = DOTween.Sequence();
+﻿﻿﻿﻿﻿mySequence.Append(transform.DOMoveX(45, 1))
+﻿﻿﻿﻿﻿  .Append(transform.DORotate(new Vector3(0,180,0), 1))
+﻿﻿﻿﻿﻿  .PrependInterval(1)
+﻿﻿﻿﻿﻿  .Insert(0, transform.DOScale(new Vector3(3,3,3), mySequence.Duration()));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

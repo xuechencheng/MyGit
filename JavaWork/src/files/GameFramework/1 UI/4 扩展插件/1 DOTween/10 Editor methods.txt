@@ -1,0 +1,5 @@
+Editor methods
+Previewing tweens in editor
+	static DOTweenEditorPreview.PrepareTweenForPreview(bool clearCallbacks = true, bool preventAutoKill = true, bool andPlay = true)
+	static DOTweenEditorPreview.Start(Action onPreviewUpdated = null)
+	static DOTweenEditorPreview.Stop()

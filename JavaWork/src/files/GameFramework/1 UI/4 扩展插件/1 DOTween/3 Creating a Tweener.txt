@@ -1,0 +1,42 @@
+Creating a Tweener
+Tweeners are the working ants of DOTween. They take a property/field and animate it towards a given value.
+
+As of now DOTween can tween these types of values:
+float, double, int, uint, long, ulong, Vector2/3/4, Quaternion, Rect, RectOffset, Color, string
+
+There are 3 ways to create a Tweener: the generic way, the shortcuts way and additional generic ways.
+
+A. The generic way
+This is the most flexible way of tweening and allows you to tween almost any value, either public or private, static or dynamic (just so you know, the shortcuts way actually uses the generic way in the background).
+
+As with shortcuts, the generic way has a FROM alternate version.
+Just chain a From to a Tweener to make the tween behave as a FROM tween instead of a TO tween.
+
+static DOTween.To(getter, setter, to, float duration)
+Examples
+﻿﻿﻿﻿﻿﻿﻿DOTween.To(()=> myVector, x=> myVector = x, new Vector3(3,4,8), 1);
+﻿﻿﻿﻿﻿﻿﻿DOTween.To(()=> myFloat, x=> myFloat = x, 52, 1);
+
+B. The shortcuts way
+DOTween includes shortcuts for some known Unity objects, like Transform, Rigidbody and Material. 
+	transform.DOMove(new Vector3(2,3,4), 1);
+	﻿﻿﻿﻿﻿rigidbody.DOMove(new Vector3(2,3,4), 1);
+	﻿﻿﻿﻿﻿material.DOColor(Color.green, 1);
+Each of these shortcuts also has a FROM alternate version except where indicated. 
+Just chain a From to a Tweener to make the tween behave as a FROM tween instead of a TO tween.
+IMPORTANT: when you assign a FROM to a tween, the target will immediately jump to the FROM position.
+	transform.DOMove(new Vector3(2,3,4), 1).From();
+	﻿﻿﻿﻿﻿rigidbody.DOMove(new Vector3(2,3,4), 1).From();
+	﻿﻿﻿﻿﻿material.DOColor(Color.green, 1).From();
+
+C. Additional generic ways
+These are additional generic methods that allow to tween values in specific ways.
+These too have FROM alternate versions except where indicated.
+Just chain a From to a Tweener to make the tween behave as a FROM tween instead of a TO tween.
+	static DOTween.Punch(getter, setter, Vector3 direction, float duration, int vibrato, float elasticity)
+	static DOTween.Shake(getter, setter, float duration, float/Vector3 strength, int vibrato, float randomness, bool ignoreZAxis)
+	static DOTween.ToAlpha(getter, setter, float to, float duration)
+	static DOTween.ToArray(getter, setter, float to, float duration)
+	static DOTween.ToAxis(getter, setter, float to, float duration, AxisConstraint axis)
+Virtual Tween
+	static DOTween.To(setter, float startValue, float endValue, float duration)
