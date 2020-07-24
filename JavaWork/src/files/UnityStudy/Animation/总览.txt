@@ -1,0 +1,4 @@
+有哪些窗口，组件和资源？
+窗口：
+组件：Animator
+资源：Animator Controller,Avatar

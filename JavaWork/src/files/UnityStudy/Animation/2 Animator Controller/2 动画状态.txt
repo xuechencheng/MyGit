@@ -1,0 +1,8 @@
+动画状态
+属性：	功能：
+Speed	动画的默认速度
+Motion	分配给此状态的动画剪辑
+Foot IK	此状态下是否遵循 Foot IK。适用于人形动画。
+Write Defaults	AnimatorStates 是否为其运动执行未动画化的属性写回默认值。
+Mirror	是否为状态生成镜像。这仅适用于人形动画。
+Transitions	源自此状态的过渡的列表
