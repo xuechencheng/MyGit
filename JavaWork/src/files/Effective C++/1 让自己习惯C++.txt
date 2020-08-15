@@ -1,6 +1,51 @@
 条款1：视C++为一个语言联邦
+C++是一个同时支持过程形式，面向对象形式，函数形式，泛型形式和元编程形式的语言。
 为了理解C++，你必须认识其主要的次语言，总共有四个：C，Object-Oriented C++,Template C++和STL。
 
 条款2：尽量以const,enum,inline替换#define
 使用const double AspectRatio = 1.653代替#define ASPECT_RATIO 1.653
+宁可以编译器替换预处理器，ASPECT_RATIO也许从未被编译器看见，也许在编译器开始处理源码之前它就被预处理器移走了。
 string对象通常比其前辈char*合宜。
+有了consts，enum和inlines，我们对预处理器（特别是#define）的需求降低了，但并非完全消除。目前还不到预处理器全面隐退的时候。
+
+条款3：尽可能使用const
+如果关键字const出现在星号左边，表示被指物是常量；如果出现在星号右边，表示指针自身是常量；如果出现在两边，表示被指物和指针都是常量。
+如果被指物是常量，有些程序员会将关键字const写在类型之前，有些人会把它写在类型之后，星号之前。两种写法意义相同。const Widget* pw和Widget const *pw。
+const std::vector<int>::iterator iter = vec.begin();//iter的作用像个T* const
+*iter = 10;//正确 ++iter;//错误
+std::vector<int>::const_iterator cIter = vec.begin();//cIter作用像个const T*
+*cIter = 10；//错误 ++cIter;//正确
+const最具威力的用法是面对函数声明时的应用。
+在一个函数声明式内，const可以和函数返回值，各参数，函数自身（如果是成员函数）产生关联。
+除非你有需要改动参数或local对象，否则请将它们声明为const。
+两个成员函数如果只有常量性不同是可以被重载的。
+成员函数如果是const： void Hello() const{}
+成员函数如果是const意味着什么？bitwise constness和logical constness。
+bitwise constness的意思是成员函数只有在不更改对象的任何成员变量时才可以说时const。
+logical constness主张，一个const成员函数可以修改它所处理的对象内的某些bits，但只有在客户端侦测不出的情况下才得如此。
+mutable可以释放掉non-static成员变量的bitwise constness约束。
+mutable std::size_t textLength;这个成员即使在const成员函数内也可以改变。
+
+条款4：确定对象被使用前已被初始化
+永远在使用对象之前先将它初始化。对于无任何成员的内置类型，你必须手工完成此事。
+至于内置类型之外的任何其他东西，初始化责任落在构造函数，确保每一个构造函数将对象的每一个成员初始化。
+赋值并非初始化。
+ABEntry::ABEntry(const std::string& name){theName = name;}//这是赋值并非初始化，赋值之前已经进行了默认初始化
+ABEntry::ABEntry(const std::string& name):theName(name)//这是初始化，效率更高，避免了默认初始化
+总是使用成员初值列，这样做有时候绝对必要，且又往往比赋值更高效。
+所谓的static对象，其寿命从被构造出来直到程序结束为止。
+程序结束时static对象会被自动销毁，也就是它们的析构函数会在main()结束时自动调用。
+如果你有一个系统，其中对象A必须在对象B之前先初始化，但A的初始化能否成功却又受制于B是否已初始化，这时候你就有麻烦了。
+
+
+
+
+
+
+
+
+
+
+
+
+

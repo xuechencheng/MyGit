@@ -1,0 +1,60 @@
+条款5 了解C++默默编写并调用哪些函数
+如果你打算在一个内含reference成员或者const成员的class内支持赋值操作，你必须自己定义copy assignment操作符，系统不会自动生成。
+
+条款6 若不想使用编译器自动生成的函数，就该明确拒绝
+所有编译器产生的函数都是public。为阻止这些函数被创建出来，你得自行声明它们，然后把copy构造函数或copy assignment操作符声明为private。
+藉由明确声明一个成员函数，你阻止了编译器暗自创建其专属版本，而令这些函数为private，使你得以阻止人们调用它。
+一般这个做饭并不绝对安全，并未member函数和friend函数还是可以调用你的private函数。
+将成员函数声明为private而且故意不实现它们。
+声明一个Uncopyable类，声明private的copy构造函数和copy assignment操作符但是不实现它们。其他类继承这个类即可。
+
+条款7：为多态基类声明virtual析构函数
+任何class只要带有virtual函数都几乎确定应该也有一个virtual析构函数。
+每一个带有virtual函数的class都有一个相应的vtbl，当对象调用某一virtual函数，实际被调用的函数取决于该对象的vptr所指向的那个vtbl。
+只有当class内含至少一个virtual函数，才为它声明virtual析构函数。
+如果你曾经企图继承一个标准容器或任何其他“带有non-virtual析构函数”的class，拒绝诱惑吧。
+很不幸C++没有提供类似Java的final classes或C#的sealed classes那样的“禁止派生”机制。
+pure virtual函数导致abstract classes，也就是不能被实体化的class。
+为你希望它成为抽象的那个class声明一个pure virtual析构函数。
+class AWOV{public: virtual ~AWOV() = 0;};
+这里有一个窍门，你必须为这个pure virtual析构函数提供一份定义：AWOV::~AWOV(){}
+具有多态性质的base classes应该声明一个virtual析构函数。
+如果class带有任何virtual函数，它就应该有一个virtual析构函数。
+Class的设计目的如果不是作为base class使用，或不是为了具备多态性，就不该声明virtual析构函数。
+
+条款8：别让异常逃离析构函数
+C++并不禁止析构函数吐出异常，但它不鼓励你这样做。
+析构函数绝对不要吐出异常，如果一个呗析构函数调用的函数可能抛出异常，析构函数应该捕捉任何异常，然后吞下它们或结束程序。
+如果客户需要对某个操作函数运行期间抛出的异常做出反应，那么class应该提供一个普通函数（而非在析构函数中）执行该操作。
+
+条款9：绝不在构造和析构过程中调用virtual函数
+base class构造期间virtual函数绝不会下降到derived class阶层，非正式的说法比较传神：在base class构造期间，virtual函数不是virtual函数。
+在构造和析构期间不要调用virtual函数，因为这类调用从不下降至derived classes。
+
+条款10：令operator=返回一个reference to *this
+为了实现“连锁赋值”，赋值操作符必须返回一个reference指向操作符的左侧实参。
+这只是一个协议，并无强制性。这份协议被所有内置类型和标准程序库提供的类型如string，vector，complex，shared_ptr等类型遵守
+
+条款11：在operator=中处理“自我赋值”
+在operator=最前面加一个“证同测试”的if判断语句，如果相等就直接退出。但这种方法并不是很好，不具备“异常安全性”。
+让operator=具备“异常安全性”往往自动获得“自我赋值安全”的回报。
+因此愈来愈多的人对“自我赋值”的处理态度是倾向不去管它，把焦点放在实现“异常安全性”。
+使用copy and swap技术。
+确保党对象自我赋值时operator=有良好行为。其中技术包括比较“来源对象”和目标对象的地址，进行周到的语句顺序以及copy-and-swap技术。
+
+条款12：复制对象时勿忘其每一个成分
+任何时候只要你承担起“为derived class撰写copying函数”的重大责任，必须很小心地赋值其base class成分。
+那些成分往往是private的，所以你无法直接访问它们，你应该让derived class的copying函数调用相应的base class函数。
+Child& Child::operator=(const Child& c){Parent::operator={rhs}; ... ; return *this;}
+当你编写一个copying函数，请确保赋值所有的local成员变量，调用所有base classes内的适当的copying函数。
+不要尝试以某个copying函数实现另一个copying函数，应该讲共同机能放进第三个函数中，并由两个coping函数共同调用。
+
+
+
+
+
+
+
+
+
+
