@@ -1,0 +1,23 @@
+关键字
+const	constexpr	decltype	delete	extern	explicit	friend	final
+mutable	sizeof	typedef	 using							
+static_cast,dynamic_cast,const_cast和reinterpret_cast
+
+类
+构造函数，拷贝构造函数，拷贝赋值运算符，移动构造函数，移动赋值运算符和析构函数。
+重载运算符
+虚函数	纯虚函数
+
+
+方法
+成员函数和非成员函数	变长参数
+函数指针，lambda和bind
+
+
+
+变量
+引用和指针	智能指针	
+
+工具类
+IO 顺序容器	关联容器 模板
+

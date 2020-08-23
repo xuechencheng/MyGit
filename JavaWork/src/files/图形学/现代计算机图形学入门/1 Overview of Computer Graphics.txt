@@ -1,0 +1,20 @@
+课程内容：
+1,Rasterization	光栅化
+2,Curves and Meshes	曲线和曲面
+3,Ray Tracing	光线追踪
+4,Animation/Simulation	动画和模拟
+
+光栅化
+什么是光栅化？把三维物体显示到二维屏幕上。
+
+曲线和曲面
+
+不包含什么？
+OpenGL，DirectX和Vulkan
+如何写Shader
+三维建模
+计算机视觉：需要猜测的东西，图形识别
+把三维渲染到二维是图形学，从二维识别三维物体是计算机视觉。
+
+虎书
+
