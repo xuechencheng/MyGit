@@ -1,0 +1,118 @@
+1，tuple类型
+当我们希望将一些数据组合成单一对象，但又不想麻烦地定义一个新数据结构来表示这些数据时，tuple是非常有用的。
+我们可以将tuple看作一个快速而随意的数据结构。
+tuple<string,vector<double>,int,list<int>> someVal("constants",{3.14,2.1},42,{0,1,2});
+标准库定义了make_tuple函数，我们还可以用它来生成tuple对象：
+auto item = make_tuple("111",3,2.1);
+访问成员： auto book = get<0>(item)
+获取成员数量：typedef decltype(item) trans;auto size = tuple_size<trans>::value;
+tuple的一个常见用途是从一个函数返回多个值。
+
+2，bitset类型
+标准库还定义了bitset类，使得位运算的使用更为容易，并且能够处理超过最长整型类型大小的集合。
+bitset<32> bitvec(1U)//32位：低位为1，其他位为0
+当我们使用一个整型值来初始化bitset时，此值将被转换为unsigned long long类型并被当做位模式来处理。
+bitset<13> bitvec(0xbeef);
+bitset<128> bitvec(~0ULL);
+我们可以从一个string或一个字符数组指针来初始化bitset。
+bitset<32> bitvec("1100")
+bitset<32> bitvec(str,5,4)//从str[5]开始的四个二进制位
+参考文档：bitset操作
+
+3，正则表达式
+regex类表示一个正则表达式。
+regex_match和regex_search确定一个给定字符序列与一个给定regex是否匹配。
+
+4，随机数
+在新标准出现之前，C和C++都依赖于一个简单的C库函数rand来生成随机数。
+rand函数有一些问题，很多程序需要不同范围的随机数，一些引用需要随机浮点数。一些程序需要非均匀分布的数。
+定义在头文件random中的随机数库通过一组协作的类来解决这些问题：随机数引擎类和随机数分布类。
+C++程序不应该使用库函数rand，而应使用default_random_engine类和恰当的分布类对象。
+
+4.1随机数引擎和分布
+随机数引擎是函数对象类，它们定义了一个调用运算符，该运算符不接受参数并返回一个随机unsigned整数。
+default_random_engine e; e()
+参考文档：随机数引擎操作
+//生成0到9之间均匀分布的随机数
+uniform_int_distribution<unsigned> u(0,9);
+default_random_engine e；u(e)
+类似引擎类型，分布类型也是函数对象类。
+当我们说随机数发生器时，是指分布对象和引擎对象的组合。
+一个给定的随机数发生器一直会生成相同的随机数序列。一个函数如果定义了局部的随机数发生器，应该将其（包括引擎和分布对象）定义为static的。否则每次调用函数都会生成相同的序列。
+设置随机数发生器种子
+default_random_engine e(121311243);
+更改种子：e.seed(22134)
+使用时间作为种子：default_random_engine e(time(0));
+如果程序作为一个自动过程的一部分反复运行，将time的返回值作为种子的方式就无效了；它可能多次使用的都是相同的种子。
+
+4.2 其他随机数分布
+随机生成0-1的浮点数
+default_random_engine e;
+uniform_real_distribution<double> u(0,1);u(e)
+空的<>表示我们希望使用默认结果类型
+uniform_real_distribution<> u(0,1);
+生成非均匀分布的随机数
+正态分布：normal_distribution
+伯努利分布：bernoulli_distribution总是返回一个bool值，它返回true的概率是0.5
+
+5 IO库再探
+5.1 格式化输入与输出
+操纵符用于两大类输出控制：控制数值的输出形式以及控制补白的数量和位置。
+大多数改变格式状态的操纵符都是设置/复原成对的。
+当操纵符改变流的格式状态时，通常改变后的状态对所有后续IO都生效。
+一旦向cout写入了boolalpha，我们就改变了cout打印bool值的方式，后续打印bool值的操作都会打印true和false而非1或0。
+为了取消cout格式状态的改变，我们使用noboolalpha。
+默认情况下，整型值的输入输出使用十进制，我们可以使用操纵符hex,oct和dec将其改为十六进制，八进制或者改回十进制。
+我们通过调用IO对象的precision成员或使用setprecision操纵符来改变浮点数输出精度。
+cout.percision(12);cout << setprecision(12)
+参考文档：定义在iostream中的操纵符
+打印小数点，输出补白，控制输入格式
+
+5.2 未格式化的输入/输出操作
+单字节操作
+char ch;
+while(cin.get(ch))
+	cout.put(ch)
+从输入操作返回的int值
+int ch;
+while((ch = cin.get()) != EOF)
+	cout.put(ch)
+
+5.3 流随机访问
+标准库提供了一对函数，来定位（seek）到流中给定的位置，以及高速（tell）我们当前位置。
+随机IO本质上是依赖于系统的。为了理解如何使用这些特性，你必须查询系统文档。
+由于istream和ostream类型通常不支持随机访问，所以本节剩余内容只适用于fstream和sstream类型。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

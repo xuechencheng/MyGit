@@ -1,0 +1,1 @@
+local AssetRefObject = BaseClass("Common.AssetRefObject")

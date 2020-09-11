@@ -1,0 +1,38 @@
+实践
+	UI
+		UI模块封装
+	战斗
+		人物：捏脸，换装，待机，规格，动画，同步
+		技能：技能，同步
+		框架：事件，状态机，寻路，AI，网络
+	渲染
+		所有的Shader
+	资源
+		大世界，图集，AB，光影，模型
+	性能
+		参数
+
+知识
+	Unity
+		UI：UI组件，UI源码
+		地形与树木
+		光照（进阶）
+		粒子
+		动画（进阶）
+		Timeline
+		寻路导航
+		物理（进阶）
+		AB和图集
+		性能优化（进阶）
+		AI（进阶）
+		插件：DOTween，CineMechina，SpringBone，行为树，状态机
+		其他：数学，图形学，游戏引擎
+	语言：
+		Lua：Lua程序设计，Lua源码
+		C#：C#图解，CLR via C#
+		C++:C++ Primer, Effective C++, More Effective C++,深度探索C++对象模型
+	编码：
+		设计模式，重构，代码整洁之道，代码大全
+	算法：
+		算法，算法导论，LeetCode
+		

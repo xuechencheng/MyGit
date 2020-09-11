@@ -1,0 +1,50 @@
+4 设计与声明
+条款18 让接口容易被正确使用，不易被误用
+返回shared_ptr而不是普通的指针让接口设计者得以阻止一大群客户犯下资源泄露的错误。
+shared_ptr支持定制型删除器。
+
+条款19 设计class犹如设计type
+新type的对象应该如何被创建和销毁？
+对象的初始化和对象赋值该有什么样的差别？
+新type的对象如果被passed by value，意味着什么？
+什么是新type的合法值？
+你的新type需要配合某个继承图系吗？
+你的新type需要什么样的转换？
+什么样的操作符和函数对此新type而言是合理的？
+什么样的标准函数应该驳回？
+谁该取用新的type成员？
+什么是新type的未声明接口？
+你的新type有多么一般化？
+你真的需要一个新type吗？
+
+条款20 宁以pass-by-reference-to-const替换pass-by-value
+缺省情况下C++以by value方式传递对象至函数。这些复件由对象的copy构造函数产出。
+如果窥视C++编译器的底层，你会发现，references往往以指针实现出来，因此pass by referenece通常意味着真正传递的是指针。
+对于内置类型而言，选择pass-by-value是更好的。这个忠告也适用于STL的迭代器和函数对象。
+一般而言，你可以合理假设“pass-by-value并不昂贵”的唯一对象就是内置类型和 STL的迭代器和函数对象。
+至于其他任何东西尽量以pass-by-reference-to-const替换pass-by-value。
+
+条款21 必须返回对象时，别妄想返回其reference
+任何函数如果返回一个reference指向某个local对象，都将一败涂地。（如果函数返回指针指向一个local对象，也是一样）
+一个必须返回新对象的函数的正确写法是：就让那个函数返回一个新对象。
+
+条款22 将成员变量声明为private
+切记将成员变量声明为private。这可赋予客户访问数据的一致性，可细微划分访问控制，允诺约束条件获得保证，并提供class作者以充分的实现弹性。
+protected并不比public更具封装性。
+
+条款23 宁以non-member,non-friend替换member函数
+能够访问private成员变量的函数只有class的member函数机上friend函数而已。
+在C++，比较自然的做法是让clearBrowser成为一个non-member函数并且位于WebBrowser所在的同一个namespace内。
+
+
+
+
+
+
+
+
+
+
+
+
+
