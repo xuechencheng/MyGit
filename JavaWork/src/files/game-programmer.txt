@@ -22,9 +22,35 @@ C#
 	深入理解C#
 	CLR via C#
 C++
-	17本C++
+C++新手
+	C++Primer
+C++实践
+	Effective C++
+	More Effective C++
+	Effective Modern C++
+	Optimized C++
+	Exceptional C++
+	More Exceptional C++
+	Exceptional C++ Style
+	C++ 编程规范
+C++标准库
+	C++标准库
+	C++并发编程实战
+	The Boost C++ Libraies
+	Effective STL中文版
+C++进阶
+	深度探索C++对象模型
+	Imperfect C++中文版
+	C++ Templates
+	C++设计新思维
+	编程原本
+	From Mathematics to Generic Programming
+	
+	
 
 3 软件开发
+新手
+	人月神话
 实践
 	程序设计实践
 	重构
@@ -72,8 +98,7 @@ Unity
 	Beginning Game Programming
 	Best of Game Programming Gems
 	Advanced Game Programming
-	游戏编程精粹1--7
-	Game Programming Gems 8 
+	游戏编程精粹1--8
 
 6 游戏引擎开发
 游戏引擎开发新手
