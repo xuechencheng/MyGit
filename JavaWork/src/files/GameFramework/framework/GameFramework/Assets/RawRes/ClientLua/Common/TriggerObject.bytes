@@ -1,0 +1,79 @@
+local TriggerObject = BaseClass("Common.TriggerObject")
+
+function TriggerObject:__init()
+    
+end
+
+function TriggerObject:SetTriggerClick(obj, func)
+
+end
+
+function TriggerObject:SetTriggerDoubleClick(obj, func)
+    
+end
+
+function TriggerObject:SetTriggerDown(obj, func)
+    
+end
+
+function TriggerObject:SetTriggerPress(obj, func)
+    
+end
+
+function TriggerObject:SetTriggerUpdatePress(obj, func)
+    
+end
+
+function TriggerObject:SetTriggerUp(obj, func)
+    
+end
+
+function TriggerObject:SetTriggerEnter(obj, func)
+    
+end
+
+function TriggerObject:SetTriggerExit(obj, func)
+    
+end
+
+function TriggerObject:SetTriggerSelect(obj, func)
+    
+end
+
+function TriggerObject:SetTriggerDeselect(obj, func)
+    
+end
+
+function TriggerObject:SetTriggerUpdateSelect(obj, func)
+    
+end
+
+function TriggerObject:SetTriggerBeginDrag(obj, func)
+    
+end
+
+function TriggerObject:SetTriggerEndDrag(obj, func)
+    
+end
+
+function TriggerObject:SetTriggerDrag(obj, func)
+    
+end
+
+function TriggerObject:SetTriggerDrop(obj, func)
+    
+end
+
+function TriggerObject:SetValueChange(obj, func)
+    
+end
+
+function TriggerObject:ClearAllTrigger(obj)
+    
+end
+
+function TriggerObject:__delete()
+    
+end
+
+return TriggerObject

@@ -1,0 +1,73 @@
+精灵图集
+Unity通常为场景中的每个纹理发出一个draw call，一个图集也是只需要一个draw call。
+参考文档（图集Inspector）
+
+
+Variant Sprite Atlases：
+变体图集以主图集为基础。他们的主要目的是创建另一个具有不同缩放分辨率的精灵图集。
+若要从变体图集而不是主图集自动加载精灵纹理，请仅为变体图集启用“Include In Build”，并为主图集禁用该选项。
+
+精灵图集工作流
+按照以下步骤创建精灵图集：
+1，创建精灵图集资源。
+2，选择要打包到精灵图集中的对象列表，可以将文件夹直接拖放到列表中。
+3，启用“Include in build”以将其包含在项目中。
+4，（可选）创建变体精灵图集。
+5，（可选）准备精灵图集以供分发。准备分发的精灵需要通过脚本的后期绑定来加载。
+6，（可选）在项目中优化精灵图集的使用和大小以提高性能。
+
+图集优化？
+使用一个图片时候会同时加载整个图集，所以场景中处于活动状态的所有或大多数精灵应属于同一个图集。
+另一种降低性能开销的方法是减少图集中打包纹理之间的空白空间。
+从“最大纹理大小”（Max Texture Size）设置的下拉菜单中选择较小的值。
+
+
+Preparing Sprite Atlases for distribution
+A Project can have multiple Sprite Atlases for different purposes (for example, Variant Atlases with lower-resolution Textures for hardware with different limitations). 
+If you enable all available Sprite Atlases, you might encounter conflicts.
+To prevent these issues, properly prepare Sprite Atlases for distribution with the following steps:
+	Disable ‘Include in Build’ in the Sprite Atlas properties.
+	Choose a method to distribute the Atlas.
+	Load the Atlas via Late Binding with a script.
+If ‘Include in Build’ is disabled, Unity still packs the Sprite Atlas into a *.spriteatlas file in the Project’s Assets folder. 
+However, Sprites which reference Textures in an disabled Sprite Atlas appear invisible as the reference Texture is not available or loaded. 
+Unity does not include the disabled Sprite Atlas in the Project’s published build, and does not automatically load it at run time. 
+To do so, a script is required to load the Sprite Atlas via Late Binding.
+
+Methods of distribution
+The following are the two main methods to consider when you distribute Sprite Atlases:
+Place the Sprite Atlases into the build’s Resources folder.
+Distribute them as downloadable AssetBundles.
+
+Late Binding
+Late Binding is the name of a process in which you load or swap in the desired Sprite Atlas at run time via the Sprite Atlas API. 
+This is necessary when the build does not automatically load a prepared Sprite Atlas at run time (for example, when no Sprite Atlases are included in the build.
+Sprites enumeration at run time
+To retrieve the contents of a Sprite Atlas at run time, follow these steps:
+	Create a custom component that takes SpriteAtlasas a public variable.
+	Assign a Sprite Atlas to the field.
+	Enter the Editor’s Play Mode.
+	Access the variable and call the property .GetSprites to retrieve the array of Sprites packed in the selected Atlas.
+
+Resolving different Sprite Atlas scenarios
+The way Unity resolves the interaction between Sprites and Sprite Atlases depends on various conditions. The examples below detail the most common scenarios:
+
+Scenario 1: Basic Sprite Atlas usage
+Sprite Atlas A contains Sprite 1.
+Sprite Atlas A has Include in Build enabled.
+Result: The Project’s published build includes Sprite Atlas A. Sprite 1 renders with the Texture from Sprite Atlas A.
+Scenario 2: ‘Include in Build’ is disabled
+Sprite Atlas A contains Sprite 1.
+Sprite Atlas A has Include in Build disabled.
+Result: The Project’s published build does not include Sprite Atlas A, and does not include Sprite 1’s Texture. 
+Sprite 1 appears invisible in the build at run time, because the Texture it refers to is not available and is not loaded.
+Scenario 3: One Sprite in two Sprite Atlases
+Sprite Atlas A and Sprite Atlas B both include Sprite 1 in their Objects for Packing lists.
+Both Sprite Atlas A and Sprite Atlas B have Include in Build enabled.
+Both Sprite Atlases have different Texture output settings in this example.
+Result: The Project’s published build includes both Sprite Atlases. Unity randomly chooses which Texture to render Sprite 1 with, in an internal process that is out of your control.
+In this scenario, to ensure that the Sprite renders with the Texture from the Sprite Atlas you want, follow the steps below:
+
+Disable ‘Include in Build’ for both Sprite Atlases.
+When you initialize the Sprite at run time, request the Sprite directly from one of the Atlases with SpriteAtlas.
+GetSprite. This ensures that Unity always draws the Sprite Texture from the correct Sprite Atlas.

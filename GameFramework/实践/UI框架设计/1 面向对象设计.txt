@@ -1,0 +1,8 @@
+ClientLua\Common\BaseClass
+全局方法：BaseClass(classname,...)
+1，分类和对象两种类型
+2，创建一个类，实现多继承...参数
+3，类添加一个new方法，new的对象具有__init和__delete方法
+
+全局方法：Singleton(classname,...)
+创建单例，获取单例的接口为GetInstance()和Instance
