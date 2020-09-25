@@ -1,0 +1,34 @@
+1，使用关联容器
+两个主要的关联容器：map和set。
+参考文档：关联容器类型
+按关键字有序保存元素：map,set,multimap和multiset
+无序集合：unordered_map,unordered_set,unordered_multimap和unordered_multiset
+set是关键字的简单集合，当只是想知道一个值是否存在时，set是最有用的。
+编程：使用map实现单词计数程序。
+编程：使用set改进上述程序，忽略常见单词，如“the”“and”和“or”等。
+查询set元素 exclude.find(word) == exclude.end()
+
+2 关联容器概述
+容器multimap和multiset都允许多个元素具有相同的关键字。
+对于有序容器，map,set,multimap和multiset的关键字类型必须定义元素比较的方法。
+如果一个类型定义了“正常行为”的<运算符，则它可以用作关键字类型。
+如果Sales_data类没有定义<运算符，但是有一个compareIsbn函数，那么可以如下方法进行定义：
+multiset<Sales_data, decltype(compareIsbn)*> bookstore(CompareIsbn);
+
+3 关联容器操作
+pair的关键字部分是const的。
+set的迭代器是const的。
+map和set都支持begin和end操作。
+关联容器的insert成员向容器添加一个元素或一个元素范围。
+关联容器删除元素的方法erase。
+map和unordered_amp容器提供了下标运算符和一个对应的at函数。
+与其他下标运算符不同的是，如果关键字并不在map中，会为它创建一个元素并插入到map中。
+查找一个特定元素是否在容器中，使用find方法。
+对map使用find代替下标操作。
+如果一个multimap或multiset中有多个元素具有给定关键字，那么这些元素在容器中会相邻存储。
+
+4 无序容器
+无序关联容器不是使用比较运算符来组织元素，而是使用一个哈希函数和关键字类型的==运算符。
+在关键字的元素没有明显的序关系情况下，无序容器是非常有用的。
+如果关键字类型固有就是无序的，或者性能测试发现问题可以用哈希技术解决，就可以使用无序容器。
+无序容器对关键字类型的要求（了解）。
