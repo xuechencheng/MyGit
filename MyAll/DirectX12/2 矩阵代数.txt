@@ -76,8 +76,8 @@ inline XMMATRIX XM_CALLCONV XMMatrixInverse(XMVECTOR* pDeterminant, FXMMATRIX  M
 typedef const XMMATRIX& FXMMATRIX;
 typedef const XMMATRIX& CXMMATRIX;
 //在32位的Windows系统上，__vectorcall调用约定通过寄存器传递前6个XMVECTOR参数，其余的参数则存在堆栈上
-typedef const XMMATRIX& FXMMATRIX;
-typedef const XMMATRIX CXMMATRIX;
+typedef const XMMATRIX FXMMATRIX;
+typedef const XMMATRIX& CXMMATRIX;
 可以看出，在32位Windows操作系统上的__fastcall调用约定中，XMMATRIX类型的参数是不能传至SSE/SSE2寄存器的，因为这些寄存器此时只支持3个XMVECTOR参数传入。
 DirectXMath建议用户总是在构造函数中采用CXMMATRIX类型来获取XMMATRIX参数，而且对于构造函数也不需要使用XM_CALLCONV约定注解。
 
