@@ -1,0 +1,17 @@
+C++
+	C++ Primer
+	Effective C++ 和 More Effective C++
+	Think in C++
+	C++沉思录
+	Exceptional C++ 和 More Exceptional C++
+	Advanced C++ 和 Modern C++
+	泛型编程与STL
+	深入探索C++对象模型
+	
+算法和思想
+	算法
+	算法导论
+	设计模式
+	
+图形学
+	DirectX12 3D游戏开发实战
