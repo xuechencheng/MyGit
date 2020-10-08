@@ -1,0 +1,8 @@
+IUnknown是指COM标准接口。所有COM接口都继承IUnKnown。
+IID_PPV_ARGS_Helper 函数：验证指定参数的类型是否从IUnknown接口派生。
+__uuidof运算符：Microsoft专用，检索附加到表达式的GUID。
+WINAPI==__stdcall：被这个关键字修饰的函数，其参数都是从右向左通过堆栈传递的(__fastcall的前面部分由ecx,edx传)， 函数调用在返回前要由被调用者清理堆栈。
+#define REFIID const IID &;   typedef GUID IID;
+HRESULT类型：
+在COM中接口的返回值强制定义为该类型，用于表示当前执行的状态是完成或者是出错。
+其实它就是一个32位的整数，微软将这个整数分成几个部分，各个部分都有详细的含义。

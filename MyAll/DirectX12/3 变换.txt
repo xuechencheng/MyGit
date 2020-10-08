@@ -13,3 +13,91 @@ t(ku) = kt(u)
 3.1.4 旋转
 向量v绕轴n以角θ进行旋转，首先，将向量v分解为两部分：一部分平行于n，另一部分正交于n。
 平行于n的部分在旋转时保持不变。
+旋转矩阵有个有趣的性质：每个行向量都为单位长度且两两正交。
+也就是说这些行向量都是规范正交的。
+若一个矩阵的行向量都是规范正交的，则称此矩阵为正交矩阵。
+正交矩阵的逆矩阵与转置矩阵是相等的。
+如果选择绕x轴，y轴或z轴进行旋转，便会获得以x，y，z为旋转轴的对应旋转矩阵（见书本）。
+
+3.2 仿射变换
+3.2.1 齐次坐标
+仿射变换是由一个线性变换与一个平移变换组合而成的。
+对于向量而言，平移操作是没有意义的，换句话说，平移操作不应作用于向量。平移变换只能应用于点。
+齐次坐标所提供的表示机制，使我们可以方便地对点和向量进行统一的处理。
+在采用齐次坐标表示法时，我们将坐标扩充为四元组，其中，第四个坐标w的取值将根据被描述对象是点还是向量而定。
+(x,y,z,0)表示向量；(x,y,z,1)表示点。
+使w=1能使点被正确地平移；w=0可以防止向量坐标受到平移操作的影响。
+
+3.2.2 仿射变换的定义及其矩阵表示
+仿射变换为一个线性变换加上一个平移向量。
+放射变换的矩阵表示见书本。
+
+3.2.3 平移
+平移矩阵及其逆矩阵的表示方法。
+
+3.2.4 缩放和旋转的放射矩阵
+可以用4x4矩阵统一地表示所有变换。
+
+3.2.5 放射变换矩阵的几何意义
+
+3.3 变换的复合
+先缩放，后旋转再平移
+
+3.4 坐标变换
+不同标架间的坐标的转换称为坐标变换。
+坐标变换的过程中，几何体本身并没有随之发生改变。
+
+3.4.1 向量的坐标变换
+如果知道标架A中的坐标向量，相对于标架B的坐标的向量值就可以计算出向量的坐标变换。
+
+3.4.2 点的坐标变换
+除了要知道坐标向量还要知道标架A的原点相对于标架B的原点的坐标。
+
+3.4.3 坐标变换的矩阵表示
+坐标转换矩阵见书本。
+
+3.4.4 坐标变换矩阵及其结合律
+标架FG和H。A为将坐标从F转换到G的变换矩阵，B为将坐标由G转换到H的矩阵。
+那么F转到H的矩阵为AB。
+
+3.4.5 坐标变换矩阵及其逆矩阵
+
+3.5 变换矩阵与坐标变换矩阵
+到目前为止，我们已经对使几何体本身发生改变的变换（缩放，旋转和平移）与坐标变换进行了区分。
+在数学角度上看，两个在数学上是等价的。
+我们能够将一个改变几何体的复合变换（缩放，旋转和平移），解释为一种对应的坐标变换。
+
+3.6 DirectXMath库提供的变换函数
+//构建一个缩放矩阵
+inline XMMATRIX XM_CALLCONV XMMatrixScaling(float ScaleX, float ScaleY, float ScaleZ)
+//用一个3D向量中的分量来构建缩放矩阵
+inline XMMATRIX XM_CALLCONV XMMatrixScalingFromVector(FXMVECTOR Scale)
+//构建一个绕XYZ轴旋转的矩阵Rx
+inline XMMATRIX XM_CALLCONV XMMatrixRotationX(float Angle)
+//构建一个绕任意轴旋转的矩阵Rx
+inline XMMATRIX XM_CALLCONV XMMatrixRotationAxis(FXMVECTOR Axis, float     Angle)
+//构建一个平移矩阵
+inline XMMATRIX XM_CALLCONV XMMatrixTranslation(float OffsetX, float OffsetY, float OffsetZ)
+//用一个3D向量中的分量来构建平移矩阵
+inline XMMATRIX XM_CALLCONV XMMatrixTranslationFromVector(FXMVECTOR Offset)
+//计算向量与矩阵的乘积vM，此函数为针对点的变换，即总是默认令Vw为1
+inline XMVECTOR XM_CALLCONV XMVector3TransformCoord(FXMVECTOR V, FXMMATRIX M)
+//计算向量与矩阵的乘积vM，此函数为针对向量的变换，即总是默认令Vw为1
+inline XMVECTOR XM_CALLCONV XMVector3TransformNormal(FXMVECTOR V, FXMMATRIX M)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
