@@ -1,0 +1,3 @@
+local TriggerObject = require("Common.TriggerObject") --待续
+local AssetRefObject = require("Common.AssetRefObject")
+local BaseUI = BaseClass("Common.BaseUI", TriggerObject, AssetRefObject)

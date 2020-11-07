@@ -1,0 +1,37 @@
+local EventManager = Singleton("Common.Event.EventManager")
+
+function EventManager:__init()
+    self.eventMap = {}
+end
+
+--key--event value--eventObj{event, callback, priority}的list
+--如果priority不为0就排序
+function EventManager:AddEventListener(event, tbl, callback, priority)
+
+end
+
+function EventManager:HasEventListener(event, tbl, callback)
+
+end
+
+function EventManager:RemoveEventListener(event, tbl, callback)
+
+end
+
+function EventManager:RemoveEventListenerByEventObj(eventObj)
+
+end
+
+function EventManager:DispatchEvent(event, ...)
+
+end
+
+function EventManager:Clear()
+    self.eventMap = {}
+end
+
+function EventManager:__delete()
+    self.eventMap = nil
+end
+
+return EventManager

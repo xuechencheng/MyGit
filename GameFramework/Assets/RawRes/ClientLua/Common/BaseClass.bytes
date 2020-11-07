@@ -1,0 +1,32 @@
+local _class = {}
+
+ClassType = {
+	class = 1,
+	instance = 2
+}
+
+function FindClass( tbl )
+	return _class[tbl]
+end
+---递归父节点，先调用父节点方法
+local function CallFuncDown( tbl, name, ...)
+	
+end
+---递归父节点，后调用父节点方法
+local function CallFuncUp( tbl, name, ...)
+	
+end
+---创建一个多继承的类
+local  function NewClassType( classname, ... )
+
+end 
+---创建一个单例，接口是GetInstance,Destory,Instance
+---首次调用Instance时候会调用__init,Destory会调用__destory
+function Singleton( classname, ...)
+	
+end
+
+---创建一个多继承类，接口new和Destory，调用new时候调用__init
+function BaseClass( classname, ... )
+
+end
