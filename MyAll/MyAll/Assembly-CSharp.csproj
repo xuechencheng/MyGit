@@ -64,25 +64,45 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Packages\GameFramework\Base\IGameModule.cs" />
+    <Compile Include="Assets\Packages\GameFramework\ObjectPool\MapList.cs" />
     <Compile Include="Assets\Scripts\Common\Character\Character_Common.cs" />
     <Compile Include="Assets\Scripts\Logic\Character\AI\CharAI.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\AI\CollectionStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\AI\InteractiveStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\AI\MainPlayerStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\AI\MonsterStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\AI\NpcStateMachine.cs" />
     <Compile Include="Assets\Scripts\Logic\Character\AI\State.cs" />
     <Compile Include="Assets\Scripts\Logic\Character\AI\StateMachine.cs" />
     <Compile Include="Assets\Scripts\Logic\Character\AnimationControl\AnimationControlBase.cs" />
     <Compile Include="Assets\Scripts\Logic\Character\Char\CharBase.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\Char\CharCollection.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\Char\CharInteractive.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\Char\CharMonster.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\Char\CharNpc.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\Char\CharPlayer.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\Char\CharPlayerMain.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\CharacterManager.cs" />
     <Compile Include="Assets\Scripts\Logic\Character\Property\BaseProperty.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\Property\InputProperty.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\Property\MainPlayerProperty.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\Property\PlayerProperty.cs" />
     <Compile Include="Assets\Scripts\Logic\Character\Property\PropertyValue\IPropertyValue.cs" />
     <Compile Include="Assets\Scripts\Logic\Character\Property\PropertyValue\PropertyValue.cs" />
     <Compile Include="Assets\Scripts\Logic\Character\Property\PropertyValue\PropertyValueManager.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\States\MainPlayer\GroundState.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\States\MainPlayer\MoveState.cs" />
     <Compile Include="Assets\Scripts\Logic\GF_Logic\Base\ModuleManager.cs" />
     <Compile Include="Assets\Scripts\Logic\GF_Logic\Base\SingletonModule.cs" />
     <Compile Include="Assets\Scripts\Logic\GF_Logic\Utility\AssetUtility.cs" />
-    <Compile Include="Assets\Scripts\Logic\UniversalEvent\Fragments\AnimationFragmentRunner.cs" />
+    <Compile Include="Assets\Scripts\Logic\UniversalEvent\Fragments\AnimationFragment.cs" />
     <Compile Include="Assets\Scripts\Logic\UniversalEvent\Fragments\UEventFragmentRunner.cs" />
     <Compile Include="Assets\Scripts\Logic\UniversalEvent\UEvent.cs" />
     <Compile Include="Assets\Scripts\Logic\UniversalEvent\UEventTemplateDataManager.cs" />
-    <Compile Include="Assets\Scripts\Logic\UniversalEvent\UEventTemplateDataStructs.cs" />
+    <Compile Include="Assets\Scripts\Logic\UniversalEvent\UEventTemplateDataStruct.cs" />
     <Compile Include="Assets\Scripts\Logic\UniversalEvent\UniversalEventCore.cs" />
+    <None Include="Assets\Docs\1 人物移动.txt" />
+    <None Include="Assets\Docs\0 通用.txt" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.14f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

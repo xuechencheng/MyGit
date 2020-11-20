@@ -1,0 +1,9 @@
+1，主角开始移动和停止移动
+	1，在InputProperty中的Update方法中捕获并缓存摇杆值（虚拟摇杆通过lua全局变量，或者通过键盘值）
+	2，设置BaseProperty的RunFast为true
+	3，在GroundState中更新位置，方向和动画
+
+2，主角同步位置
+3，其他玩家移动
+
+状态机的使用

@@ -1,0 +1,9 @@
+{
+"Date": "2020/11/17 9:58:55",
+"UnityVersion": "2019.3.14f1",
+"com.unity.scriptablebuildpipeline": "1.14.1",
+"com.unity.addressables": "1.16.10",
+"traceEvents": [
+{"name": "Building Simulate Groups (advanced)", "ph": "X", "dur": 708215.3, "tid": 1, "ts": 7648, "pid": 1}
+]
+}

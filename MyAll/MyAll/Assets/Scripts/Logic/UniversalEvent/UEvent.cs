@@ -1,18 +1,40 @@
-﻿using System.Collections;
+﻿using GameFramework.ObjectPool;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace UniversalEvent
 {
-    public unsafe class UEventSource { 
-        
+    public class UEventSource {
+        public DoublyLinkedList<UEvent>[] runningEvents = new DoublyLinkedList<UEvent>[] { 
+            new DoublyLinkedList<UEvent>(),new DoublyLinkedList<UEvent>()
+        };
     }
-    public unsafe class UEvent
+    public class UEvent
     {
-        UEventTemplateM* m_ptr;
-        public UEventTemplateType templateType { get { return m_ptr->templateType; } }
-        public int templateID { get { return m_ptr->templateID; } }
-
         public UEventSource eventOwner;
+        private UEventFragmentM ptr;
+
+        public RunningTrack runningTrack { get { return ptr.runningTrack; } }
+
+        public void Start() {
+            Reset();
+        }
+
+        public void Reset() { 
+        }
+
+        public static int GetRawRunningTrack(RunningTrack track) {
+            switch (track) {
+                case RunningTrack.SingleAndContinue:
+                case RunningTrack.SingleAndOverlay:
+                    return (int)RawRunningTrack.Single;
+                case RunningTrack.AddAndContinue:
+                case RunningTrack.AddAndOverlay:
+                case RunningTrack.Add:
+                    return (int)RawRunningTrack.Add;
+            }
+            return (int)RawRunningTrack.Single;
+        }
     }
 }
