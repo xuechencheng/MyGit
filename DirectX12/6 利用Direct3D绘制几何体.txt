@@ -1,0 +1,93 @@
+6 利用Direct3D绘制几何体
+6.1 顶点与输入布局
+除了空间位置，Direct3D中的顶点还可以存储其他属性数据。为了构建自定义的顶点格式，我们首先要创建一个结构体来容纳选定的顶点数据。
+struct Vertex1{ XMFLOAT3 Pos; XMFLOAT4 Color;};
+struct Vertex2{ XMFLOAT3 Pos; XMFLOAT3 Normal; XMFLOAT2 Tex0; XMFLOAT2 Tex1;};
+定义了顶点结构体之后，我们还需要向Direct3D提供该顶点结构体的描述，使它了解应怎样来处理结构体中的每个成员。
+用户提供给Direct3D的这种描述被称为输入布局描述，用结构体D3D12_INPUT_LAYOUT_DESC来表示：
+typedef struct D3D12_INPUT_LAYOUT_DESC{
+	const D3D12_INPUT_ELEMENT_DESC *pInputElementDesc;
+	UINT NumElements;
+}D3D12_INPUT_LAYOUT_DESC
+输入布局描述由两部分组成：一个以D3D12_INPUT_ELEMENT_DESC元素构成的数组，以及一个表示该数组中的元素数量的整数。
+D3D12_INPUT_ELEMENT_DESC结构体定义如下：
+typedef struct D3D12_INPUT_ELEMENT_DESC{
+	LPCSTR SemanticName; --语义，传达元素的预期用途
+	UINT SemanticIndex; --附加到语义上的索引
+	DXGI_FORMAT Format; --指定顶点元素的数据类型
+	UINT InputSlot; --指定传递元素所用的输入槽索引
+	UINT AlignedByteOffset;--在特定输入槽中，从C++顶点结构体的首地址到其中某点元素起始地址的偏移量
+	D3D12_INPUT_CLASSIFICATION InputSlotClass;--
+	UINT InstanceDataStepRate;--0，若采用实例化这种高级技术，则将此参数设为1.
+}D3D12_INPUT_ELEMENT_DESC
+
+6.2 顶点缓冲区
+为了使GPU可以访问顶点数组，就需要把它们放置在称为缓冲区的GPU资源（ID3D12Resource）里。我们把存储顶点的缓冲区叫做顶点缓冲区。
+缓冲区的结构比纹理更为简单：既非多维资源，也不支持mpmap，过滤器以及多重采样等技术。当需要向GPU提供如顶点这类数据元素所构成的数组时，我们便会使用缓冲区。
+我们先通过填写D3D12_RESOURCE_DESC结构体来描述缓冲区资源，接着再调用ID3D12Device::CreateCommittedResource方法去创建ID3D12Resource对象。
+包装类CD3DX12_RESOURCE_DESC，派生自D3D12_RESOURCE_DESC结构体，并附有多种便于使用的构造函数以及方法。
+在Direct3D 12中，所有的资源均用ID3D12Resource接口表示。
+对于静态几何体，即每一帧都不会发生改变的几何体而言，我们会将其顶点缓冲区置于默认堆(D3D12_HEAP_TYPE_DEFAULT)中来优化性能。
+除了创建顶点缓冲区资源本身以外，我们还需用D3D12_HEAP_TYPE_UPLOAD这种堆类型来创建一个处于中介位置的上传缓冲区资源。
+在创建了上传缓冲区之后，我们就可以将顶点数据从系统内存复制到上传缓冲区，而后再把顶点数据从上传缓冲区复制到真正的顶点缓冲区中。
+由于我们需要利用作为中介的上传缓冲区来初始化默认缓冲区中的数据。因此，我们就在d3dUtil.h/.cpp文件中构建了下列工具函数。
+为了将顶点缓冲区绑定到渲染流水线上，我们需要给这种资源创建一个顶点缓冲区视图。与RTV不同的是，我们无须为顶点缓冲区视图创建描述符堆。
+顶点缓冲区视图是由D3D12_VERTEX_BUFFER_VIEW结构体来表示。
+在顶点缓冲区及其对应视图创建完成后，便可以将它与渲染流水线上的一个输入槽相绑定。
+向流水线中的输入装配器阶段传递顶点数据的方法：
+void ID3D12GraphicsCommandList::IASetVertexBuffers(
+	UINT StartSlot, UINT NumView, const D3D12_VERTEX_BUFFER_VIEW *pViews);
+将顶点缓冲区设置到输入槽上并不会对其执行实际的绘制操作，而是仅为顶点数据送至渲染流水线做好准备而已。
+这最后一步才是通过ID3D12GraphicsCommandList::DrawInstanced方法正正地绘制顶点。
+图元拓扑状态由ID3D12GraphicsCommandList::IASetPrimitiveTopology方法来设置。
+
+6.3 索引和索引缓冲区
+与顶点相似，为了使GPU可以访问索引数组，就需要将它们放置于GPU的缓冲区资源(ID3D2Resource)内。我们称存储索引的缓冲区为索引缓冲区。
+本书采用d3dUtil::CreateDefaultBuffer函数时通过void*类型作为参数引入泛型数据，这就意味着我们也可以用此函数来创建索引缓冲区。
+为了使索引缓冲区与渲染流水线绑定，我们需要给索引缓冲区资源创建一个索引缓冲区视图。无须为索引缓冲区创建描述符堆。索引缓冲区视图用D3D12_INDEX_BUFFER_VIEW来表示。
+与顶点缓冲区相似，在使用之前，我们需要先将它们绑定到渲染流水线上。通过ID3D12GraphicsCommandList::IASetIndexBuffer方法即可将索引缓冲区绑定到输入装配器阶段。
+在使用索引的时候，我们一定要用ID3D12GraphicsCommandList::DrawIndexedInstanced方法代替DrawInstanced方法进行绘制。
+
+6.4 顶点着色器示例
+在Direct3D中，编写着色器的语言为高级着色语言(HLSL)，其语法与C++十分相似。
+一般情况下，着色器通常以.hlsl为扩展名的文本文件中编写。
+HLSL没有引用和指针的概念。
+参数语义":POSITION"和":COLOR"用于将顶点结构体中的元素映射到顶点着色器的相应输入参数。
+SV_POSITION语义比较特殊，它说修饰的顶点着色器输出元素存有齐次裁剪空间中的顶点位置信息。
+因此，我们必须为输出位置信息的参数附上SV_POSITION语义，使GPU可以在进行例如裁剪，深度测试和光栅化等处理。
+如果没有使用几何着色器，那么顶点着色器必须用SV_POSITION语义来输出顶点在齐次裁剪空间中的位置。
+
+6.5 像素着色器示例
+为了计算出三角形中每个像素的属性，我们会在光栅化处理期间对顶点着色器（或几何着色器）输出的顶点属性进行插值。
+随后再将这些插值数据传至像素着色器中作为它的输入。
+像素着色器与顶点着色器有些相似：前者是针对每一个像素片段而运行的函数，后者是针对每一个顶点而运行的函数。
+值得我们注意的是，这些输入像素着色器的像素片段有可能最终不会传入或留存在后台缓冲区中。例如，像素片段可能会在像素着色器中被裁剪掉，被另一个像素片段遮挡，或者被丢弃。
+因此，在确定后台缓冲区某一像素的过程中，可能会存在多个候选的像素片段。这就是像素片段和像素意义的差别。
+像素着色器的输入与顶点着色器的输出可以准确匹配，这也是必须满足的一点。
+
+6.6 常量缓冲区
+6.6.1 创建常量缓冲区
+常量缓冲区是一种GPU资源，其数据内容可供着色器程序所引用。
+在HLSL中，可将一个4x4矩阵声明为内置的float4x4类型。
+常量缓冲区通常由CPU每帧更新一次。所以，我们会把常量缓冲区创建到一个上传堆而非默认堆中。
+常量缓冲区对硬件也有特别的要求，即常量缓冲区的大小必为硬件最小分配空间(256B)的整数倍。
+创建常量缓冲区的例子见书本。
+待到绘制物体的时候，只要将常量缓冲区视图绑定到存有物体相应常量数据的缓冲区子区域即可。
+工具函数d3dUtil::CalcConstantBufferByteSize会做适当的运算，使缓冲区的大小凑整为256B的整数倍。
+
+6.6.2 更新常量缓冲区
+首先要获得指向欲更新资源数据的指针，可用Map方法来做到这一点。
+利用memcpy函数将数据从系统内存复制到常量缓冲区。
+当常量缓冲区更新完成后，我们应在释放映射内存之前对其进行Unmap操作。
+
+6.6.3 上传缓冲区辅助函数
+将上传缓冲区的相关操作简单封装一下，使用起来更加方便。我们在UploadBuffer.h文件中定义了下面这个类。
+
+
+
+
+
+
+
+
+
