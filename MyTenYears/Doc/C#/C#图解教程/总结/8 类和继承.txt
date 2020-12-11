@@ -1,0 +1,62 @@
+8 类和继承
+8.3 所有类都派生自object类
+
+8.4 屏蔽基类的成员
+要让编译器知道你在故意屏蔽继承的成员，可使用new修饰符。
+
+8.5 基类访问
+基类访问表达式：由关键字base后面跟一个点和成员的名称组成。
+
+8.6 基类的引用
+使用new不能实现多态。
+使用virtual/override可以实现多态。
+
+8.7 构造函数的执行
+构造函数初始化语句：public MyDerivedClass(int x, string s):base( s, x)
+使用当前类中其他的构造函数。 public MyClass(int x):this(x,"Using Default String")
+类的可访问性有两个级别：public和internal。
+
+8.9 成员访问修饰符
+5个成员访问级别的名称：public,private,protected,internal和proteced internal。
+成员的访问性不能比它的类高。
+
+8.10 抽象成员
+抽象成员是指设计为被覆写的函数成员。包括以下特征：
+1，必须是一个函数成员，字段和常量不能成为抽象成员；
+2，必须用abstract修饰符标记；
+3，不能有实现代码块。
+有四种类型的抽象成员：方法，属性，事件和索引器。
+虚成员和抽象成员：virtual和abstract。
+
+8.12 密封类
+当对一个类应用sealed修饰符时，此修饰符会阻止其他类从该类继承。
+sealed修饰方法或属性，能够允许类从基类继承，并防止它们重写特定的虚方法或虚属性。
+
+8.13 静态类
+静态类中所有成员都是静态的。
+静态类可以有一个静态构造函数。
+静态类似隐式封闭的，不能继承静态类。
+
+8.14 扩展方法
+static class ExtendMyData{
+	public static double Average(this MyData md){
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

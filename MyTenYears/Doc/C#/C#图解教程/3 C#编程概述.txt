@@ -1,0 +1,27 @@
+3 C#编程概述
+3.1 一个简单的C#程序
+编程：打印HelloWorld
+打印到屏幕上的命令：Console.WriteLine("")
+
+3.2 标志符
+3.3 关键字
+参考文档：C#所有关键字
+
+3.4 Main:程序的起始点
+3.5 空白
+3.6 语句
+3.7 从程序中输出文本
+格式字符串：Console.WriteLine("Three integers are {0} {1} and {1}", 3, 5)
+字符串插值：int var1 = 3, var2 = 6 Console.WriteLine($"{var1} {var2}")
+
+3.8 注释：为代码添加注解
+
+
+
+
+
+
+
+
+
+
