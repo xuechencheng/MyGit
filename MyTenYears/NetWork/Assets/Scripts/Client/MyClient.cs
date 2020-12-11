@@ -11,7 +11,8 @@ public class MyClient
     public delegate void ReceiveServerMsg(string message);
     public ReceiveServerMsg receiveServerMsg;
     private Socket socketSend;
-    public void ConnetServer() { 
+    public void ConnetServer() {
+        //指定 Socket 类用其解析网络地址的标准地址系列（例如，AddressFamily.InterNetwork 指定IP版本4地址系列）
         socketSend = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         IPAddress ip = IPAddress.Parse("127.0.0.1");
         IPEndPoint point = new IPEndPoint(ip, 5000);
