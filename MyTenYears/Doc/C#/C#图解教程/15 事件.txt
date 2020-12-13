@@ -1,0 +1,39 @@
+事件
+15.1 发布者和订阅者
+当一个特定的程序事件发生时，程序的其他部分可以得到该事件已经发生的通知，发布者/订阅者模式可以满足这个需求。
+事件就像是专门用于某种特殊用途的简单委托。
+
+15.2 源代码组件概览
+委托类型声明，事件处理程序声明，事件声明，事件注册和触发事件代码。
+
+15.3 声明事件
+声明需要委托类型的名称。
+public event EventHandler CountedADozen;
+事件不是类型，它是类或结构的成员。
+
+15.4 订阅事件
+使用+=运算符来为事件添加事件处理程序。
+事件处理程序的规范可以是以下任意一种：
+实例方法名称；静态方法名称；匿名方法；Lambda表达式。
+
+15.5 触发事件
+在触发事件之前和null进行比较。
+
+15.6 标准事件的用法
+对于事件的使用，.NET框架提供了一个标准模式。该模式的基础就是EventHandler委托类型。
+第一个参数用来保存触发事件的对象的引用。
+第二个参数用来保存状态信息，指明什么类型适用于该应用程序。
+返回类型为void。
+public delegate void EventHandler(object sender, EventArgs e);
+15.6.1 通过扩展EventArgs来传递数据
+EventArgs不能传递任何数据。如果你希望传递数据，必须声明一个派生自EventArgs的类。
+为了向自己的事件处理程序的第二个参数传入数据，我们需要声明一个个派生自EventArgs的自定义类，它可以保存我们需要传入的数据。
+类的名称应该以EventArgs结尾。
+public class IncrementEventArgs : EventArgs{
+	public int IterationCount{get;set;}
+}
+public event EventHandler<IncrementEventArgs> CountedADozen;
+15.6.2 移除事件处理程序
+可以利用-=运算符把事件处理程序从事件中移除。
+
+15.7 事件访问器

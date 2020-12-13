@@ -1,0 +1,95 @@
+反射和特性
+25.1 元数据和反射
+有关程序及其类型的数据被称为元数据，它们保存在程序的程序集中。
+运行中的程序查看本身的元数据或其他程序的元数据的行为叫作反射。
+
+25.2 Type类
+Type类被设计用来包含类型的特征。
+Type是抽象类，不能有实例。
+对于程序中用到的每一个类型，CLR都会创建一个包含这个类型信息的Type类型的对象。
+不管创建的类型有多少个实例，只有一个Type对象会关联到所有这些实例。
+我们可以从Type对象中获取有关类型的几乎所有信息：
+Name,Namespace,Assembly属性
+GetFields,GetProperties,GetMethods方法
+
+25.3 获取Type对象
+可以使用实例对象的GetType方法和typeof运算符和类名来获取Type对象。
+
+25.4 什么是特性
+特性是一种允许我们向程序的程序集添加元数据的语言结构。它是用于保存程序结构信息的特殊类型的类。
+将应用了特性的程序结构叫作目标。
+设计用来获取和使用元数据的程序叫作特性的消费者。
+特性命名一般以Attribute后缀结尾。
+
+25.5 应用特性
+特性的目的是高速编译器把程序结构的某组元数据嵌入程序集。
+通过在结构前放置特性片段来应用特性。
+特性片段由方括号包围特性名和参数列表而成。
+[MyAttribute("Simple class","Version 3.7")]
+public class MyOtherClass{}
+
+25.6 预定义的保留特性
+25.6.1 Obsolete特性
+使用“Obsolete”特性将程序结构标注为“过时”，并且在代码编译时显示有用的警告信息。
+Obsolete特性的另外一个重载接受了bool类型的第二个参数，这个参数指定目标是否应该被标记为错误而不仅仅是警告。
+
+25.6.2 Conditional特性
+Conditional特性允许我们包括或排斥特定方法的所有调用。
+要使用Conditional特性，将其应用于方法声明并把编译符作为参数。
+如果没有定义编译符号，那么编译器会忽略代码中这个方法的所有调用。
+
+25.6.3 调用者信息特性
+利用调用者信息特性可以访问文件路径，代码行数，调用成员的名称等源代码信息。
+这3个特性名称为CallerFilePath,CallerLineNumber和CallerMemberName
+这些特性只能用于方法中的可选参数。
+
+25.6.4 DebuggerStepThrough特性
+我们在单步调试代码时，常常希望调试器不要进入某些方法。DebuggerStepThrough特性高速调试器在执行目标代码时不要进入该方法调试。
+
+25.6.5 其他预定义特性
+
+25.7 关于应用特性的更多内容
+特性目标
+event method property type assembly field param return typevar module
+全局特性一般定义在AssemblyInfo.cs文件中。
+[assembly:AssemblyTitle("SuperWidget")]
+
+25.8 自定义特性
+特性只是一种特殊的类。
+所有特性类都派生自System.Attribute。
+
+25.8.1 声明自定义特性
+安全起见，通常建议你声明一个sealed的特性类。
+
+25.8.2 使用特性的构造函数
+
+25.8.3 指定构造函数
+当我们为目标应用特性时，其实是在指定应该使用哪个构造函数来创建特性的实例。
+列在特性应用中的参数其实就是构造函数的实参。
+
+25.8.4 使用构造函数
+特性的实例被创建后，只有特性的消费者访问特性时才能调用构造函数。
+
+25.8.5 构造函数中的位置参数和命名参数
+
+25.8.6 限制特性的使用
+如果希望自定义特性MyAttribute只能应用到方法上，那么可以以如下形式使用AttributeUsage:
+[AttributeUsage(AttributeTarget.Method)]
+public sealed class MyAttribute : System.Attribute{}
+
+25.9 访问特性
+Type的两个方法：IsDefined和GetCustomAttribute在这里非常有用。
+25.9.1 使用IsDefined方法
+
+
+
+
+
+
+
+
+
+
+
+
+	

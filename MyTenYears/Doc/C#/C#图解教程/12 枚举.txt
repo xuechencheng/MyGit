@@ -1,0 +1,33 @@
+枚举
+12.1 枚举
+与结构一样，枚举是值类型。
+枚举只有一种类型的成员：命名的整数值常量。
+在默认情况下，编译器对第一个成员赋值为0，对每一个后续成员赋的值都比前一个成员多1。
+12.1.1 设置底层类型和显示值
+可以把冒号和类型名放在枚举名之后，这样就可以使用int以外的整数类型。类型可以是任何整数类型。
+尽管不能有重复的名称，但可以有重复的值。
+12.1.2 隐式成员编号
+
+12.2 位标志
+程序员们长期使用单个字的不同为作为表示一组开关标志的紧凑方法。我们将其称为标志字。
+Flags特性装饰枚举实际上不是必要的，但可以带来一些额外的便利。
+[Flags]
+enum CardDeckSettings : uint{
+	SingleDeck = 0x01,
+	LargePictures = 0x02,
+	FancyNumbers = 0x04,
+	Animation = 0x08
+}
+CardDeckSettings ops = CardDeckSettings.SingleDeck | CardDeckSettings.FancyNumbers | CardDeckSettings.Animation
+bool useFancyNubmers = ops.HasFlag(CardDeckSettings.FancyNumbers)
+bool useFancyNubmers = (ops & CardDeckSettings.FancyNumbers) == CardDeckSettings.FancyNumbers
+
+12.2.1 Flags特性
+12.2.2 使用位标志的示例
+
+12.3 关于枚举的更多内容
+不能对成员使用修饰符。
+枚举的成员都是静态的。
+枚举还包括一些有用的静态方法：
+1，GetName
+2，GetNames

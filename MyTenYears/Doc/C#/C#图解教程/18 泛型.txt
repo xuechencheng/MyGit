@@ -1,0 +1,40 @@
+泛型
+18.1 什么是泛型
+18.2 C#中的泛型
+泛型类型也不是类型，而是类型的模板。
+C#提供了5种泛型：类，结构，接口，委托和方法。
+
+18.3 泛型类
+
+18.4 类型参数的约束
+要让泛型变得更有用，我们需要提供额外的信息让编译器知道参数可以接受那些类型。这些额外的信息叫做约束。
+
+18.4.1 Where子句
+class MyClass<T1,T2,T3> where T2: Customer,where T3 : IComparable
+
+18.4.2 约束类型和次序
+共有5种类型的约束
+类名，class，struct，接口名，new()
+class MyDictionary<KeyType, ValueType> where KeyType : IEnumerable, new(){}
+
+18.5 泛型方法
+18.5.1 声明泛型方法
+public void PrintData<S,T>(S p,T t) where S:Person{}
+
+18.5.2 调用泛型方法
+18.5.3 泛型方法的示例
+
+18.6 扩展方法和泛型类
+
+18.7 泛型结构
+
+18.8 泛型委托
+delegate R MyDelegate<T,R>(T value);
+
+18.9 泛型接口
+
+18.10 协变和逆变
+待续
+
+
+

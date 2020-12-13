@@ -1,0 +1,68 @@
+委托
+14.1 什么是委托
+可以认为委托是持有一个或多个方法的对象。但是委托可以执行。
+delegate void MyDel(int value);
+Program program = new Program();
+MyDel del = new MyDel(program.PringLow);
+
+14.2 委托概述
+可以把delegate看作一个包含有序方法列表的对象，这些方法具有相同的签名和返回类型。
+委托持有的方法可以来自任何类或结构，只要满足两个方面匹配：
+1，委托的返回类型
+2，委托的签名（包括ref和out修饰符）
+
+14.3 声明委托类型
+委托类型不需要在类内部声明，因为它是类型声明。
+
+14.4 创建委托对象
+有两种创建委托对象的方式，第一种是使用带new运算符的对象创建表达式。delVar = new MyDel(myInstObj.MyM1);
+我们还可以使用快捷语法。delVar = myInstObj.MyM1;
+
+14.5 给委托赋值
+
+14.6 组合委托
+委托可以使用额外的运算符来组合。这个运算最终会创建一个新的委托。
+
+14.7 为委托添加方法
++=
+
+14.8 从委托中移除方法
+-=
+可以通过将委托和null进行比较来判断委托的调用列表是否为空。
+
+14.9 调用委托
+可以通过两种方法调用委托。
+1，像调用方法一样调用委托；
+2，使用委托的Invoke方法。
+delVar?.Invoke(65)
+
+14.10 委托的示例
+
+14.11 调用带返回值的委托
+如果委托有返回值并且在调用列表中有一个以上的方法，会发生以下情况：
+调用列表中最后一个方法返回的值就是委托调用返回的值，其他返回值都被忽略。
+
+14.12 调用带引用参数的委托
+如果委托有引用参数，参数值会根据低啊用列表中的一个或多个方法的返回值而改变。
+
+14.13 匿名方法
+delegate int OtherDel(int InParam)；
+OtherDel del = delegate(int){return x + 20;};
+用在匿名方法实现代码中的外部变量称为被方法捕获。
+
+14.14 Lambda表达式
+Lambda表达式简化了匿名方法。如果先引入了Lambda表达式，就不会有匿名方法了。
+MyDel del = delegate(int x){return x + 1;};
+MyDel del = (int x)=>{return x + 1;};
+MyDel del = (x)=>{return x + 1;};
+MyDel del =  x =>{return x + 1;};
+MyDel del =  x => return x + 1;
+
+
+
+
+
+
+
+
+
