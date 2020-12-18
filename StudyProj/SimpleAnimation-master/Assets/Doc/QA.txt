@@ -1,0 +1,79 @@
+一，有哪些主要的类？
+public partial class SimpleAnimationPlayable : PlayableBehaviour
+1，SimpleAnimationPlayable_State文件中声明了下列类：
+StateEnumerable
+
+StateHandle : IState
+封装Playable的各种行为
+
+StateInfo
+管理Playable的各种变量
+
+StateManagement
+管理List<StateInfo> m_States
+
+QueuedState
+public StateHandle state;
+public float fadeTime;
+
+2，SimpleAnimationPlayable文件中
+主要的成员变量：
+	LinkedList<QueuedState> m_StateQueue;
+	StateManagement m_States;
+主要的方法：
+	AddClip(AnimationClip clip, string name)
+	RemoveClip(string name)
+	Play(string name)
+	PlayQueued(string name, QueueMode queueMode)
+	Rewind(string name)
+	Crossfade(string name, float time)
+	CrossfadeQueued(string name, float time, QueueMode queueMode)
+	public bool Blend(string name, float targetWeight, float time)
+	生命周期方法：OnPlayableCreate，PrepareFrame，OnGraphStop
+在OnPlayableCreate方法中创建AnimationMixerPlayable，并把AnimationMixerPlayable连接到输入。
+
+public partial class SimpleAnimation: MonoBehaviour
+1，SimpleAnimation_impl文件中
+控制流程的生命周期，并调用SimpleAnimationPlayable
+2，SimpleAnimation文件中
+封装和调用SimpleAnimationPlayable类
+主要的方法：
+	AddClip(AnimationClip clip, string newName)
+	Blend(string stateName, float targetWeight, float fadeLength)
+	CrossFade(string stateName, float fadeLength)
+	CrossFadeQueued(string stateName, float fadeLength, QueueMode queueMode)
+	IsPlaying(string stateName)
+	Stop(string stateName)
+	AddState(AnimationClip clip, string name)
+	RemoveState(string name)
+	Play(string stateName)
+	PlayQueued(string stateName, QueueMode queueMode)
+	Rewind(string stateName)
+
+二，Play和PlayQueued的区别
+	Play：停止其他动画，播放该动画
+	PlayQueued：
+
+
+二，对外亟需的接口
+	播放一个动画（是否分层，是否循环，是否加入队列）
+
+
+
+
+
+
+
+clone
+Cross和Blend
+
+
+
+
+
+
+
+
+
+
+

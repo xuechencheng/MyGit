@@ -61,6 +61,28 @@
     <Compile Include="Assets\TestPanel.cs" />
     <Compile Include="Assets\Files\Protos\Test.cs" />
     <Compile Include="Assets\GameStart.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\AI\State.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\AI\StateMachine.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\AI\CharAI.cs" />
+    <Compile Include="Assets\Scripts\Common\Character\Character_Common.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\Char\CharBase.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\Char\CharPlayer.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\Char\CharPlayerMain.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\Char\CharCollection.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\Char\CharInteractive.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\Char\CharMonster.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\Char\CharNPC.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\AI\CollectionStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\AI\InteractiveStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\AI\MainPlayerStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\AI\MonsterStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\AI\NpcStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\AI\PlayerStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\States\Player\PlayerMoveState.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\States\MainPlayer\GroundState.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\States\MainPlayer\MoveState.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\States\Monster\MonsterIdleState.cs" />
+    <Compile Include="Assets\Scripts\Logic\Character\States\Monster\MonsterState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

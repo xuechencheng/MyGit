@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAnimation-Tests", "SimpleAnimation-Tests.csproj", "{58504965-D354-E580-B231-7DC0C3407BCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAnimationComponent", "SimpleAnimationComponent.csproj", "{F69334B9-E663-7E09-BF10-D37F79CFD00A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.PlayableGraphVisualizer.Tests", "Unity.PlayableGraphVisualizer.Tests.csproj", "{0749CF74-874D-E3A4-3194-EFF95A91C7C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.PlayableGraphVisualizer", "Unity.PlayableGraphVisualizer.csproj", "{1C9738F0-4F8D-6B29-7EFA-29183C740DCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAnimationComponent-Editor", "SimpleAnimationComponent-Editor.csproj", "{3AE9E5BF-859F-4CA3-0BEC-F243381F517F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.PlayableGraphVisualizer.Editor", "Unity.PlayableGraphVisualizer.Editor.csproj", "{168F482D-F237-866B-9439-3DD060851439}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{58504965-D354-E580-B231-7DC0C3407BCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58504965-D354-E580-B231-7DC0C3407BCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58504965-D354-E580-B231-7DC0C3407BCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58504965-D354-E580-B231-7DC0C3407BCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F69334B9-E663-7E09-BF10-D37F79CFD00A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F69334B9-E663-7E09-BF10-D37F79CFD00A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F69334B9-E663-7E09-BF10-D37F79CFD00A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F69334B9-E663-7E09-BF10-D37F79CFD00A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0749CF74-874D-E3A4-3194-EFF95A91C7C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0749CF74-874D-E3A4-3194-EFF95A91C7C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0749CF74-874D-E3A4-3194-EFF95A91C7C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0749CF74-874D-E3A4-3194-EFF95A91C7C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C9738F0-4F8D-6B29-7EFA-29183C740DCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C9738F0-4F8D-6B29-7EFA-29183C740DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C9738F0-4F8D-6B29-7EFA-29183C740DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C9738F0-4F8D-6B29-7EFA-29183C740DCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AE9E5BF-859F-4CA3-0BEC-F243381F517F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AE9E5BF-859F-4CA3-0BEC-F243381F517F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AE9E5BF-859F-4CA3-0BEC-F243381F517F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AE9E5BF-859F-4CA3-0BEC-F243381F517F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{168F482D-F237-866B-9439-3DD060851439}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{168F482D-F237-866B-9439-3DD060851439}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{168F482D-F237-866B-9439-3DD060851439}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{168F482D-F237-866B-9439-3DD060851439}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

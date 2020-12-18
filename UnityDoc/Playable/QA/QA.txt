@@ -1,0 +1,15 @@
+1，PlayableExtensions是对哪个类的扩展？
+IPlayable接口
+2，目前支持哪几种Playable？
+Animation：
+	AnimationClipPlayable
+	AnimationLayerMixerPlayable
+	AnimationMixerPlayable
+	AnimatorControllerPlayable
+Audio：
+	AudioMixerPlayable
+	AudioClipPlayable
+Script：
+	ScriptPlayable<>
+
+	
