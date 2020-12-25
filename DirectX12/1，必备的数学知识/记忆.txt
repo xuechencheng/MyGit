@@ -1,9 +1,0 @@
-数学
-	坐标系
-	点积和叉积
-	规范正交化
-	旋转缩放移动矩阵
-	坐标系变换
-	XMVECTOR,XMFLOAT3,XMMATRIX
-
-
