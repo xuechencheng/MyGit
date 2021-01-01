@@ -1,0 +1,2 @@
+C:\Users\xuechencheng\Desktop\DXCode\Chapter 9 Texturing\Crate\x64\Debug\Crate.exe
+C:\Users\xuechencheng\Desktop\DXCode\Chapter 9 Texturing\Crate\x64\Debug\Crate.pdb

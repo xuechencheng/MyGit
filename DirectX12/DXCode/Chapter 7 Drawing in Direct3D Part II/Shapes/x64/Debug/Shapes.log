@@ -1,0 +1,9 @@
+﻿  d3dApp.cpp
+  d3dUtil.cpp
+  GameTimer.cpp
+  GeometryGenerator.cpp
+  MathHelper.cpp
+  FrameResource.cpp
+  ShapesApp.cpp
+  正在生成代码...
+  Shapes.vcxproj -> C:\Users\xuechencheng\Desktop\DXCode\Chapter 7 Drawing in Direct3D Part II\Shapes\x64\Debug\Shapes.exe

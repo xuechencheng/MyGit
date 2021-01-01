@@ -1,0 +1,13 @@
+﻿  d3dApp.cpp
+  d3dUtil.cpp
+  GameTimer.cpp
+  GeometryGenerator.cpp
+  MathHelper.cpp
+  FrameResource.cpp
+  LitWavesApp.cpp
+  Waves.cpp
+  正在生成代码
+  Previous IPDB not found, fall back to full compilation.
+  All 1939 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  已完成代码的生成
+  LitWaves.vcxproj -> C:\Users\xuechencheng\Desktop\DXCode\Chapter 8 Lighting\LitWaves\x64\Release\LitWaves.exe

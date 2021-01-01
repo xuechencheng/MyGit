@@ -1,0 +1,10 @@
+﻿  d3dApp.cpp
+  d3dUtil.cpp
+  DDSTextureLoader.cpp
+  GameTimer.cpp
+  GeometryGenerator.cpp
+  MathHelper.cpp
+  FrameResource.cpp
+  StencilApp.cpp
+  正在生成代码...
+  StencilDemo.vcxproj -> C:\Users\xuechencheng\Desktop\DXCode\Chapter 11 Stenciling\StencilDemo\x64\Debug\StencilDemo.exe

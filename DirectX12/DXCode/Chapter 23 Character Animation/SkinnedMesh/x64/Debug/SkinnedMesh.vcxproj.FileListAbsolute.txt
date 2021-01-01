@@ -1,0 +1,4 @@
+D:\work\MyGit\MyAll\DXCode\Chapter 23 Character Animation\SkinnedMesh\x64\Debug\SkinnedMesh.exe
+D:\work\MyGit\MyAll\DXCode\Chapter 23 Character Animation\SkinnedMesh\x64\Debug\SkinnedMesh.pdb
+C:\Users\xuechencheng\Desktop\DXCode\Chapter 23 Character Animation\SkinnedMesh\x64\Debug\SkinnedMesh.exe
+C:\Users\xuechencheng\Desktop\DXCode\Chapter 23 Character Animation\SkinnedMesh\x64\Debug\SkinnedMesh.pdb

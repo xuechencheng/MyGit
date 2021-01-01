@@ -1,0 +1,2 @@
+C:\Users\xuechencheng\Desktop\DXCode\Chapter 11 Stenciling\StencilDemo\x64\Debug\StencilDemo.exe
+C:\Users\xuechencheng\Desktop\DXCode\Chapter 11 Stenciling\StencilDemo\x64\Debug\StencilDemo.pdb

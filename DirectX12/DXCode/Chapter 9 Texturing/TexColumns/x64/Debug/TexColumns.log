@@ -1,0 +1,10 @@
+﻿  d3dApp.cpp
+  d3dUtil.cpp
+  DDSTextureLoader.cpp
+  GameTimer.cpp
+  GeometryGenerator.cpp
+  MathHelper.cpp
+  FrameResource.cpp
+  TexColumnsApp.cpp
+  正在生成代码...
+  TexColumns.vcxproj -> C:\Users\xuechencheng\Desktop\DXCode\Chapter 9 Texturing\TexColumns\x64\Debug\TexColumns.exe

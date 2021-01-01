@@ -1,0 +1,14 @@
+﻿  d3dApp.cpp
+  d3dUtil.cpp
+  DDSTextureLoader.cpp
+  GameTimer.cpp
+  GeometryGenerator.cpp
+  MathHelper.cpp
+  FrameResource.cpp
+  TexWavesApp.cpp
+  Waves.cpp
+  正在生成代码
+  Previous IPDB not found, fall back to full compilation.
+  All 2165 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  已完成代码的生成
+  TexWaves.vcxproj -> C:\Users\xuechencheng\Desktop\DXCode\Chapter 9 Texturing\TexWaves\x64\Release\TexWaves.exe
