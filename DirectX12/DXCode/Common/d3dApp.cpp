@@ -586,7 +586,7 @@ void D3DApp::CreateSwapChain()
 		mSwapChain.GetAddressOf()));
 }
 /// <summary>
-/// 刷新命令队列。--DONE
+/// 强制CPU等待GPU，直到GPU处理完队列中的所有命令
 /// </summary>
 void D3DApp::FlushCommandQueue()
 {
