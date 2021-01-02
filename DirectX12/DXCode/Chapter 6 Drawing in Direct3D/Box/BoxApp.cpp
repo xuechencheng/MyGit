@@ -362,6 +362,13 @@ void BoxApp::BuildShadersAndInputLayout()
 
     mInputLayout =
     {
+        //语义
+        //附加到语义上的索引
+        //顶点元素的格式
+        //指定传入元素的输入槽索引
+        //在特定输入槽中的位置偏移量
+        //目前仅使用D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA
+        //目前仅使用0
         { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
         { "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 }
     };
