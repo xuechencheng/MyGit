@@ -1,2 +1,4 @@
 C:\Users\xuechencheng\Desktop\DXCode\Chapter 7 Drawing in Direct3D Part II\Shapes\x64\Debug\Shapes.exe
 C:\Users\xuechencheng\Desktop\DXCode\Chapter 7 Drawing in Direct3D Part II\Shapes\x64\Debug\Shapes.pdb
+D:\work\MyGit\DirectX12\DXCode\Chapter 7 Drawing in Direct3D Part II\Shapes\x64\Debug\Shapes.exe
+D:\work\MyGit\DirectX12\DXCode\Chapter 7 Drawing in Direct3D Part II\Shapes\x64\Debug\Shapes.pdb

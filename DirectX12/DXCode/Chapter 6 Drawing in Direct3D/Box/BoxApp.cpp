@@ -73,8 +73,8 @@ private:
     XMFLOAT4X4 mView = MathHelper::Identity4x4();
     XMFLOAT4X4 mProj = MathHelper::Identity4x4();
 
-    float mTheta = 1.5f*XM_PI;
-    float mPhi = XM_PIDIV4;
+    float mTheta = 1.5f*XM_PI;//θ
+    float mPhi = XM_PIDIV4;//Φ
     float mRadius = 5.0f;
 
     POINT mLastMousePos;
@@ -117,7 +117,10 @@ BoxApp::BoxApp(HINSTANCE hInstance)
 BoxApp::~BoxApp()
 {
 }
-
+/// <summary>
+/// Initialize
+/// </summary>
+/// <returns></returns>
 bool BoxApp::Initialize()
 {
     if(!D3DApp::Initialize())
@@ -149,10 +152,13 @@ void BoxApp::OnResize()
 	D3DApp::OnResize();
 
     // The window resized, so update the aspect ratio and recompute the projection matrix.
-    XMMATRIX P = XMMatrixPerspectiveFovLH(0.25f*MathHelper::Pi, AspectRatio(), 1.0f, 1000.0f);
+    XMMATRIX P = XMMatrixPerspectiveFovLH( 0.25f*MathHelper::Pi, AspectRatio(), 1.0f, 1000.0f);
     XMStoreFloat4x4(&mProj, P);
 }
-
+/// <summary>
+/// 计算变换矩阵的结果world*view*proj，并更新到常量缓冲区中
+/// </summary>
+/// <param name="gt"></param>
 void BoxApp::Update(const GameTimer& gt)
 {
     // Convert Spherical to Cartesian coordinates.
@@ -177,7 +183,10 @@ void BoxApp::Update(const GameTimer& gt)
     XMStoreFloat4x4(&objConstants.WorldViewProj, XMMatrixTranspose(worldViewProj));
     mObjectCB->CopyData(0, objConstants);
 }
-
+/// <summary>
+/// 更新mCommandList
+/// </summary>
+/// <param name="gt"></param>
 void BoxApp::Draw(const GameTimer& gt)
 {
     // Reuse the memory associated with command recording.
@@ -211,9 +220,10 @@ void BoxApp::Draw(const GameTimer& gt)
 	mCommandList->IASetIndexBuffer(&mBoxGeo->IndexBufferView());
     mCommandList->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
     
-    mCommandList->SetGraphicsRootDescriptorTable(0, mCbvHeap->GetGPUDescriptorHandleForHeapStart());
+    mCommandList->SetGraphicsRootDescriptorTable(0, //将根参数按此索引(即欲绑定到的寄存器槽号)进行设置
+        mCbvHeap->GetGPUDescriptorHandleForHeapStart());//此参数指定的是将要向着色器绑定的描述符表中第一个描述符位于描述符堆中的句柄
 
-    mCommandList->DrawIndexedInstanced(
+    mCommandList->DrawIndexedInstanced(//待续
 		mBoxGeo->DrawArgs["box"].IndexCount, 
 		1, 0, 0, 0);
 	
@@ -237,7 +247,12 @@ void BoxApp::Draw(const GameTimer& gt)
 	// so we do not have to wait per frame.
 	FlushCommandQueue();
 }
-
+/// <summary>
+/// OnMouseDown
+/// </summary>
+/// <param name="btnState"></param>
+/// <param name="x"></param>
+/// <param name="y"></param>
 void BoxApp::OnMouseDown(WPARAM btnState, int x, int y)
 {
     mLastMousePos.x = x;
@@ -245,12 +260,22 @@ void BoxApp::OnMouseDown(WPARAM btnState, int x, int y)
 
     SetCapture(mhMainWnd);
 }
-
+/// <summary>
+/// OnMouseUp
+/// </summary>
+/// <param name="btnState"></param>
+/// <param name="x"></param>
+/// <param name="y"></param>
 void BoxApp::OnMouseUp(WPARAM btnState, int x, int y)
 {
     ReleaseCapture();
 }
-
+/// <summary>
+/// OnMouseMove
+/// </summary>
+/// <param name="btnState"></param>
+/// <param name="x"></param>
+/// <param name="y"></param>
 void BoxApp::OnMouseMove(WPARAM btnState, int x, int y)
 {
     if((btnState & MK_LBUTTON) != 0)
@@ -282,7 +307,9 @@ void BoxApp::OnMouseMove(WPARAM btnState, int x, int y)
     mLastMousePos.x = x;
     mLastMousePos.y = y;
 }
-
+/// <summary>
+/// 创建常量描述符堆
+/// </summary>
 void BoxApp::BuildDescriptorHeaps()
 {
     D3D12_DESCRIPTOR_HEAP_DESC cbvHeapDesc;
@@ -293,9 +320,12 @@ void BoxApp::BuildDescriptorHeaps()
     ThrowIfFailed(md3dDevice->CreateDescriptorHeap(&cbvHeapDesc,
         IID_PPV_ARGS(&mCbvHeap)));
 }
-
+/// <summary>
+/// 创建常量缓冲区和常量视图
+/// </summary>
 void BoxApp::BuildConstantBuffers()
 {
+    //常量缓冲区
 	mObjectCB = std::make_unique<UploadBuffer<ObjectConstants>>(md3dDevice.Get(), 1, true);
 
 	UINT objCBByteSize = d3dUtil::CalcConstantBufferByteSize(sizeof(ObjectConstants));
@@ -308,32 +338,37 @@ void BoxApp::BuildConstantBuffers()
 	D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc;
 	cbvDesc.BufferLocation = cbAddress;
 	cbvDesc.SizeInBytes = d3dUtil::CalcConstantBufferByteSize(sizeof(ObjectConstants));
-
+    //创建常量缓冲区视图
 	md3dDevice->CreateConstantBufferView(
 		&cbvDesc,
 		mCbvHeap->GetCPUDescriptorHandleForHeapStart());
 }
-
+/// <summary>
+/// 创建根签名
+/// </summary>
 void BoxApp::BuildRootSignature()
 {
+    //CD3DX12_DESCRIPTOR_RANGE->CD3DX12_ROOT_PARAMETER->CD3DX12_ROOT_SIGNATURE_DESC->ID3DBlob->ID3D12RootSignature
+
 	// Shader programs typically require resources as input (constant buffers,
 	// textures, samplers).  The root signature defines the resources the shader
 	// programs expect.  If we think of the shader programs as a function, and
 	// the input resources as function parameters, then the root signature can be
 	// thought of as defining the function signature.  
-
+    //根参数可以是描述符表，根描述符或根常量
 	// Root parameter can be a table, root descriptor or root constants.
 	CD3DX12_ROOT_PARAMETER slotRootParameter[1];
-
-	// Create a single descriptor table of CBVs.
+    //创建一个只存有一个CBV的描述符表
 	CD3DX12_DESCRIPTOR_RANGE cbvTable;
-	cbvTable.Init(D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 1, 0);
-	slotRootParameter[0].InitAsDescriptorTable(1, &cbvTable);
-
+	cbvTable.Init(D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 1,//表中描述符数量
+        0);//将这段描述符区域绑定至此基准着色器寄存器
+	slotRootParameter[0].InitAsDescriptorTable(1, //描述符区域的数量
+        &cbvTable);//指向描述符区域数组的指针
+    //根签名由一组根参数构成
 	// A root signature is an array of root parameters.
 	CD3DX12_ROOT_SIGNATURE_DESC rootSigDesc(1, slotRootParameter, 0, nullptr, 
 		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
-
+    //创建仅含一个槽位的根签名(该槽位指向一个仅有单个常量缓冲区组成的描述符区域)
 	// create a root signature with a single slot which points to a descriptor range consisting of a single constant buffer
 	ComPtr<ID3DBlob> serializedRootSig = nullptr;
 	ComPtr<ID3DBlob> errorBlob = nullptr;
@@ -352,7 +387,9 @@ void BoxApp::BuildRootSignature()
 		serializedRootSig->GetBufferSize(),
 		IID_PPV_ARGS(&mRootSignature)));
 }
-
+/// <summary>
+/// 编译Shader，填充InputLayout
+/// </summary>
 void BoxApp::BuildShadersAndInputLayout()
 {
     HRESULT hr = S_OK;
@@ -373,9 +410,12 @@ void BoxApp::BuildShadersAndInputLayout()
         { "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 }
     };
 }
-
+/// <summary>
+/// 定义顶点数据和索引数据，用这些数据填充MeshGeometry
+/// </summary>
 void BoxApp::BuildBoxGeometry()
 {
+    //顶点数据
     std::array<Vertex, 8> vertices =
     {
         Vertex({ XMFLOAT3(-1.0f, -1.0f, -1.0f), XMFLOAT4(Colors::White) }),
@@ -387,7 +427,7 @@ void BoxApp::BuildBoxGeometry()
 		Vertex({ XMFLOAT3(+1.0f, +1.0f, +1.0f), XMFLOAT4(Colors::Cyan) }),
 		Vertex({ XMFLOAT3(+1.0f, -1.0f, +1.0f), XMFLOAT4(Colors::Magenta) })
     };
-
+    //索引数据
 	std::array<std::uint16_t, 36> indices =
 	{
 		// front face
@@ -420,16 +460,16 @@ void BoxApp::BuildBoxGeometry()
 
 	mBoxGeo = std::make_unique<MeshGeometry>();
 	mBoxGeo->Name = "boxGeo";
-
+    //创建VertexBufferCPU，用顶点数据填充VertexBufferCPU
 	ThrowIfFailed(D3DCreateBlob(vbByteSize, &mBoxGeo->VertexBufferCPU));
 	CopyMemory(mBoxGeo->VertexBufferCPU->GetBufferPointer(), vertices.data(), vbByteSize);
-
+    //创建IndexBufferCPU，用索引数据填充IndexBufferCPU
 	ThrowIfFailed(D3DCreateBlob(ibByteSize, &mBoxGeo->IndexBufferCPU));
 	CopyMemory(mBoxGeo->IndexBufferCPU->GetBufferPointer(), indices.data(), ibByteSize);
-
+    //创建VertexBufferGPU，用顶点数据填充
 	mBoxGeo->VertexBufferGPU = d3dUtil::CreateDefaultBuffer(md3dDevice.Get(),
 		mCommandList.Get(), vertices.data(), vbByteSize, mBoxGeo->VertexBufferUploader);
-
+    //创建IndexBufferGPU，用索引数据填充
 	mBoxGeo->IndexBufferGPU = d3dUtil::CreateDefaultBuffer(md3dDevice.Get(),
 		mCommandList.Get(), indices.data(), ibByteSize, mBoxGeo->IndexBufferUploader);
 
@@ -445,33 +485,35 @@ void BoxApp::BuildBoxGeometry()
 
 	mBoxGeo->DrawArgs["box"] = submesh;
 }
-
+/// <summary>
+/// 流水线状态对象
+/// </summary>
 void BoxApp::BuildPSO()
 {
     D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc;
     ZeroMemory(&psoDesc, sizeof(D3D12_GRAPHICS_PIPELINE_STATE_DESC));
-    psoDesc.InputLayout = { mInputLayout.data(), (UINT)mInputLayout.size() };
-    psoDesc.pRootSignature = mRootSignature.Get();
-    psoDesc.VS = 
+    psoDesc.InputLayout = { mInputLayout.data(), (UINT)mInputLayout.size() };//输入布局描述
+    psoDesc.pRootSignature = mRootSignature.Get();//指定一个与此PSO相绑定的根签名的指针
+    psoDesc.VS = //待绑定的顶点着色器
 	{ 
 		reinterpret_cast<BYTE*>(mvsByteCode->GetBufferPointer()), 
 		mvsByteCode->GetBufferSize() 
 	};
-    psoDesc.PS = 
+    psoDesc.PS = //待绑定的像素着色器
 	{ 
 		reinterpret_cast<BYTE*>(mpsByteCode->GetBufferPointer()), 
 		mpsByteCode->GetBufferSize() 
-	};
-    psoDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
-    psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
-    psoDesc.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
-    psoDesc.SampleMask = UINT_MAX;
-    psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
-    psoDesc.NumRenderTargets = 1;
-    psoDesc.RTVFormats[0] = mBackBufferFormat;
-    psoDesc.SampleDesc.Count = m4xMsaaState ? 4 : 1;
+	};//DS：域着色器 HS：外壳着色器 GS：几何着色器
+    psoDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);//指定用来配置光栅器的光栅化状态
+    psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);//指定混合操作所用的混合状态
+    psoDesc.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);//指定用于配置深度/模板测试的深度/模板状态
+    psoDesc.SampleMask = UINT_MAX;//多重采样最多可采集32个样本。借此参数的32位整数值，即可色泽每个采样点的采集情况
+    psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;//指定图元的拓扑结构
+    psoDesc.NumRenderTargets = 1;//同时所用的渲染目标数量
+    psoDesc.RTVFormats[0] = mBackBufferFormat;//渲染目标的格式
+    psoDesc.SampleDesc.Count = m4xMsaaState ? 4 : 1;//多重采样
     psoDesc.SampleDesc.Quality = m4xMsaaState ? (m4xMsaaQuality - 1) : 0;
-    psoDesc.DSVFormat = mDepthStencilFormat;
+    psoDesc.DSVFormat = mDepthStencilFormat;//深度、模板缓冲区的格式
     ThrowIfFailed(md3dDevice->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&mPSO)));
 
 

@@ -52,7 +52,9 @@ public:
         DirectX::XMFLOAT3 TangentU;
         DirectX::XMFLOAT2 TexC;
 	};
-
+	/// <summary>
+	/// 保存顶点和索引数据 Done-1
+	/// </summary>
 	struct MeshData
 	{
 		std::vector<Vertex> Vertices;

@@ -1,7 +1,10 @@
 #pragma once
 
 #include "d3dUtil.h"
-
+/// <summary>
+/// 上传堆的缓冲区资源
+/// </summary>
+/// <typeparam name="T"></typeparam>
 template<typename T>
 class UploadBuffer
 {
@@ -20,7 +23,7 @@ public:
         // } D3D12_CONSTANT_BUFFER_VIEW_DESC;
         if(isConstantBuffer)
             mElementByteSize = d3dUtil::CalcConstantBufferByteSize(sizeof(T));
-
+        //在上传堆创建资源缓冲区mUploadBuffer
         ThrowIfFailed(device->CreateCommittedResource(
             &CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
             D3D12_HEAP_FLAG_NONE,
@@ -28,7 +31,7 @@ public:
 			D3D12_RESOURCE_STATE_GENERIC_READ,
             nullptr,
             IID_PPV_ARGS(&mUploadBuffer)));
-
+        //map mUploadBuffer和mMappedData
         ThrowIfFailed(mUploadBuffer->Map(0, nullptr, reinterpret_cast<void**>(&mMappedData)));
 
         // We do not need to unmap until we are done with the resource.  However, we must not write to
@@ -44,12 +47,15 @@ public:
 
         mMappedData = nullptr;
     }
-
+    /// <summary>
+    /// return ID3D12Resource mUploadBuffer;
+    /// </summary>
+    /// <returns></returns>
     ID3D12Resource* Resource()const
     {
         return mUploadBuffer.Get();
     }
-
+    //将数据复制到缓冲区
     void CopyData(int elementIndex, const T& data)
     {
         memcpy(&mMappedData[elementIndex*mElementByteSize], &data, sizeof(T));

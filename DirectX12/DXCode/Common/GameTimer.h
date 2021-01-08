@@ -19,14 +19,14 @@ public:
 	void Tick();  // Call every frame.
 
 private:
-	double mSecondsPerCount;
-	double mDeltaTime;
+	double mSecondsPerCount;//每次秒数
+	double mDeltaTime;//间隔计数
 
-	__int64 mBaseTime;
-	__int64 mPausedTime;
-	__int64 mStopTime;
-	__int64 mPrevTime;
-	__int64 mCurrTime;
+	__int64 mBaseTime;//开始计数
+	__int64 mPausedTime;//暂停的计数
+	__int64 mStopTime;//停止时候的计数
+	__int64 mPrevTime;//前一帧的计数
+	__int64 mCurrTime;//当前计数
 
 	bool mStopped;
 };

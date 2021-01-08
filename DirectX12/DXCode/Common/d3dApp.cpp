@@ -9,7 +9,7 @@ using Microsoft::WRL::ComPtr;
 using namespace std;
 using namespace DirectX;
 /// <summary>
-/// Windows事件回调--DONE
+/// Windows事件回调
 /// </summary>
 LRESULT CALLBACK
 MainWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -19,7 +19,7 @@ MainWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     return D3DApp::GetApp()->MsgProc(hwnd, msg, wParam, lParam);
 }
 /// <summary>
-/// return mApp--DONE
+/// return mApp
 /// </summary>
 D3DApp* D3DApp::mApp = nullptr;
 D3DApp* D3DApp::GetApp()
@@ -27,7 +27,7 @@ D3DApp* D3DApp::GetApp()
     return mApp;
 }
 /// <summary>
-/// --DONE
+/// 单例
 /// </summary>
 D3DApp::D3DApp(HINSTANCE hInstance)
 :	mhAppInst(hInstance)
@@ -37,7 +37,7 @@ D3DApp::D3DApp(HINSTANCE hInstance)
     mApp = this;
 }
 /// <summary>
-/// 防止游戏退出时崩溃--DONE
+/// 防止游戏退出时崩溃
 /// </summary>
 /// <returns></returns>
 D3DApp::~D3DApp()
@@ -46,7 +46,7 @@ D3DApp::~D3DApp()
 		FlushCommandQueue();
 }
 /// <summary>
-/// return mhAppInst--DONE
+/// return mhAppInst
 /// </summary>
 /// <returns></returns>
 HINSTANCE D3DApp::AppInst()const
@@ -55,7 +55,7 @@ HINSTANCE D3DApp::AppInst()const
 }
 
 /// <summary>
-/// return mhMainWnd--DONE
+/// return mhMainWnd
 /// </summary>
 /// <returns></returns>
 HWND D3DApp::MainWnd()const
@@ -63,7 +63,7 @@ HWND D3DApp::MainWnd()const
 	return mhMainWnd;
 }
 /// <summary>
-/// 返回纵横比--DONE
+/// 返回纵横比
 /// </summary>
 /// <returns></returns>
 float D3DApp::AspectRatio()const
@@ -71,7 +71,7 @@ float D3DApp::AspectRatio()const
 	return static_cast<float>(mClientWidth) / mClientHeight;
 }
 /// <summary>
-/// return m4xMsaaState--DONE
+/// 多重采样抗锯齿
 /// </summary>
 /// <returns></returns>
 bool D3DApp::Get4xMsaaState()const
@@ -79,7 +79,7 @@ bool D3DApp::Get4xMsaaState()const
     return m4xMsaaState;
 }
 /// <summary>
-/// set m4xMsaaState--DONE
+/// 设置多重采样抗锯齿
 /// </summary>
 /// <param name="value"></param>
 void D3DApp::Set4xMsaaState(bool value)
@@ -94,7 +94,7 @@ void D3DApp::Set4xMsaaState(bool value)
     }
 }
 /// <summary>
-/// --DONE
+/// 程序运行后的不断循环逻辑
 /// </summary>
 /// <returns></returns>
 int D3DApp::Run()
@@ -133,7 +133,7 @@ int D3DApp::Run()
 	return (int)msg.wParam;
 }
 /// <summary>
-/// 初始化--DONE
+/// 初始化
 /// </summary>
 /// <returns></returns>
 bool D3DApp::Initialize()
@@ -182,23 +182,19 @@ void D3DApp::OnResize()
 
 	// Flush before changing any resources.
 	FlushCommandQueue();
-
+	// 1,Reset mCommandList,mSwapChainBuffer和mDepthStencilBuffer
     ThrowIfFailed(mCommandList->Reset(mDirectCmdListAlloc.Get(), nullptr));
-
-	// Release the previous resources we will be recreating.
 	for (int i = 0; i < SwapChainBufferCount; ++i)
 		mSwapChainBuffer[i].Reset();
     mDepthStencilBuffer.Reset();
-	
-	// Resize the swap chain.
+	//2,mSwapChain ResizeBuffers
     ThrowIfFailed(mSwapChain->ResizeBuffers(
 		SwapChainBufferCount, 
 		mClientWidth, mClientHeight, 
 		mBackBufferFormat, 
 		DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH));
-
 	mCurrBackBuffer = 0;
- 
+	//3,创建RTV和DSV视图 
 	CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHeapHandle(mRtvHeap->GetCPUDescriptorHandleForHeapStart());
 	for (UINT i = 0; i < SwapChainBufferCount; i++)
 	{
@@ -206,32 +202,42 @@ void D3DApp::OnResize()
 		md3dDevice->CreateRenderTargetView(mSwapChainBuffer[i].Get(), nullptr, rtvHeapHandle);
 		rtvHeapHandle.Offset(1, mRtvDescriptorSize);
 	}
-
     // Create the depth/stencil buffer and view.
     D3D12_RESOURCE_DESC depthStencilDesc;
-    depthStencilDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+    depthStencilDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;//资源的维度
     depthStencilDesc.Alignment = 0;
-    depthStencilDesc.Width = mClientWidth;
-    depthStencilDesc.Height = mClientHeight;
-    depthStencilDesc.DepthOrArraySize = 1;
-    depthStencilDesc.MipLevels = 1;
+    depthStencilDesc.Width = mClientWidth;//以纹素为单位来表示的纹理宽度
+    depthStencilDesc.Height = mClientHeight;//以纹素为单位来表示的纹理高度
+    depthStencilDesc.DepthOrArraySize = 1;//以纹素为单位来表示的纹理深度，或者是纹理数组的大小。
+    depthStencilDesc.MipLevels = 1;//mipmap层级数量
 
 	// Correction 11/12/2016: SSAO chapter requires an SRV to the depth buffer to read from 
 	// the depth buffer.  Therefore, because we need to create two views to the same resource:
 	//   1. SRV format: DXGI_FORMAT_R24_UNORM_X8_TYPELESS
 	//   2. DSV Format: DXGI_FORMAT_D24_UNORM_S8_UINT
 	// we need to create the depth buffer resource with a typeless format.  
-	depthStencilDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
-
+	depthStencilDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;//指定纹素的格式
+	//多重采样的质量级别以及对每个像素的采样次数
     depthStencilDesc.SampleDesc.Count = m4xMsaaState ? 4 : 1;
     depthStencilDesc.SampleDesc.Quality = m4xMsaaState ? (m4xMsaaQuality - 1) : 0;
-    depthStencilDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
-    depthStencilDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
+    depthStencilDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;//纹理的布局
+    depthStencilDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;//与资源有关的杂项
 
     D3D12_CLEAR_VALUE optClear;
     optClear.Format = mDepthStencilFormat;
     optClear.DepthStencil.Depth = 1.0f;
     optClear.DepthStencil.Stencil = 0;
+	/// <summary>
+	/// 创建一个资源与一个堆，并把该资源提交到这个堆中
+	/// </summary>
+	/// <param name="pHeapProperties">堆具有的属性，目标只关注D3D12_HEAP_TYPE</param>
+	/// <param name="HeapFlags">堆有关的额外选项标志，通常为D3D12_HEAP_FLAG_NONE</param>
+	/// <param name="pDesc">D3D12_RESOURCE_DESC指针</param>
+	/// <param name="InitialResourceState">资源初始状态</param>
+	/// <param name="pOptimizedClearValue">描述一个用于清除资源的优化值</param>
+	/// <param name="riidResource">COM ID</param>
+	/// <param name="ppvResource">COM PTR</param>
+	/// <returns></returns>
     ThrowIfFailed(md3dDevice->CreateCommittedResource(
         &CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
 		D3D12_HEAP_FLAG_NONE,
@@ -422,15 +428,15 @@ bool D3DApp::InitMainWindow()
 {
 	WNDCLASS wc;
 	wc.style         = CS_HREDRAW | CS_VREDRAW;//指定窗口样式
-	wc.lpfnWndProc   = MainWndProc; 
-	wc.cbClsExtra    = 0;
-	wc.cbWndExtra    = 0;
-	wc.hInstance     = mhAppInst;
-	wc.hIcon         = LoadIcon(0, IDI_APPLICATION);
-	wc.hCursor       = LoadCursor(0, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)GetStockObject(NULL_BRUSH);
-	wc.lpszMenuName  = 0;
-	wc.lpszClassName = L"MainWnd";
+	wc.lpfnWndProc   = MainWndProc; //指向与此WNDCLASS实例相关联的窗口过程函数指针
+	wc.cbClsExtra    = 0;//为当前应用分配额外的内存空间
+	wc.cbWndExtra    = 0;//为当前应用分配额外的内存空间
+	wc.hInstance     = mhAppInst;//当前应用实例的句柄
+	wc.hIcon         = LoadIcon(0, IDI_APPLICATION);//图标句柄
+	wc.hCursor       = LoadCursor(0, IDC_ARROW);//光标句柄
+	wc.hbrBackground = (HBRUSH)GetStockObject(NULL_BRUSH);//画刷句柄
+	wc.lpszMenuName  = 0;//指定窗口的菜单
+	wc.lpszClassName = L"MainWnd";//指定窗口类结构体名字
 
 	if( !RegisterClass(&wc) )
 	{
@@ -586,7 +592,7 @@ void D3DApp::CreateSwapChain()
 		mSwapChain.GetAddressOf()));
 }
 /// <summary>
-/// 强制CPU等待GPU，直到GPU处理完队列中的所有命令
+/// 强制CPU等待GPU，直到GPU处理完队列中的所有命令，待续
 /// </summary>
 void D3DApp::FlushCommandQueue()
 {
@@ -664,7 +670,7 @@ void D3DApp::CalculateFrameStats()
 	}
 }
 /// <summary>
-/// 枚举适配器--DONE
+/// IDXGIFactory4枚举IDXGIAdapter--DONE
 /// </summary>
 void D3DApp::LogAdapters()
 {
@@ -694,7 +700,7 @@ void D3DApp::LogAdapters()
     }
 }
 /// <summary>
-/// 枚举输出设备--DONE
+/// IDXGIAdapter枚举IDXGIOutput--DONE
 /// </summary>
 /// <param name="adapter"></param>
 void D3DApp::LogAdapterOutputs(IDXGIAdapter* adapter)
@@ -719,7 +725,7 @@ void D3DApp::LogAdapterOutputs(IDXGIAdapter* adapter)
     }
 }
 /// <summary>
-/// 枚举显示模式--DONE
+/// IDXGIOutput枚举DXGI_MODE_DESC--DONE
 /// </summary>
 /// <param name="output"></param>
 /// <param name="format"></param>

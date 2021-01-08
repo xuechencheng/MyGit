@@ -14,8 +14,10 @@ GameTimer::GameTimer()
 	mSecondsPerCount = 1.0 / (double)countsPerSec;
 }
 
-// Returns the total time elapsed since Reset() was called, NOT counting any
-// time when the clock is stopped.
+/// <summary>
+/// 返回自调用Reset()以来经过的总时间，不计算时钟停止的任何时间。
+/// </summary>
+/// <returns></returns>
 float GameTimer::TotalTime()const
 {
 	// If we are stopped, do not count the time that has passed since we stopped.
@@ -47,12 +49,17 @@ float GameTimer::TotalTime()const
 		return (float)(((mCurrTime-mPausedTime)-mBaseTime)*mSecondsPerCount);
 	}
 }
-
+/// <summary>
+/// 间隔时间
+/// </summary>
+/// <returns></returns>
 float GameTimer::DeltaTime()const
 {
 	return (float)mDeltaTime;
 }
-
+/// <summary>
+/// Reset
+/// </summary>
 void GameTimer::Reset()
 {
 	__int64 currTime;
@@ -63,7 +70,9 @@ void GameTimer::Reset()
 	mStopTime = 0;
 	mStopped  = false;
 }
-
+/// <summary>
+/// 处理Stop状态
+/// </summary>
 void GameTimer::Start()
 {
 	__int64 startTime;
@@ -85,7 +94,9 @@ void GameTimer::Start()
 		mStopped  = false;
 	}
 }
-
+/// <summary>
+/// Stop
+/// </summary>
 void GameTimer::Stop()
 {
 	if( !mStopped )
@@ -97,7 +108,9 @@ void GameTimer::Stop()
 		mStopped  = true;
 	}
 }
-
+/// <summary>
+/// Tick
+/// </summary>
 void GameTimer::Tick()
 {
 	if( mStopped )

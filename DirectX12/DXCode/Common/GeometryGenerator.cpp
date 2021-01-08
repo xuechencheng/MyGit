@@ -6,7 +6,14 @@
 #include <algorithm>
 
 using namespace DirectX;
-
+/// <summary>
+/// 创建Box Done-1
+/// </summary>
+/// <param name="width"></param>
+/// <param name="height"></param>
+/// <param name="depth"></param>
+/// <param name="numSubdivisions"></param>
+/// <returns></returns>
 GeometryGenerator::MeshData GeometryGenerator::CreateBox(float width, float height, float depth, uint32 numSubdivisions)
 {
     MeshData meshData;
@@ -21,19 +28,19 @@ GeometryGenerator::MeshData GeometryGenerator::CreateBox(float width, float heig
 	float h2 = 0.5f*height;
 	float d2 = 0.5f*depth;
     
-	// Fill in the front face vertex data.
+	// Fill in the front face vertex data. 0 1 2 3
 	v[0] = Vertex(-w2, -h2, -d2, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	v[1] = Vertex(-w2, +h2, -d2, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 	v[2] = Vertex(+w2, +h2, -d2, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 	v[3] = Vertex(+w2, -h2, -d2, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
 
-	// Fill in the back face vertex data.
+	// Fill in the back face vertex data. 4 5 6 7
 	v[4] = Vertex(-w2, -h2, +d2, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
 	v[5] = Vertex(+w2, -h2, +d2, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	v[6] = Vertex(+w2, +h2, +d2, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 	v[7] = Vertex(-w2, +h2, +d2, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
-	// Fill in the top face vertex data.
+	// Fill in the top face vertex data. 7 6 2 3
 	v[8]  = Vertex(-w2, +h2, -d2, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	v[9]  = Vertex(-w2, +h2, +d2, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 	v[10] = Vertex(+w2, +h2, +d2, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f);
@@ -99,81 +106,73 @@ GeometryGenerator::MeshData GeometryGenerator::CreateBox(float width, float heig
 
     return meshData;
 }
-
+/// <summary>
+/// CreateSphere -Todo
+/// </summary>
+/// <param name="radius"></param>
+/// <param name="sliceCount"></param>
+/// <param name="stackCount"></param>
+/// <returns></returns>
 GeometryGenerator::MeshData GeometryGenerator::CreateSphere(float radius, uint32 sliceCount, uint32 stackCount)
 {
     MeshData meshData;
-
 	//
 	// Compute the vertices stating at the top pole and moving down the stacks.
 	//
-
 	// Poles: note that there will be texture coordinate distortion as there is
 	// not a unique point on the texture map to assign to the pole when mapping
 	// a rectangular texture onto a sphere.
 	Vertex topVertex(0.0f, +radius, 0.0f, 0.0f, +1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 	Vertex bottomVertex(0.0f, -radius, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-
 	meshData.Vertices.push_back( topVertex );
-
 	float phiStep   = XM_PI/stackCount;
 	float thetaStep = 2.0f*XM_PI/sliceCount;
-
 	// Compute vertices for each stack ring (do not count the poles as rings).
+	//填充顶点信息
 	for(uint32 i = 1; i <= stackCount-1; ++i)
 	{
 		float phi = i*phiStep;
-
 		// Vertices of ring.
         for(uint32 j = 0; j <= sliceCount; ++j)
 		{
 			float theta = j*thetaStep;
-
 			Vertex v;
-
 			// spherical to cartesian
 			v.Position.x = radius*sinf(phi)*cosf(theta);
 			v.Position.y = radius*cosf(phi);
 			v.Position.z = radius*sinf(phi)*sinf(theta);
-
 			// Partial derivative of P with respect to theta
 			v.TangentU.x = -radius*sinf(phi)*sinf(theta);
 			v.TangentU.y = 0.0f;
 			v.TangentU.z = +radius*sinf(phi)*cosf(theta);
-
 			XMVECTOR T = XMLoadFloat3(&v.TangentU);
 			XMStoreFloat3(&v.TangentU, XMVector3Normalize(T));
-
 			XMVECTOR p = XMLoadFloat3(&v.Position);
 			XMStoreFloat3(&v.Normal, XMVector3Normalize(p));
-
 			v.TexC.x = theta / XM_2PI;
 			v.TexC.y = phi / XM_PI;
-
 			meshData.Vertices.push_back( v );
 		}
 	}
-
 	meshData.Vertices.push_back( bottomVertex );
 
 	//
 	// Compute indices for top stack.  The top stack was written first to the vertex buffer
 	// and connects the top pole to the first ring.
 	//
-
+	//顶点与第一个环的索引
     for(uint32 i = 1; i <= sliceCount; ++i)
 	{
 		meshData.Indices32.push_back(0);
 		meshData.Indices32.push_back(i+1);
 		meshData.Indices32.push_back(i);
 	}
-	
 	//
 	// Compute indices for inner stacks (not connected to poles).
 	//
-
 	// Offset the indices to the index of the first vertex in the first ring.
 	// This is just skipping the top pole vertex.
+	//填充中间的索引，待续
     uint32 baseIndex = 1;
     uint32 ringVertexCount = sliceCount + 1;
 	for(uint32 i = 0; i < stackCount-2; ++i)
@@ -183,7 +182,6 @@ GeometryGenerator::MeshData GeometryGenerator::CreateSphere(float radius, uint32
 			meshData.Indices32.push_back(baseIndex + i*ringVertexCount + j);
 			meshData.Indices32.push_back(baseIndex + i*ringVertexCount + j+1);
 			meshData.Indices32.push_back(baseIndex + (i+1)*ringVertexCount + j);
-
 			meshData.Indices32.push_back(baseIndex + (i+1)*ringVertexCount + j);
 			meshData.Indices32.push_back(baseIndex + i*ringVertexCount + j+1);
 			meshData.Indices32.push_back(baseIndex + (i+1)*ringVertexCount + j+1);
@@ -194,7 +192,7 @@ GeometryGenerator::MeshData GeometryGenerator::CreateSphere(float radius, uint32
 	// Compute indices for bottom stack.  The bottom stack was written last to the vertex buffer
 	// and connects the bottom pole to the bottom ring.
 	//
-
+	//填充另一个顶点
 	// South pole vertex was added last.
 	uint32 southPoleIndex = (uint32)meshData.Vertices.size()-1;
 
@@ -210,7 +208,10 @@ GeometryGenerator::MeshData GeometryGenerator::CreateSphere(float radius, uint32
 
     return meshData;
 }
- 
+/// <summary>
+/// 把一个三角形细分成4个三角形
+/// </summary>
+/// <param name="meshData"></param>
 void GeometryGenerator::Subdivide(MeshData& meshData)
 {
 	// Save a copy of the input geometry.
@@ -224,11 +225,11 @@ void GeometryGenerator::Subdivide(MeshData& meshData)
 	//       *
 	//      / \
 	//     /   \
-	//  m0*-----*m1
+	// m0(3)*-----*m1(4)
 	//   / \   / \
 	//  /   \ /   \
 	// *-----*-----*
-	// v0    m2     v2
+	// v0    m2(5)     v2
 
 	uint32 numTris = (uint32)inputCopy.Indices32.size()/3;
 	for(uint32 i = 0; i < numTris; ++i)
@@ -309,10 +310,11 @@ GeometryGenerator::MeshData GeometryGenerator::CreateGeosphere(float radius, uin
     MeshData meshData;
 
 	// Put a cap on the number of subdivisions.
+	//确定细分的次数
     numSubdivisions = std::min<uint32>(numSubdivisions, 6u);
 
 	// Approximate a sphere by tessellating an icosahedron.
-
+	//通过对一个正二十面体进行曲面细分来逼近一个球体
 	const float X = 0.525731f; 
 	const float Z = 0.850651f;
 
@@ -344,20 +346,22 @@ GeometryGenerator::MeshData GeometryGenerator::CreateGeosphere(float radius, uin
 		Subdivide(meshData);
 
 	// Project vertices onto sphere and scale.
+	//将每一个顶点都投影到球面，并推导其对应的纹理坐标
 	for(uint32 i = 0; i < meshData.Vertices.size(); ++i)
 	{
+		//投影到单位球面上
 		// Project onto unit sphere.
 		XMVECTOR n = XMVector3Normalize(XMLoadFloat3(&meshData.Vertices[i].Position));
-
+		//投影到球面上
 		// Project onto sphere.
 		XMVECTOR p = radius*n;
 
 		XMStoreFloat3(&meshData.Vertices[i].Position, p);
 		XMStoreFloat3(&meshData.Vertices[i].Normal, n);
-
+		//根据球面坐标推导出纹理坐标
 		// Derive texture coordinates from spherical coordinates.
         float theta = atan2f(meshData.Vertices[i].Position.z, meshData.Vertices[i].Position.x);
-
+		//将theta限制在[0,2pi]区间内
         // Put in [0, 2pi].
         if(theta < 0.0f)
             theta += XM_2PI;
@@ -368,6 +372,7 @@ GeometryGenerator::MeshData GeometryGenerator::CreateGeosphere(float radius, uin
 		meshData.Vertices[i].TexC.y = phi/XM_PI;
 
 		// Partial derivative of P with respect to theta
+		//求出P关于theta的偏导数
 		meshData.Vertices[i].TangentU.x = -radius*sinf(phi)*sinf(theta);
 		meshData.Vertices[i].TangentU.y = 0.0f;
 		meshData.Vertices[i].TangentU.z = +radius*sinf(phi)*cosf(theta);
@@ -378,41 +383,49 @@ GeometryGenerator::MeshData GeometryGenerator::CreateGeosphere(float radius, uin
 
     return meshData;
 }
-
+/// <summary>
+/// CreateCylinder --Todo
+/// </summary>
+/// <param name="bottomRadius"></param>
+/// <param name="topRadius"></param>
+/// <param name="height"></param>
+/// <param name="sliceCount"></param>
+/// <param name="stackCount"></param>
+/// <returns></returns>
 GeometryGenerator::MeshData GeometryGenerator::CreateCylinder(float bottomRadius, float topRadius, float height, uint32 sliceCount, uint32 stackCount)
 {
     MeshData meshData;
 
 	//
 	// Build Stacks.
-	// 
+	// 构建堆叠层
 
 	float stackHeight = height / stackCount;
-
+	//相邻分层的半径增量
 	// Amount to increment radius as we move up each stack level from bottom to top.
 	float radiusStep = (topRadius - bottomRadius) / stackCount;
 
 	uint32 ringCount = stackCount+1;
-
+	//从底面开始，由下至上计算每个堆叠层环上的顶点坐标
 	// Compute vertices for each stack ring starting at the bottom and moving up.
 	for(uint32 i = 0; i < ringCount; ++i)
 	{
-		float y = -0.5f*height + i*stackHeight;
-		float r = bottomRadius + i*radiusStep;
-
+		float y = -0.5f * height + i * stackHeight;
+		float r = bottomRadius + i * radiusStep;
+		//环上的各个顶点
 		// vertices of ring
 		float dTheta = 2.0f*XM_PI/sliceCount;
 		for(uint32 j = 0; j <= sliceCount; ++j)
 		{
 			Vertex vertex;
 
-			float c = cosf(j*dTheta);
-			float s = sinf(j*dTheta);
+			float c = cosf(j * dTheta);
+			float s = sinf(j * dTheta);
 
-			vertex.Position = XMFLOAT3(r*c, y, r*s);
+			vertex.Position = XMFLOAT3(r * c, y, r * s);
 
-			vertex.TexC.x = (float)j/sliceCount;
-			vertex.TexC.y = 1.0f - (float)i/stackCount;
+			vertex.TexC.x = (float)j / sliceCount;
+			vertex.TexC.y = 1.0f - (float)i / stackCount;
 
 			// Cylinder can be parameterized as follows, where we introduce v
 			// parameter that goes in the same direction as the v tex-coord
@@ -436,8 +449,8 @@ GeometryGenerator::MeshData GeometryGenerator::CreateCylinder(float bottomRadius
 			// This is unit length.
 			vertex.TangentU = XMFLOAT3(-s, 0.0f, c);
 
-			float dr = bottomRadius-topRadius;
-			XMFLOAT3 bitangent(dr*c, -height, dr*s);
+			float dr = bottomRadius - topRadius;
+			XMFLOAT3 bitangent(dr * c, -height, dr * s);
 
 			XMVECTOR T = XMLoadFloat3(&vertex.TangentU);
 			XMVECTOR B = XMLoadFloat3(&bitangent);
@@ -450,8 +463,9 @@ GeometryGenerator::MeshData GeometryGenerator::CreateCylinder(float bottomRadius
 
 	// Add one because we duplicate the first and last vertex per ring
 	// since the texture coordinates are different.
+	//+1是希望让每环的第一个顶点和最后一个顶点重合，这是因为他们的纹理坐标并不相同
 	uint32 ringVertexCount = sliceCount+1;
-
+	//计算每个侧面块中三角形的索引
 	// Compute indices for each stack.
 	for(uint32 i = 0; i < stackCount; ++i)
 	{
@@ -482,11 +496,12 @@ void GeometryGenerator::BuildCylinderTopCap(float bottomRadius, float topRadius,
 	float dTheta = 2.0f*XM_PI/sliceCount;
 
 	// Duplicate cap ring vertices because the texture coordinates and normals differ.
+	//使圆台端面环上的首尾顶点重合，因为这两个顶点的纹理坐标和法线是不同的
 	for(uint32 i = 0; i <= sliceCount; ++i)
 	{
 		float x = topRadius*cosf(i*dTheta);
 		float z = topRadius*sinf(i*dTheta);
-
+		//根据圆台的高度使顶面纹理坐标的范围按比例缩小
 		// Scale down by the height to try and make top cap texture coord area
 		// proportional to base.
 		float u = x/height + 0.5f;
@@ -494,10 +509,10 @@ void GeometryGenerator::BuildCylinderTopCap(float bottomRadius, float topRadius,
 
 		meshData.Vertices.push_back( Vertex(x, y, z, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, u, v) );
 	}
-
+	//顶面的中心顶点
 	// Cap center vertex.
 	meshData.Vertices.push_back( Vertex(0.0f, y, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f) );
-
+	//中心顶点的索引值
 	// Index of center vertex.
 	uint32 centerIndex = (uint32)meshData.Vertices.size()-1;
 
@@ -547,13 +562,20 @@ void GeometryGenerator::BuildCylinderBottomCap(float bottomRadius, float topRadi
 		meshData.Indices32.push_back(baseIndex + i+1);
 	}
 }
-
+/// <summary>
+/// CreateGrid Done-1
+/// </summary>
+/// <param name="width">宽度</param>
+/// <param name="depth">深度</param>
+/// <param name="m">每行点数</param>
+/// <param name="n">每列点数</param>
+/// <returns></returns>
 GeometryGenerator::MeshData GeometryGenerator::CreateGrid(float width, float depth, uint32 m, uint32 n)
 {
     MeshData meshData;
 
-	uint32 vertexCount = m*n;
-	uint32 faceCount   = (m-1)*(n-1)*2;
+	uint32 vertexCount = m*n;//顶点数量
+	uint32 faceCount   = (m-1)*(n-1)*2;//三角形数量
 
 	//
 	// Create the vertices.
@@ -569,6 +591,7 @@ GeometryGenerator::MeshData GeometryGenerator::CreateGrid(float width, float dep
 	float dv = 1.0f / (m-1);
 
 	meshData.Vertices.resize(vertexCount);
+	//填充顶点数据
 	for(uint32 i = 0; i < m; ++i)
 	{
 		float z = halfDepth - i*dz;
@@ -593,6 +616,7 @@ GeometryGenerator::MeshData GeometryGenerator::CreateGrid(float width, float dep
 	meshData.Indices32.resize(faceCount*3); // 3 indices per face
 
 	// Iterate over each quad and compute indices.
+	//填充索引数据
 	uint32 k = 0;
 	for(uint32 i = 0; i < m-1; ++i)
 	{

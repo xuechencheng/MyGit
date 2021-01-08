@@ -95,7 +95,11 @@ public:
     static bool IsKeyDown(int vkeyCode);
 
     static std::string ToString(HRESULT hr);
-
+    /// <summary>
+    /// 将缓冲区的大小抽成256B整数倍
+    /// </summary>
+    /// <param name="byteSize"></param>
+    /// <returns></returns>
     static UINT CalcConstantBufferByteSize(UINT byteSize)
     {
         // Constant buffers must be a multiple of the minimum hardware
@@ -142,21 +146,22 @@ public:
     int LineNumber = -1;
 };
 
-// Defines a subrange of geometry in a MeshGeometry.  This is for when multiple
-// geometries are stored in one vertex and index buffer.  It provides the offsets
-// and data needed to draw a subset of geometry stores in the vertex and index 
-// buffers so that we can implement the technique described by Figure 6.3.
+/// <summary>
+/// MeshGeometry中的单个几何体
+/// </summary>
 struct SubmeshGeometry
 {
-	UINT IndexCount = 0;
-	UINT StartIndexLocation = 0;
-	INT BaseVertexLocation = 0;
+	UINT IndexCount = 0;//索引数量
+	UINT StartIndexLocation = 0;//开始索引
+	INT BaseVertexLocation = 0;//开始顶点
 
     // Bounding box of the geometry defined by this submesh. 
     // This is used in later chapters of the book.
 	DirectX::BoundingBox Bounds;
 };
-
+/// <summary>
+/// 管理多个几何体的顶点和索引缓冲区数据
+/// </summary>
 struct MeshGeometry
 {
 	// Give it a name so we can look it up by name.
@@ -164,36 +169,43 @@ struct MeshGeometry
 
 	// System memory copies.  Use Blobs because the vertex/index format can be generic.
 	// It is up to the client to cast appropriately.  
-	Microsoft::WRL::ComPtr<ID3DBlob> VertexBufferCPU = nullptr;
+	//内存
+    Microsoft::WRL::ComPtr<ID3DBlob> VertexBufferCPU = nullptr;
 	Microsoft::WRL::ComPtr<ID3DBlob> IndexBufferCPU  = nullptr;
-
+    //默认堆
 	Microsoft::WRL::ComPtr<ID3D12Resource> VertexBufferGPU = nullptr;
 	Microsoft::WRL::ComPtr<ID3D12Resource> IndexBufferGPU = nullptr;
-
+    //上传堆
 	Microsoft::WRL::ComPtr<ID3D12Resource> VertexBufferUploader = nullptr;
 	Microsoft::WRL::ComPtr<ID3D12Resource> IndexBufferUploader = nullptr;
 
     // Data about the buffers.
-	UINT VertexByteStride = 0;
-	UINT VertexBufferByteSize = 0;
+	UINT VertexByteStride = 0;//顶点数据的大小
+	UINT VertexBufferByteSize = 0;//所有顶点数乘以顶点大小
 	DXGI_FORMAT IndexFormat = DXGI_FORMAT_R16_UINT;
-	UINT IndexBufferByteSize = 0;
+	UINT IndexBufferByteSize = 0;//所有索引数乘以顶点大小
 
 	// A MeshGeometry may store multiple geometries in one vertex/index buffer.
 	// Use this container to define the Submesh geometries so we can draw
 	// the Submeshes individually.
 	std::unordered_map<std::string, SubmeshGeometry> DrawArgs;
-
+	/// <summary>
+	/// 顶点缓冲区视图
+	/// </summary>
+	/// <returns></returns>
 	D3D12_VERTEX_BUFFER_VIEW VertexBufferView()const
 	{
 		D3D12_VERTEX_BUFFER_VIEW vbv;
-		vbv.BufferLocation = VertexBufferGPU->GetGPUVirtualAddress();
-		vbv.StrideInBytes = VertexByteStride;
-		vbv.SizeInBytes = VertexBufferByteSize;
+		vbv.BufferLocation = VertexBufferGPU->GetGPUVirtualAddress();//资源虚拟地址
+		vbv.StrideInBytes = VertexByteStride;//待创建视图的顶点缓冲区大小
+		vbv.SizeInBytes = VertexBufferByteSize;//每个顶点元素所占用的字节数
 
 		return vbv;
 	}
-
+	/// <summary>
+	/// 索引缓冲区视图
+	/// </summary>
+	/// <returns></returns>
 	D3D12_INDEX_BUFFER_VIEW IndexBufferView()const
 	{
 		D3D12_INDEX_BUFFER_VIEW ibv;
