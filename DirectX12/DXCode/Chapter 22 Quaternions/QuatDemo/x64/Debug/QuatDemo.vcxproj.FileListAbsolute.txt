@@ -1,0 +1,2 @@
+D:\work\MyGit\DirectX12\DXCode\Chapter 22 Quaternions\QuatDemo\x64\Debug\QuatDemo.exe
+D:\work\MyGit\DirectX12\DXCode\Chapter 22 Quaternions\QuatDemo\x64\Debug\QuatDemo.pdb

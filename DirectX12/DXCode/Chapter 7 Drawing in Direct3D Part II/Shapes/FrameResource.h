@@ -33,7 +33,7 @@ struct Vertex
     DirectX::XMFLOAT4 Color;
 };
 /// <summary>
-/// 帧资源
+/// 帧资源：命令分配器，摄像机常量，世界常量，围栏
 /// </summary>
 struct FrameResource
 {
@@ -43,7 +43,7 @@ public:
     FrameResource& operator=(const FrameResource& rhs) = delete;
     ~FrameResource();
     Microsoft::WRL::ComPtr<ID3D12CommandAllocator> CmdListAlloc;
-    std::unique_ptr<UploadBuffer<PassConstants>> PassCB = nullptr;
-    std::unique_ptr<UploadBuffer<ObjectConstants>> ObjectCB = nullptr;
+    std::unique_ptr<UploadBuffer<PassConstants>> PassCB = nullptr;//摄像机
+    std::unique_ptr<UploadBuffer<ObjectConstants>> ObjectCB = nullptr;//物体
     UINT64 Fence = 0;
 };

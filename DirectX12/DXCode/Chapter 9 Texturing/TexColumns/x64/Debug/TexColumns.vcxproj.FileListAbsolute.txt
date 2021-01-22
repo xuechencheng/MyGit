@@ -1,2 +1,4 @@
 C:\Users\xuechencheng\Desktop\DXCode\Chapter 9 Texturing\TexColumns\x64\Debug\TexColumns.exe
 C:\Users\xuechencheng\Desktop\DXCode\Chapter 9 Texturing\TexColumns\x64\Debug\TexColumns.pdb
+D:\work\MyGit\DirectX12\DXCode\Chapter 9 Texturing\TexColumns\x64\Debug\TexColumns.exe
+D:\work\MyGit\DirectX12\DXCode\Chapter 9 Texturing\TexColumns\x64\Debug\TexColumns.pdb

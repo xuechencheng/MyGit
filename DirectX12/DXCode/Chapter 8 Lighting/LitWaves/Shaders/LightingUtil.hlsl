@@ -31,13 +31,14 @@ float CalcAttenuation(float d, float falloffStart, float falloffEnd)
 
 // Schlick gives an approximation to Fresnel reflectance (see pg. 233 "Real-Time Rendering 3rd Ed.").
 // R0 = ( (n-1)/(n+1) )^2, where n is the index of refraction.
+
+//石里克 菲涅尔 RF(θ) = RF(0°) + (1-RF(0°))(1-cosθ)5
 float3 SchlickFresnel(float3 R0, float3 normal, float3 lightVec)
 {
+    //saturate(x)将x限制在0--1
     float cosIncidentAngle = saturate(dot(normal, lightVec));
-
     float f0 = 1.0f - cosIncidentAngle;
     float3 reflectPercent = R0 + (1.0f - R0)*(f0*f0*f0*f0*f0);
-
     return reflectPercent;
 }
 
@@ -45,14 +46,15 @@ float3 BlinnPhong(float3 lightStrength, float3 lightVec, float3 normal, float3 t
 {
     const float m = mat.Shininess * 256.0f;
     float3 halfVec = normalize(toEye + lightVec);
-
-    float roughnessFactor = (m + 8.0f)*pow(max(dot(halfVec, normal), 0.0f), m) / 8.0f;
+    //roughnessFactor = ( m + 8) / 8 ( n · h )m次方
+    float roughnessFactor = (m + 8.0f) * pow(max(dot(halfVec, normal), 0.0f), m) / 8.0f;
+    //RF(θ) = RF(0°) + (1-RF(0°))(1-cosθ)5次方
     float3 fresnelFactor = SchlickFresnel(mat.FresnelR0, halfVec, lightVec);
 
-    float3 specAlbedo = fresnelFactor*roughnessFactor;
+    float3 specAlbedo = fresnelFactor * roughnessFactor;
 
-    // Our spec formula goes outside [0,1] range, but we are 
-    // doing LDR rendering.  So scale it down a bit.
+    // 我们的spec公式超出了[0,1]范围，但我们正在进行LDR渲染。所以缩小一点。待续
+
     specAlbedo = specAlbedo / (specAlbedo + 1.0f);
 
     return (mat.DiffuseAlbedo.rgb + specAlbedo) * lightStrength;

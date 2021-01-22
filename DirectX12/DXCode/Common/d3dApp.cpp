@@ -14,25 +14,20 @@ using namespace DirectX;
 LRESULT CALLBACK
 MainWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	// Forward hwnd on because we can get messages (e.g., WM_CREATE)
-	// before CreateWindow returns, and thus before mhMainWnd is valid.
     return D3DApp::GetApp()->MsgProc(hwnd, msg, wParam, lParam);
 }
-/// <summary>
-/// return mApp
-/// </summary>
+
 D3DApp* D3DApp::mApp = nullptr;
 D3DApp* D3DApp::GetApp()
 {
     return mApp;
 }
 /// <summary>
-/// 单例
+/// 单例初始化
 /// </summary>
 D3DApp::D3DApp(HINSTANCE hInstance)
 :	mhAppInst(hInstance)
 {
-    // Only one D3DApp can be constructed.
     assert(mApp == nullptr);
     mApp = this;
 }
@@ -100,23 +95,18 @@ void D3DApp::Set4xMsaaState(bool value)
 int D3DApp::Run()
 {
 	MSG msg = {0};
- 
 	mTimer.Reset();
-
 	while(msg.message != WM_QUIT)
 	{
-		// If there are Window messages then process them.
 		//处理Window message
 		if(PeekMessage( &msg, 0, 0, 0, PM_REMOVE ))
 		{
             TranslateMessage( &msg );
             DispatchMessage( &msg );
 		}
-		// Otherwise, do animation/game stuff.
 		else
         {	
 			mTimer.Tick();
-
 			if( !mAppPaused )
 			{
 				CalculateFrameStats();
@@ -144,13 +134,12 @@ bool D3DApp::Initialize()
 	if(!InitDirect3D())
 		return false;
 
-    // Do the initial resize code.
     OnResize();
 
 	return true;
 }
 /// <summary>
-/// 创建Rtv和Dsv描述符堆--DONE
+/// 创建Rtv和Dsv描述符堆
 /// </summary>
 void D3DApp::CreateRtvAndDsvDescriptorHeaps()
 {
@@ -159,20 +148,17 @@ void D3DApp::CreateRtvAndDsvDescriptorHeaps()
     rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
     rtvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 	rtvHeapDesc.NodeMask = 0;
-    ThrowIfFailed(md3dDevice->CreateDescriptorHeap(
-        &rtvHeapDesc, IID_PPV_ARGS(mRtvHeap.GetAddressOf())));
-
+    ThrowIfFailed(md3dDevice->CreateDescriptorHeap(&rtvHeapDesc, IID_PPV_ARGS(mRtvHeap.GetAddressOf())));
 
     D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc;
     dsvHeapDesc.NumDescriptors = 1;
     dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
     dsvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 	dsvHeapDesc.NodeMask = 0;
-    ThrowIfFailed(md3dDevice->CreateDescriptorHeap(
-        &dsvHeapDesc, IID_PPV_ARGS(mDsvHeap.GetAddressOf())));
+    ThrowIfFailed(md3dDevice->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(mDsvHeap.GetAddressOf())));
 }
 /// <summary>
-/// 待续
+/// 初始化/调整窗口大小
 /// </summary>
 void D3DApp::OnResize()
 {
@@ -180,44 +166,35 @@ void D3DApp::OnResize()
 	assert(mSwapChain);
     assert(mDirectCmdListAlloc);
 
-	// Flush before changing any resources.
 	FlushCommandQueue();
-	// 1,Reset mCommandList,mSwapChainBuffer和mDepthStencilBuffer
+	//重置命令分配器
     ThrowIfFailed(mCommandList->Reset(mDirectCmdListAlloc.Get(), nullptr));
+	//重置交换链的缓冲区内容
 	for (int i = 0; i < SwapChainBufferCount; ++i)
 		mSwapChainBuffer[i].Reset();
+	//重置深度模板缓冲区
     mDepthStencilBuffer.Reset();
-	//2,mSwapChain ResizeBuffers
-    ThrowIfFailed(mSwapChain->ResizeBuffers(
-		SwapChainBufferCount, 
-		mClientWidth, mClientHeight, 
-		mBackBufferFormat, 
-		DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH));
+	//重置交换链的大小
+    ThrowIfFailed(mSwapChain->ResizeBuffers(SwapChainBufferCount, mClientWidth, mClientHeight, mBackBufferFormat, DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH));
 	mCurrBackBuffer = 0;
-	//3,创建RTV和DSV视图 
-	CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHeapHandle(mRtvHeap->GetCPUDescriptorHandleForHeapStart());
+	//创建渲染目标视图，其数据来自于交换链
+	CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHeapHandle(mRtvHeap->GetCPUDescriptorHandleForHeapStart());//渲染目标视图句柄
 	for (UINT i = 0; i < SwapChainBufferCount; i++)
 	{
 		ThrowIfFailed(mSwapChain->GetBuffer(i, IID_PPV_ARGS(&mSwapChainBuffer[i])));
 		md3dDevice->CreateRenderTargetView(mSwapChainBuffer[i].Get(), nullptr, rtvHeapHandle);
 		rtvHeapHandle.Offset(1, mRtvDescriptorSize);
 	}
-    // Create the depth/stencil buffer and view.
+
+    // 创建深度模板缓冲区和视图
     D3D12_RESOURCE_DESC depthStencilDesc;
     depthStencilDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;//资源的维度
     depthStencilDesc.Alignment = 0;
-    depthStencilDesc.Width = mClientWidth;//以纹素为单位来表示的纹理宽度
-    depthStencilDesc.Height = mClientHeight;//以纹素为单位来表示的纹理高度
-    depthStencilDesc.DepthOrArraySize = 1;//以纹素为单位来表示的纹理深度，或者是纹理数组的大小。
+    depthStencilDesc.Width = mClientWidth;//纹理宽度
+    depthStencilDesc.Height = mClientHeight;//纹理高度
+    depthStencilDesc.DepthOrArraySize = 1;//纹理深度，或者纹理数组的大小。
     depthStencilDesc.MipLevels = 1;//mipmap层级数量
-
-	// Correction 11/12/2016: SSAO chapter requires an SRV to the depth buffer to read from 
-	// the depth buffer.  Therefore, because we need to create two views to the same resource:
-	//   1. SRV format: DXGI_FORMAT_R24_UNORM_X8_TYPELESS
-	//   2. DSV Format: DXGI_FORMAT_D24_UNORM_S8_UINT
-	// we need to create the depth buffer resource with a typeless format.  
 	depthStencilDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;//指定纹素的格式
-	//多重采样的质量级别以及对每个像素的采样次数
     depthStencilDesc.SampleDesc.Count = m4xMsaaState ? 4 : 1;
     depthStencilDesc.SampleDesc.Quality = m4xMsaaState ? (m4xMsaaQuality - 1) : 0;
     depthStencilDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;//纹理的布局
@@ -227,71 +204,41 @@ void D3DApp::OnResize()
     optClear.Format = mDepthStencilFormat;
     optClear.DepthStencil.Depth = 1.0f;
     optClear.DepthStencil.Stencil = 0;
-	/// <summary>
-	/// 创建一个资源与一个堆，并把该资源提交到这个堆中
-	/// </summary>
-	/// <param name="pHeapProperties">堆具有的属性，目标只关注D3D12_HEAP_TYPE</param>
-	/// <param name="HeapFlags">堆有关的额外选项标志，通常为D3D12_HEAP_FLAG_NONE</param>
-	/// <param name="pDesc">D3D12_RESOURCE_DESC指针</param>
-	/// <param name="InitialResourceState">资源初始状态</param>
-	/// <param name="pOptimizedClearValue">描述一个用于清除资源的优化值</param>
-	/// <param name="riidResource">COM ID</param>
-	/// <param name="ppvResource">COM PTR</param>
-	/// <returns></returns>
-    ThrowIfFailed(md3dDevice->CreateCommittedResource(
-        &CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
-		D3D12_HEAP_FLAG_NONE,
-        &depthStencilDesc,
-		D3D12_RESOURCE_STATE_COMMON,
-        &optClear,
-        IID_PPV_ARGS(mDepthStencilBuffer.GetAddressOf())));
 
-    // Create descriptor to mip level 0 of entire resource using the format of the resource.
+	ThrowIfFailed(md3dDevice->CreateCommittedResource(&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),//默认堆
+		D3D12_HEAP_FLAG_NONE, &depthStencilDesc, D3D12_RESOURCE_STATE_COMMON, &optClear, IID_PPV_ARGS(mDepthStencilBuffer.GetAddressOf())));
+
+    // 创建深度/模板视图
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc;
 	dsvDesc.Flags = D3D12_DSV_FLAG_NONE;
 	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 	dsvDesc.Format = mDepthStencilFormat;
 	dsvDesc.Texture2D.MipSlice = 0;
     md3dDevice->CreateDepthStencilView(mDepthStencilBuffer.Get(), &dsvDesc, DepthStencilView());
-
-    // Transition the resource from its initial state to be used as a depth buffer.
-	mCommandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(mDepthStencilBuffer.Get(),
-		D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_DEPTH_WRITE));
-	
-    // Execute the resize commands.
+	mCommandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(mDepthStencilBuffer.Get(), D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_DEPTH_WRITE));
     ThrowIfFailed(mCommandList->Close());
     ID3D12CommandList* cmdsLists[] = { mCommandList.Get() };
     mCommandQueue->ExecuteCommandLists(_countof(cmdsLists), cmdsLists);
-
-	// Wait until resize is complete.
 	FlushCommandQueue();
 
-	// Update the viewport transform to cover the client area.
+	//设置视口
 	mScreenViewport.TopLeftX = 0;
 	mScreenViewport.TopLeftY = 0;
 	mScreenViewport.Width    = static_cast<float>(mClientWidth);
 	mScreenViewport.Height   = static_cast<float>(mClientHeight);
 	mScreenViewport.MinDepth = 0.0f;
 	mScreenViewport.MaxDepth = 1.0f;
-
+	//裁剪矩形
     mScissorRect = { 0, 0, mClientWidth, mClientHeight };
 }
 /// <summary>
-/// 处理各种Windows事件--DONE
+/// 处理各种Windows事件
 /// </summary>
-/// <param name="hwnd"></param>
-/// <param name="msg"></param>
-/// <param name="wParam"></param>
-/// <param name="lParam"></param>
-/// <returns></returns>
 LRESULT D3DApp::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch( msg )
 	{
-	// WM_ACTIVATE is sent when the window is activated or deactivated.  
-	// We pause the game when the window is deactivated and unpause it 
-	// when it becomes active.  
-	case WM_ACTIVATE://应用程序被激活或进入非活动状态
+	case WM_ACTIVATE://应用程序激活或进入非活动状态
 		if( LOWORD(wParam) == WA_INACTIVE )
 		{
 			mAppPaused = true;
@@ -303,10 +250,7 @@ LRESULT D3DApp::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			mTimer.Start();
 		}
 		return 0;
-
-	// WM_SIZE is sent when the user resizes the window.  
 	case WM_SIZE://当用户调整窗口的大小时便会产生此消息
-		// Save the new client area dimensions.
 		mClientWidth  = LOWORD(lParam);
 		mClientHeight = HIWORD(lParam);
 		if( md3dDevice )
@@ -326,16 +270,12 @@ LRESULT D3DApp::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			}
 			else if( wParam == SIZE_RESTORED )
 			{
-				
-				// Restoring from minimized state?
 				if( mMinimized )
 				{
 					mAppPaused = false;
 					mMinimized = false;
 					OnResize();
 				}
-
-				// Restoring from maximized state?
 				else if( mMaximized )
 				{
 					mAppPaused = false;
@@ -344,16 +284,8 @@ LRESULT D3DApp::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				}
 				else if( mResizing )
 				{
-					// If user is dragging the resize bars, we do not resize 
-					// the buffers here because as the user continuously 
-					// drags the resize bars, a stream of WM_SIZE messages are
-					// sent to the window, and it would be pointless (and slow)
-					// to resize for each WM_SIZE message received from dragging
-					// the resize bars.  So instead, we reset after the user is 
-					// done resizing the window and releases the resize bars, which 
-					// sends a WM_EXITSIZEMOVE message.
 				}
-				else // API call such as SetWindowPos or mSwapChain->SetFullscreenState.
+				else 
 				{
 					OnResize();
 				}
@@ -361,34 +293,22 @@ LRESULT D3DApp::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		}
 		return 0;
 
-	// WM_EXITSIZEMOVE is sent when the user grabs the resize bars.
 	case WM_ENTERSIZEMOVE://当用户抓取调整栏时发送此消息
 		mAppPaused = true;
 		mResizing  = true;
 		mTimer.Stop();
 		return 0;
-
-	// WM_EXITSIZEMOVE is sent when the user releases the resize bars.
-	// Here we reset everything based on the new window dimensions.
 	case WM_EXITSIZEMOVE://完成调整窗口大小操作
 		mAppPaused = false;
 		mResizing  = false;
 		mTimer.Start();
 		OnResize();
 		return 0;
- 
-	// WM_DESTROY is sent when the window is being destroyed.
 	case WM_DESTROY://窗口被摧毁
 		PostQuitMessage(0);
 		return 0;
-
-	// The WM_MENUCHAR message is sent when a menu is active and the user presses 
-	// a key that does not correspond to any mnemonic or accelerator key. 
 	case WM_MENUCHAR://某一个菜单处于激活状态
-        // Don't beep when we alt-enter.
         return MAKELRESULT(0, MNC_CLOSE);//不发出蜂鸣声
-
-	// Catch this message so to prevent the window from becoming too small.
 	case WM_GETMINMAXINFO://捕获此消息以防窗口变得过小
 		((MINMAXINFO*)lParam)->ptMinTrackSize.x = 200;
 		((MINMAXINFO*)lParam)->ptMinTrackSize.y = 200; 
@@ -417,26 +337,25 @@ LRESULT D3DApp::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
         return 0;
 	}
-
 	return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 /// <summary>
-/// 初始化Window--DONE
+/// 初始化Window
 /// </summary>
 /// <returns></returns>
 bool D3DApp::InitMainWindow()
 {
 	WNDCLASS wc;
 	wc.style         = CS_HREDRAW | CS_VREDRAW;//指定窗口样式
-	wc.lpfnWndProc   = MainWndProc; //指向与此WNDCLASS实例相关联的窗口过程函数指针
-	wc.cbClsExtra    = 0;//为当前应用分配额外的内存空间
-	wc.cbWndExtra    = 0;//为当前应用分配额外的内存空间
-	wc.hInstance     = mhAppInst;//当前应用实例的句柄
+	wc.lpfnWndProc   = MainWndProc; //事件回调函数
+	wc.cbClsExtra    = 0;//额外的内存空间
+	wc.cbWndExtra    = 0;//额外的内存空间
+	wc.hInstance     = mhAppInst;//应用实例的句柄
 	wc.hIcon         = LoadIcon(0, IDI_APPLICATION);//图标句柄
 	wc.hCursor       = LoadCursor(0, IDC_ARROW);//光标句柄
 	wc.hbrBackground = (HBRUSH)GetStockObject(NULL_BRUSH);//画刷句柄
-	wc.lpszMenuName  = 0;//指定窗口的菜单
-	wc.lpszClassName = L"MainWnd";//指定窗口类结构体名字
+	wc.lpszMenuName  = 0;//窗口菜单
+	wc.lpszClassName = L"MainWnd";//窗口名
 
 	if( !RegisterClass(&wc) )
 	{
@@ -444,7 +363,6 @@ bool D3DApp::InitMainWindow()
 		return false;
 	}
 
-	// Compute window rectangle dimensions based on requested client area dimensions.
 	RECT R = { 0, 0, mClientWidth, mClientHeight };
     AdjustWindowRect(&R, WS_OVERLAPPEDWINDOW, false);
 	int width  = R.right - R.left;
@@ -464,7 +382,7 @@ bool D3DApp::InitMainWindow()
 	return true;
 }
 /// <summary>
-/// InitDirect3D--DONE
+/// InitDirect3D
 /// </summary>
 /// <returns></returns>
 bool D3DApp::InitDirect3D()
@@ -480,48 +398,31 @@ bool D3DApp::InitDirect3D()
 	//创建工厂
 	ThrowIfFailed(CreateDXGIFactory1(IID_PPV_ARGS(&mdxgiFactory)));
 	//1，创建设备
-	// Try to create hardware device.
-	HRESULT hardwareResult = D3D12CreateDevice(
-		nullptr,             // default adapter
-		D3D_FEATURE_LEVEL_11_0,
-		IID_PPV_ARGS(&md3dDevice));
+	HRESULT hardwareResult = D3D12CreateDevice(nullptr, D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&md3dDevice));
 
-	// Fallback to WARP device.
+	// 如果创建失败就使用WarpAdapter
 	if(FAILED(hardwareResult))
 	{
 		ComPtr<IDXGIAdapter> pWarpAdapter;
 		ThrowIfFailed(mdxgiFactory->EnumWarpAdapter(IID_PPV_ARGS(&pWarpAdapter)));
-
-		ThrowIfFailed(D3D12CreateDevice(
-			pWarpAdapter.Get(),
-			D3D_FEATURE_LEVEL_11_0,
-			IID_PPV_ARGS(&md3dDevice)));
+		ThrowIfFailed(D3D12CreateDevice(pWarpAdapter.Get(), D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&md3dDevice)));
 	}
-	//2，创建围栏
-	ThrowIfFailed(md3dDevice->CreateFence(0, D3D12_FENCE_FLAG_NONE,
-		IID_PPV_ARGS(&mFence)));
+	//2，创建围栏，获取描述符的大小
+	ThrowIfFailed(md3dDevice->CreateFence(0, D3D12_FENCE_FLAG_NONE,IID_PPV_ARGS(&mFence)));
 
 	mRtvDescriptorSize = md3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 	mDsvDescriptorSize = md3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 	mCbvSrvUavDescriptorSize = md3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
-    // Check 4X MSAA quality support for our back buffer format.
-    // All Direct3D 11 capable devices support 4X MSAA for all render 
-    // target formats, so we only need to check quality support.
 	//3，检测质量级别
 	D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS msQualityLevels;
 	msQualityLevels.Format = mBackBufferFormat;
 	msQualityLevels.SampleCount = 4;
 	msQualityLevels.Flags = D3D12_MULTISAMPLE_QUALITY_LEVELS_FLAG_NONE;
 	msQualityLevels.NumQualityLevels = 0;
-	ThrowIfFailed(md3dDevice->CheckFeatureSupport(
-		D3D12_FEATURE_MULTISAMPLE_QUALITY_LEVELS,
-		&msQualityLevels,
-		sizeof(msQualityLevels)));
-
+	ThrowIfFailed(md3dDevice->CheckFeatureSupport(D3D12_FEATURE_MULTISAMPLE_QUALITY_LEVELS, &msQualityLevels, sizeof(msQualityLevels)));
     m4xMsaaQuality = msQualityLevels.NumQualityLevels;
 	assert(m4xMsaaQuality > 0 && "Unexpected MSAA quality level.");
-	
 #ifdef _DEBUG
     LogAdapters();
 #endif
@@ -535,94 +436,78 @@ bool D3DApp::InitDirect3D()
 	return true;
 }
 /// <summary>
-/// 创建命令队列--DONE
+/// 创建命令队列
 /// </summary>
 void D3DApp::CreateCommandObjects()
 {
+	//创建命令队列
 	D3D12_COMMAND_QUEUE_DESC queueDesc = {};
 	queueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
 	queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
 	ThrowIfFailed(md3dDevice->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(&mCommandQueue)));
-
-	ThrowIfFailed(md3dDevice->CreateCommandAllocator(
-		D3D12_COMMAND_LIST_TYPE_DIRECT,
-		IID_PPV_ARGS(mDirectCmdListAlloc.GetAddressOf())));
-
-	ThrowIfFailed(md3dDevice->CreateCommandList(
-		0,
-		D3D12_COMMAND_LIST_TYPE_DIRECT,
-		mDirectCmdListAlloc.Get(), // Associated command allocator
-		nullptr,                   // Initial PipelineStateObject
-		IID_PPV_ARGS(mCommandList.GetAddressOf())));
-
-	// Start off in a closed state.  This is because the first time we refer 
-	// to the command list we will Reset it, and it needs to be closed before
-	// calling Reset.
+	//创建命令分配器
+	ThrowIfFailed(md3dDevice->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(mDirectCmdListAlloc.GetAddressOf())));
+	//创建命令列表
+	ThrowIfFailed(md3dDevice->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, mDirectCmdListAlloc.Get(), nullptr, IID_PPV_ARGS(mCommandList.GetAddressOf())));
 	mCommandList->Close();
 }
 /// <summary>
-/// 创建SwapChain--DONE
+/// 创建或者重置交换链
 /// </summary>
 void D3DApp::CreateSwapChain()
 {
-    // Release the previous swapchain we will be recreating.
     mSwapChain.Reset();
 
-    DXGI_SWAP_CHAIN_DESC sd;
+	DXGI_SWAP_CHAIN_DESC sd;
     sd.BufferDesc.Width = mClientWidth;
     sd.BufferDesc.Height = mClientHeight;
-    sd.BufferDesc.RefreshRate.Numerator = 60;
-    sd.BufferDesc.RefreshRate.Denominator = 1;
+    sd.BufferDesc.RefreshRate.Numerator = 60;//分子
+    sd.BufferDesc.RefreshRate.Denominator = 1;//分母
     sd.BufferDesc.Format = mBackBufferFormat;
     sd.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
     sd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
     sd.SampleDesc.Count = m4xMsaaState ? 4 : 1;
-    sd.SampleDesc.Quality = m4xMsaaState ? (m4xMsaaQuality - 1) : 0;
+    sd.SampleDesc.Quality = m4xMsaaState ? (m4xMsaaQuality - 1) : 0;//待续 为什么减1
     sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
     sd.BufferCount = SwapChainBufferCount;
     sd.OutputWindow = mhMainWnd;
     sd.Windowed = true;
 	sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
     sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
-
-	// Note: Swap chain uses queue to perform flush.
-    ThrowIfFailed(mdxgiFactory->CreateSwapChain(
-		mCommandQueue.Get(),
-		&sd, 
-		mSwapChain.GetAddressOf()));
+    ThrowIfFailed(mdxgiFactory->CreateSwapChain(mCommandQueue.Get(), &sd, mSwapChain.GetAddressOf()));
 }
 /// <summary>
-/// 强制CPU等待GPU，直到GPU处理完队列中的所有命令，待续
+/// 强制CPU等待GPU处理完队列中的所有命令
 /// </summary>
 void D3DApp::FlushCommandQueue()
 {
-	// Advance the fence value to mark commands up to this fence point.
     mCurrentFence++;
-
-    // Add an instruction to the command queue to set a new fence point.  Because we 
-	// are on the GPU timeline, the new fence point won't be set until the GPU finishes
-	// processing all the commands prior to this Signal().
+	//创建一个围栏点
     ThrowIfFailed(mCommandQueue->Signal(mFence.Get(), mCurrentFence));
-
-	// Wait until the GPU has completed commands up to this fence point.
     if(mFence->GetCompletedValue() < mCurrentFence)
 	{
-		HANDLE eventHandle = CreateEventEx(nullptr, false, false, EVENT_ALL_ACCESS);
-
-        // Fire event when GPU hits current fence.  
+		//创建一个异步事件
+		HANDLE eventHandle = CreateEventEx(nullptr, nullptr, CREATE_EVENT_MANUAL_RESET, EVENT_ALL_ACCESS);
+		//当GPU执行到围栏点时候触发事件
         ThrowIfFailed(mFence->SetEventOnCompletion(mCurrentFence, eventHandle));
-
-        // Wait until the GPU hits current fence event is fired.
+		//阻塞等待事件触发
 		WaitForSingleObject(eventHandle, INFINITE);
-        CloseHandle(eventHandle);
+        //事件触发后继续执行CPU指令
+		CloseHandle(eventHandle);
 	}
 }
-
+/// <summary>
+/// 交换链的后台缓冲区
+/// </summary>
+/// <returns></returns>
 ID3D12Resource* D3DApp::CurrentBackBuffer()const
 {
 	return mSwapChainBuffer[mCurrBackBuffer].Get();
 }
-
+/// <summary>
+/// 交换链的后台缓冲区视图
+/// </summary>
+/// <returns></returns>
 D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::CurrentBackBufferView()const
 {
 	return CD3DX12_CPU_DESCRIPTOR_HANDLE(
@@ -630,47 +515,38 @@ D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::CurrentBackBufferView()const
 		mCurrBackBuffer,
 		mRtvDescriptorSize);
 }
-
+/// <summary>
+/// 深度/模板描述符堆开始处的句柄
+/// </summary>
+/// <returns></returns>
 D3D12_CPU_DESCRIPTOR_HANDLE D3DApp::DepthStencilView()const
 {
 	return mDsvHeap->GetCPUDescriptorHandleForHeapStart();
 }
 /// <summary>
-/// 每秒刷新帧数信息--DONE
+/// 每秒刷新帧数信息
 /// </summary>
 void D3DApp::CalculateFrameStats()
 {
-	// Code computes the average frames per second, and also the 
-	// average time it takes to render one frame.  These stats 
-	// are appended to the window caption bar.
-    
 	static int frameCnt = 0;
 	static float timeElapsed = 0.0f;
-
 	frameCnt++;
-
-	// Compute averages over one second period.
 	if( (mTimer.TotalTime() - timeElapsed) >= 1.0f )
 	{
 		float fps = (float)frameCnt; // fps = frameCnt / 1
 		float mspf = 1000.0f / fps;
-
         wstring fpsStr = to_wstring(fps);
         wstring mspfStr = to_wstring(mspf);
-
         wstring windowText = mMainWndCaption +
             L"    fps: " + fpsStr +
             L"   mspf: " + mspfStr;
-
         SetWindowText(mhMainWnd, windowText.c_str());
-		
-		// Reset for next average.
 		frameCnt = 0;
 		timeElapsed += 1.0f;
 	}
 }
 /// <summary>
-/// IDXGIFactory4枚举IDXGIAdapter--DONE
+/// 打印显示适配器信息
 /// </summary>
 void D3DApp::LogAdapters()
 {
@@ -700,7 +576,7 @@ void D3DApp::LogAdapters()
     }
 }
 /// <summary>
-/// IDXGIAdapter枚举IDXGIOutput--DONE
+/// IDXGIAdapter枚举IDXGIOutput
 /// </summary>
 /// <param name="adapter"></param>
 void D3DApp::LogAdapterOutputs(IDXGIAdapter* adapter)
@@ -711,21 +587,17 @@ void D3DApp::LogAdapterOutputs(IDXGIAdapter* adapter)
     {
         DXGI_OUTPUT_DESC desc;
         output->GetDesc(&desc);
-        
         std::wstring text = L"***Output: ";
         text += desc.DeviceName;
         text += L"\n";
         OutputDebugString(text.c_str());
-
         LogOutputDisplayModes(output, mBackBufferFormat);
-
         ReleaseCom(output);
-
         ++i;
     }
 }
 /// <summary>
-/// IDXGIOutput枚举DXGI_MODE_DESC--DONE
+/// IDXGIOutput枚举DXGI_MODE_DESC
 /// </summary>
 /// <param name="output"></param>
 /// <param name="format"></param>
@@ -733,13 +605,9 @@ void D3DApp::LogOutputDisplayModes(IDXGIOutput* output, DXGI_FORMAT format)
 {
     UINT count = 0;
     UINT flags = 0;
-
-    // Call with nullptr to get list count.
     output->GetDisplayModeList(format, flags, &count, nullptr);
-
     std::vector<DXGI_MODE_DESC> modeList(count);
     output->GetDisplayModeList(format, flags, &count, &modeList[0]);
-
     for(auto& x : modeList)
     {
         UINT n = x.RefreshRate.Numerator;
@@ -749,7 +617,6 @@ void D3DApp::LogOutputDisplayModes(IDXGIOutput* output, DXGI_FORMAT format)
             L"Height = " + std::to_wstring(x.Height) + L" " +
             L"Refresh = " + std::to_wstring(n) + L"/" + std::to_wstring(d) +
             L"\n";
-
         ::OutputDebugString(text.c_str());
     }
 }

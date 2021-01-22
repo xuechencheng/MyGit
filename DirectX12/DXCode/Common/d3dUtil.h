@@ -96,23 +96,12 @@ public:
 
     static std::string ToString(HRESULT hr);
     /// <summary>
-    /// 将缓冲区的大小抽成256B整数倍
+    /// 将缓冲区的大小凑成256B整数倍
     /// </summary>
     /// <param name="byteSize"></param>
     /// <returns></returns>
     static UINT CalcConstantBufferByteSize(UINT byteSize)
     {
-        // Constant buffers must be a multiple of the minimum hardware
-        // allocation size (usually 256 bytes).  So round up to nearest
-        // multiple of 256.  We do this by adding 255 and then masking off
-        // the lower 2 bytes which store all bits < 256.
-        // Example: Suppose byteSize = 300.
-        // (300 + 255) & ~255
-        // 555 & ~255
-        // 0x022B & ~0x00ff
-        // 0x022B & 0xff00
-        // 0x0200
-        // 512
         return (byteSize + 255) & ~255;
     }
 
@@ -164,12 +153,8 @@ struct SubmeshGeometry
 /// </summary>
 struct MeshGeometry
 {
-	// Give it a name so we can look it up by name.
 	std::string Name;
-
-	// System memory copies.  Use Blobs because the vertex/index format can be generic.
-	// It is up to the client to cast appropriately.  
-	//内存
+	//将顶点和索引数据转换成ID3DBlob
     Microsoft::WRL::ComPtr<ID3DBlob> VertexBufferCPU = nullptr;
 	Microsoft::WRL::ComPtr<ID3DBlob> IndexBufferCPU  = nullptr;
     //默认堆
@@ -179,15 +164,11 @@ struct MeshGeometry
 	Microsoft::WRL::ComPtr<ID3D12Resource> VertexBufferUploader = nullptr;
 	Microsoft::WRL::ComPtr<ID3D12Resource> IndexBufferUploader = nullptr;
 
-    // Data about the buffers.
-	UINT VertexByteStride = 0;//顶点数据的大小
+	UINT VertexByteStride = 0;//每个顶点数据的大小
 	UINT VertexBufferByteSize = 0;//所有顶点数乘以顶点大小
 	DXGI_FORMAT IndexFormat = DXGI_FORMAT_R16_UINT;
 	UINT IndexBufferByteSize = 0;//所有索引数乘以顶点大小
 
-	// A MeshGeometry may store multiple geometries in one vertex/index buffer.
-	// Use this container to define the Submesh geometries so we can draw
-	// the Submeshes individually.
 	std::unordered_map<std::string, SubmeshGeometry> DrawArgs;
 	/// <summary>
 	/// 顶点缓冲区视图
@@ -199,7 +180,6 @@ struct MeshGeometry
 		vbv.BufferLocation = VertexBufferGPU->GetGPUVirtualAddress();//资源虚拟地址
 		vbv.StrideInBytes = VertexByteStride;//待创建视图的顶点缓冲区大小
 		vbv.SizeInBytes = VertexBufferByteSize;//每个顶点元素所占用的字节数
-
 		return vbv;
 	}
 	/// <summary>
@@ -212,11 +192,9 @@ struct MeshGeometry
 		ibv.BufferLocation = IndexBufferGPU->GetGPUVirtualAddress();
 		ibv.Format = IndexFormat;
 		ibv.SizeInBytes = IndexBufferByteSize;
-
 		return ibv;
 	}
 
-	// We can free this memory after we finish upload to the GPU.
 	void DisposeUploaders()
 	{
 		VertexBufferUploader = nullptr;
@@ -242,7 +220,6 @@ struct MaterialConstants
 	DirectX::XMFLOAT3 FresnelR0 = { 0.01f, 0.01f, 0.01f };
 	float Roughness = 0.25f;
 
-	// Used in texture mapping.
 	DirectX::XMFLOAT4X4 MatTransform = MathHelper::Identity4x4();
 };
 

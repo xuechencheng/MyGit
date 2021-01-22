@@ -1,2 +1,4 @@
 C:\Users\xuechencheng\Desktop\DXCode\Chapter 12 The Geometry Shader\TreeBillboards\x64\Debug\TreeBillboards.exe
 C:\Users\xuechencheng\Desktop\DXCode\Chapter 12 The Geometry Shader\TreeBillboards\x64\Debug\TreeBillboards.pdb
+D:\work\MyGit\DirectX12\DXCode\Chapter 12 The Geometry Shader\TreeBillboards\x64\Debug\TreeBillboards.exe
+D:\work\MyGit\DirectX12\DXCode\Chapter 12 The Geometry Shader\TreeBillboards\x64\Debug\TreeBillboards.pdb

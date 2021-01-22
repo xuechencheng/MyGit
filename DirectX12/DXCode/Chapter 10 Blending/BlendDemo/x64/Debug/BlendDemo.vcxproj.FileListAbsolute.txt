@@ -1,2 +1,4 @@
 C:\Users\xuechencheng\Desktop\DXCode\Chapter 10 Blending\BlendDemo\x64\Debug\BlendDemo.exe
 C:\Users\xuechencheng\Desktop\DXCode\Chapter 10 Blending\BlendDemo\x64\Debug\BlendDemo.pdb
+D:\work\MyGit\DirectX12\DXCode\Chapter 10 Blending\BlendDemo\x64\Debug\BlendDemo.exe
+D:\work\MyGit\DirectX12\DXCode\Chapter 10 Blending\BlendDemo\x64\Debug\BlendDemo.pdb

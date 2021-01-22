@@ -1,0 +1,12 @@
+﻿  Camera.cpp
+  d3dApp.cpp
+  d3dUtil.cpp
+  DDSTextureLoader.cpp
+  GameTimer.cpp
+  GeometryGenerator.cpp
+  MathHelper.cpp
+  AnimationHelper.cpp
+  FrameResource.cpp
+  QuatApp.cpp
+  正在生成代码...
+  QuatDemo.vcxproj -> D:\work\MyGit\DirectX12\DXCode\Chapter 22 Quaternions\QuatDemo\x64\Debug\QuatDemo.exe
