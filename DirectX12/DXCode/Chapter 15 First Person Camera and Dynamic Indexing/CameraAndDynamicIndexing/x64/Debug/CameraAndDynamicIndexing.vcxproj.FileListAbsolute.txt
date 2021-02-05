@@ -1,0 +1,2 @@
+D:\work\MyGit\DirectX12\DXCode\Chapter 15 First Person Camera and Dynamic Indexing\CameraAndDynamicIndexing\x64\Debug\CameraAndDynamicIndexing.exe
+D:\work\MyGit\DirectX12\DXCode\Chapter 15 First Person Camera and Dynamic Indexing\CameraAndDynamicIndexing\x64\Debug\CameraAndDynamicIndexing.pdb

@@ -41,8 +41,9 @@ struct Vertex
     DirectX::XMFLOAT3 Normal;
 };
 
-// Stores the resources needed for the CPU to build the command lists
-// for a frame.  
+/// <summary>
+/// 命令分配器，杂项常量，材质常量，物体常量，波浪常量
+/// </summary>
 struct FrameResource
 {
 public:

@@ -40,7 +40,7 @@ int main()
     XMVECTOR b = u - v;
 
     // Scalar multiplication: XMVECTOR operator * 
-    XMVECTOR c = 10.0f*u;
+    XMVECTOR c = 10.0f * u;
 
     // ||u||
     XMVECTOR L = XMVector3Length(u);
@@ -79,7 +79,7 @@ int main()
     cout << "e = u x v           = " << e << endl;
     cout << "L  = ||u||          = " << L << endl;
     cout << "s = u.v             = " << s << endl;
-    cout << "projW               = " << projW << endl;
+    cout << "projW(w,n)          = " << projW << endl;
     cout << "perpW               = " << perpW << endl;
     cout << "projW + perpW == w  = " << equal << endl;
     cout << "projW + perpW != w  = " << notEqual << endl;

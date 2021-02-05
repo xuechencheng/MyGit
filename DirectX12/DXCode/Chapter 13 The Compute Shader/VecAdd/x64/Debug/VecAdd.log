@@ -1,0 +1,17 @@
+﻿  d3dApp.cpp
+  d3dUtil.cpp
+  DDSTextureLoader.cpp
+  GameTimer.cpp
+  GeometryGenerator.cpp
+  MathHelper.cpp
+  FrameResource.cpp
+  VecAddCSApp.cpp
+D:\work\MyGit\DirectX12\DXCode\Chapter 13 The Compute Shader\VecAdd\VecAddCSApp.cpp(396,32): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+D:\work\MyGit\DirectX12\DXCode\Chapter 13 The Compute Shader\VecAdd\VecAddCSApp.cpp(396,29): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+D:\work\MyGit\DirectX12\DXCode\Chapter 13 The Compute Shader\VecAdd\VecAddCSApp.cpp(396,26): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+D:\work\MyGit\DirectX12\DXCode\Chapter 13 The Compute Shader\VecAdd\VecAddCSApp.cpp(397,26): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+D:\work\MyGit\DirectX12\DXCode\Chapter 13 The Compute Shader\VecAdd\VecAddCSApp.cpp(399,30): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+D:\work\MyGit\DirectX12\DXCode\Chapter 13 The Compute Shader\VecAdd\VecAddCSApp.cpp(399,26): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+D:\work\MyGit\DirectX12\DXCode\Chapter 13 The Compute Shader\VecAdd\VecAddCSApp.cpp(400,29): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+  正在生成代码...
+  VecAdd.vcxproj -> D:\work\MyGit\DirectX12\DXCode\Chapter 13 The Compute Shader\VecAdd\x64\Debug\VecAdd.exe

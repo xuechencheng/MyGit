@@ -1,0 +1,11 @@
+﻿  d3dApp.cpp
+  d3dUtil.cpp
+  DDSTextureLoader.cpp
+  GameTimer.cpp
+  GeometryGenerator.cpp
+  MathHelper.cpp
+  FrameResource.cpp
+  GpuWaves.cpp
+  WavesCSApp.cpp
+  正在生成代码...
+  WavesCS.vcxproj -> D:\work\MyGit\DirectX12\DXCode\Chapter 13 The Compute Shader\WavesCS\x64\Debug\WavesCS.exe

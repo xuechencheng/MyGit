@@ -138,27 +138,19 @@ void BoxApp::OnResize()
 /// <summary>
 /// 计算变换矩阵的结果world*view*proj，并更新到常量缓冲区中
 /// </summary>
-/// <param name="gt"></param>
 void BoxApp::Update(const GameTimer& gt)
 {
-    // Convert Spherical to Cartesian coordinates.
-    float x = mRadius*sinf(mPhi)*cosf(mTheta);
-    float z = mRadius*sinf(mPhi)*sinf(mTheta);
-    float y = mRadius*cosf(mPhi);
-
-    // Build the view matrix.
+    float x = mRadius * sinf(mPhi) * cosf(mTheta);
+    float z = mRadius * sinf(mPhi) * sinf(mTheta);
+    float y = mRadius * cosf(mPhi);
     XMVECTOR pos = XMVectorSet(x, y, z, 1.0f);
     XMVECTOR target = XMVectorZero();
     XMVECTOR up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
-
     XMMATRIX view = XMMatrixLookAtLH(pos, target, up);
     XMStoreFloat4x4(&mView, view);
-
     XMMATRIX world = XMLoadFloat4x4(&mWorld);
     XMMATRIX proj = XMLoadFloat4x4(&mProj);
-    XMMATRIX worldViewProj = world*view*proj;
-
-	// Update the constant buffer with the latest worldViewProj matrix.
+    XMMATRIX worldViewProj = world * view * proj;
     //shader读取const buffer是按列主序来读取的，所以这里要对矩阵先进行转置，再传递给shader
     //https://blog.csdn.net/u014038143/article/details/78192194
 	ObjectConstants objConstants;
@@ -177,7 +169,7 @@ void BoxApp::Draw(const GameTimer& gt)
     //2，设置视口，裁剪矩形
     mCommandList->RSSetViewports(1, &mScreenViewport);
     mCommandList->RSSetScissorRects(1, &mScissorRect);
-    //3，处理交换链的视图
+    //3，切换后台缓冲区状态
 	mCommandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(CurrentBackBuffer(),
 		D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET));
     //4，清除渲染视图和深度视图
@@ -193,7 +185,7 @@ void BoxApp::Draw(const GameTimer& gt)
     mCommandList->IASetVertexBuffers(0, 1, &mBoxGeo->VertexBufferView());
 	mCommandList->IASetIndexBuffer(&mBoxGeo->IndexBufferView());
     mCommandList->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-    //待续
+    //填充根描述符数据
     mCommandList->SetGraphicsRootDescriptorTable(0, mCbvHeap->GetGPUDescriptorHandleForHeapStart());
     //8，绘制顶点 待续
     mCommandList->DrawIndexedInstanced(mBoxGeo->DrawArgs["box"].IndexCount, 1, 0, 0, 0);
@@ -209,22 +201,15 @@ void BoxApp::Draw(const GameTimer& gt)
 /// <summary>
 /// OnMouseDown
 /// </summary>
-/// <param name="btnState"></param>
-/// <param name="x"></param>
-/// <param name="y"></param>
 void BoxApp::OnMouseDown(WPARAM btnState, int x, int y)
 {
     mLastMousePos.x = x;
     mLastMousePos.y = y;
-
     SetCapture(mhMainWnd);
 }
 /// <summary>
 /// OnMouseUp
 /// </summary>
-/// <param name="btnState"></param>
-/// <param name="x"></param>
-/// <param name="y"></param>
 void BoxApp::OnMouseUp(WPARAM btnState, int x, int y)
 {
     ReleaseCapture();
@@ -232,37 +217,23 @@ void BoxApp::OnMouseUp(WPARAM btnState, int x, int y)
 /// <summary>
 /// OnMouseMove
 /// </summary>
-/// <param name="btnState"></param>
-/// <param name="x"></param>
-/// <param name="y"></param>
 void BoxApp::OnMouseMove(WPARAM btnState, int x, int y)
 {
     if((btnState & MK_LBUTTON) != 0)
     {
-        // Make each pixel correspond to a quarter of a degree.
         float dx = XMConvertToRadians(0.25f*static_cast<float>(x - mLastMousePos.x));
         float dy = XMConvertToRadians(0.25f*static_cast<float>(y - mLastMousePos.y));
-
-        // Update angles based on input to orbit camera around box.
         mTheta += dx;
         mPhi += dy;
-
-        // Restrict the angle mPhi.
         mPhi = MathHelper::Clamp(mPhi, 0.1f, MathHelper::Pi - 0.1f);
     }
     else if((btnState & MK_RBUTTON) != 0)
     {
-        // Make each pixel correspond to 0.005 unit in the scene.
         float dx = 0.005f*static_cast<float>(x - mLastMousePos.x);
         float dy = 0.005f*static_cast<float>(y - mLastMousePos.y);
-
-        // Update the camera radius based on input.
         mRadius += dx - dy;
-
-        // Restrict the radius.
         mRadius = MathHelper::Clamp(mRadius, 3.0f, 15.0f);
     }
-
     mLastMousePos.x = x;
     mLastMousePos.y = y;
 }
@@ -292,10 +263,10 @@ void BoxApp::BuildConstantBuffers()
 	cbvDesc.BufferLocation = cbAddress;
 	cbvDesc.SizeInBytes = d3dUtil::CalcConstantBufferByteSize(sizeof(ObjectConstants));
     //创建常量缓冲区视图
-	md3dDevice->CreateConstantBufferView(&cbvDesc,mCbvHeap->GetCPUDescriptorHandleForHeapStart());
+	md3dDevice->CreateConstantBufferView(&cbvDesc, mCbvHeap->GetCPUDescriptorHandleForHeapStart());
 }
 /// <summary>
-/// 创建根签名
+/// 创建根签名，只还有一个根参数：描述符表
 /// </summary>
 void BoxApp::BuildRootSignature()
 {

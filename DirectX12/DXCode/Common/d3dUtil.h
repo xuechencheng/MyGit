@@ -167,7 +167,7 @@ struct MeshGeometry
 	UINT VertexByteStride = 0;//每个顶点数据的大小
 	UINT VertexBufferByteSize = 0;//所有顶点数乘以顶点大小
 	DXGI_FORMAT IndexFormat = DXGI_FORMAT_R16_UINT;
-	UINT IndexBufferByteSize = 0;//所有索引数乘以顶点大小
+	UINT IndexBufferByteSize = 0;//所有索引数乘以索引大小
 
 	std::unordered_map<std::string, SubmeshGeometry> DrawArgs;
 	/// <summary>
@@ -219,7 +219,6 @@ struct MaterialConstants
 	DirectX::XMFLOAT4 DiffuseAlbedo = { 1.0f, 1.0f, 1.0f, 1.0f };
 	DirectX::XMFLOAT3 FresnelR0 = { 0.01f, 0.01f, 0.01f };
 	float Roughness = 0.25f;
-
 	DirectX::XMFLOAT4X4 MatTransform = MathHelper::Identity4x4();
 };
 
@@ -254,11 +253,8 @@ struct Material
 
 struct Texture
 {
-	// Unique material name for lookup.
 	std::string Name;
-
 	std::wstring Filename;
-
 	Microsoft::WRL::ComPtr<ID3D12Resource> Resource = nullptr;
 	Microsoft::WRL::ComPtr<ID3D12Resource> UploadHeap = nullptr;
 };

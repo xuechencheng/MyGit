@@ -1,11 +1,2 @@
-﻿  d3dApp.cpp
-  d3dUtil.cpp
-  DDSTextureLoader.cpp
-  GameTimer.cpp
-  GeometryGenerator.cpp
-  MathHelper.cpp
-  BlendApp.cpp
-  FrameResource.cpp
-  Waves.cpp
-  正在生成代码...
+﻿  BlendApp.cpp
   BlendDemo.vcxproj -> D:\work\MyGit\DirectX12\DXCode\Chapter 10 Blending\BlendDemo\x64\Debug\BlendDemo.exe

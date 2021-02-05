@@ -1,0 +1,10 @@
+﻿  GeometryGenerator.cpp
+  d3dApp.cpp
+  d3dUtil.cpp
+  FrameResource.cpp
+  GpuWaves.cpp
+  RenderTarget.cpp
+  SobelApp.cpp
+  SobelFilter.cpp
+  正在生成代码...
+  SobelFilter.vcxproj -> D:\work\MyGit\DirectX12\DXCode\Chapter 13 The Compute Shader\SobelFilter\x64\Debug\SobelFilter.exe

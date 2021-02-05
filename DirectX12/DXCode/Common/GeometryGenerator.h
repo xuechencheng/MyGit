@@ -53,7 +53,7 @@ public:
         DirectX::XMFLOAT2 TexC;
 	};
 	/// <summary>
-	/// 保存顶点和索引数据 Done-1
+	/// 保存顶点和索引数据
 	/// </summary>
 	struct MeshData
 	{

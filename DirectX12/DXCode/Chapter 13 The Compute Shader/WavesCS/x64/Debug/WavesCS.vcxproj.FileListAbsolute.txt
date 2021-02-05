@@ -1,0 +1,2 @@
+D:\work\MyGit\DirectX12\DXCode\Chapter 13 The Compute Shader\WavesCS\x64\Debug\WavesCS.exe
+D:\work\MyGit\DirectX12\DXCode\Chapter 13 The Compute Shader\WavesCS\x64\Debug\WavesCS.pdb

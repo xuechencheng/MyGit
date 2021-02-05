@@ -3,12 +3,16 @@
 #include "../../Common/d3dUtil.h"
 #include "../../Common/MathHelper.h"
 #include "../../Common/UploadBuffer.h"
-
+/// <summary>
+/// Worldæÿ’Û
+/// </summary>
 struct ObjectConstants
 {
     DirectX::XMFLOAT4X4 World = MathHelper::Identity4x4();
 };
-
+/// <summary>
+/// ‘”œÓ
+/// </summary>
 struct PassConstants
 {
     DirectX::XMFLOAT4X4 View = MathHelper::Identity4x4();

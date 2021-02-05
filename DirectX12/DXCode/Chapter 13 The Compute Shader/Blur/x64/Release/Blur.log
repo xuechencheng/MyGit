@@ -1,0 +1,12 @@
+﻿  GeometryGenerator.cpp
+  d3dApp.cpp
+  d3dUtil.cpp
+  BlurApp.cpp
+  BlurFilter.cpp
+  FrameResource.cpp
+  正在生成代码
+  6 of 2251 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    10 functions had inline decision re-evaluated but remain unchanged
+  已完成代码的生成
+  Blur.vcxproj -> D:\work\MyGit\DirectX12\DXCode\Chapter 13 The Compute Shader\Blur\x64\Release\Blur.exe

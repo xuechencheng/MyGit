@@ -1,0 +1,2 @@
+D:\work\MyGit\DirectX12\DXCode\Chapter 14 The Tessellation Stages\BasicTessellation\x64\Debug\BasicTessellation.exe
+D:\work\MyGit\DirectX12\DXCode\Chapter 14 The Tessellation Stages\BasicTessellation\x64\Debug\BasicTessellation.pdb

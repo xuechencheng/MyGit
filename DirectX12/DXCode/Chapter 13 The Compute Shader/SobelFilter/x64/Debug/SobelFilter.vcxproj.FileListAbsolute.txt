@@ -1,0 +1,2 @@
+D:\work\MyGit\DirectX12\DXCode\Chapter 13 The Compute Shader\SobelFilter\x64\Debug\SobelFilter.exe
+D:\work\MyGit\DirectX12\DXCode\Chapter 13 The Compute Shader\SobelFilter\x64\Debug\SobelFilter.pdb

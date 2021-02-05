@@ -1,0 +1,2 @@
+D:\work\MyGit\DirectX12\DXCode\Chapter 13 The Compute Shader\VecAdd\x64\Debug\VecAdd.exe
+D:\work\MyGit\DirectX12\DXCode\Chapter 13 The Compute Shader\VecAdd\x64\Debug\VecAdd.pdb

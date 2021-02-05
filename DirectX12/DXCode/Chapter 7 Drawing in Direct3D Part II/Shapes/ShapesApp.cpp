@@ -364,7 +364,7 @@ void ShapesApp::BuildConstantBufferViews()
     }
 }
 /// <summary>
-/// 根签名，声明两个常量
+/// 根签名，声明两个描述符表，一个是World矩阵，一个是很多杂项
 /// </summary>
 void ShapesApp::BuildRootSignature()
 {
@@ -492,7 +492,7 @@ void ShapesApp::BuildShapeGeometry()
 	mGeometries[geo->Name] = std::move(geo);
 }
 /// <summary>
-/// 构建流水线状态对象
+/// 构建两个流水线状态对象
 /// </summary>
 void ShapesApp::BuildPSOs()
 {
@@ -543,7 +543,7 @@ void ShapesApp::BuildFrameResources()
 void ShapesApp::BuildRenderItems()
 {
 	auto boxRitem = std::make_unique<RenderItem>();
-	XMStoreFloat4x4(&boxRitem->World, XMMatrixScaling(2.0f, 2.0f, 2.0f)*XMMatrixTranslation(0.0f, 0.5f, 0.0f));
+	XMStoreFloat4x4(&boxRitem->World, XMMatrixScaling(2.0f, 2.0f, 2.0f) * XMMatrixTranslation(0.0f, 0.5f, 0.0f));
 	boxRitem->ObjCBIndex = 0;
 	boxRitem->Geo = mGeometries["shapeGeo"].get();
 	boxRitem->PrimitiveType = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;

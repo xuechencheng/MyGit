@@ -1,0 +1,10 @@
+﻿  d3dApp.cpp
+  d3dUtil.cpp
+  DDSTextureLoader.cpp
+  GameTimer.cpp
+  GeometryGenerator.cpp
+  MathHelper.cpp
+  BasicTessellationApp.cpp
+  FrameResource.cpp
+  正在生成代码...
+  BasicTessellation.vcxproj -> D:\work\MyGit\DirectX12\DXCode\Chapter 14 The Tessellation Stages\BasicTessellation\x64\Debug\BasicTessellation.exe

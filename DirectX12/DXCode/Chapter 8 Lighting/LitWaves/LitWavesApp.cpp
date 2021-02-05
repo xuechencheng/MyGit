@@ -474,7 +474,7 @@ void LitWavesApp::BuildLandGeometry()
 	mGeometries["landGeo"] = std::move(geo);
 }
 /// <summary>
-/// 生成波浪的图形数据，只有索引，没有顶点
+/// 生成波浪的图形数据存入默认堆，只有索引，没有顶点
 /// </summary>
 void LitWavesApp::BuildWavesGeometryBuffers()
 {
@@ -596,7 +596,7 @@ void LitWavesApp::BuildMaterials()
 	mMaterials["water"] = std::move(water);
 }
 /// <summary>
-/// 生成水和草地RenderItem
+/// 生成水和草地RenderItem，加入到mAllRitems中
 /// </summary>
 void LitWavesApp::BuildRenderItems()
 {
@@ -661,7 +661,7 @@ float LitWavesApp::GetHillsHeight(float x, float z)const
     return 0.3f * (z * sinf(0.1f * x) + x * cosf(0.1f * z));
 }
 /// <summary>
-/// 获取法线，待续
+/// 获取法线，微积分
 /// </summary>
 /// <param name="x"></param>
 /// <param name="z"></param>

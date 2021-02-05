@@ -16,12 +16,10 @@ public:
             mElementByteSize = d3dUtil::CalcConstantBufferByteSize(sizeof(T));
         //在上传堆创建资源缓冲区mUploadBuffer
         ThrowIfFailed(device->CreateCommittedResource(
-            &CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
-            D3D12_HEAP_FLAG_NONE,
-            &CD3DX12_RESOURCE_DESC::Buffer(mElementByteSize*elementCount),
+            &CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),D3D12_HEAP_FLAG_NONE,
+            &CD3DX12_RESOURCE_DESC::Buffer(mElementByteSize * elementCount),
 			D3D12_RESOURCE_STATE_GENERIC_READ,
-            nullptr,
-            IID_PPV_ARGS(&mUploadBuffer)));
+            nullptr,IID_PPV_ARGS(&mUploadBuffer)));
         //map mUploadBuffer和mMappedData
         ThrowIfFailed(mUploadBuffer->Map(0, nullptr, reinterpret_cast<void**>(&mMappedData)));
     }
@@ -45,7 +43,7 @@ public:
     /// <param name="data"></param>
     void CopyData(int elementIndex, const T& data)
     {
-        memcpy(&mMappedData[elementIndex*mElementByteSize], &data, sizeof(T));
+        memcpy(&mMappedData[elementIndex * mElementByteSize], &data, sizeof(T));
     }
 
 private:
