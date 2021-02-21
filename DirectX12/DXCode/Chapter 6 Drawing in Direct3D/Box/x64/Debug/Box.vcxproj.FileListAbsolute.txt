@@ -2,3 +2,5 @@ C:\Users\xuechencheng\Desktop\DXCode\Chapter 6 Drawing in Direct3D\Box\x64\Debug
 C:\Users\xuechencheng\Desktop\DXCode\Chapter 6 Drawing in Direct3D\Box\x64\Debug\Box.pdb
 D:\work\MyGit\DirectX12\DXCode\Chapter 6 Drawing in Direct3D\Box\x64\Debug\Box.exe
 D:\work\MyGit\DirectX12\DXCode\Chapter 6 Drawing in Direct3D\Box\x64\Debug\Box.pdb
+D:\MyGit\DirectX12\DXCode\Chapter 6 Drawing in Direct3D\Box\x64\Debug\Box.exe
+D:\MyGit\DirectX12\DXCode\Chapter 6 Drawing in Direct3D\Box\x64\Debug\Box.pdb

@@ -1,0 +1,10 @@
+﻿  d3dApp.cpp
+  d3dUtil.cpp
+  GameTimer.cpp
+  GeometryGenerator.cpp
+  MathHelper.cpp
+  FrameResource.cpp
+  LitWavesApp.cpp
+  Waves.cpp
+  正在生成代码...
+  LitWaves.vcxproj -> D:\MyGit\DirectX12\DXCode\Chapter 8 Lighting\LitWaves\x64\Debug\LitWaves.exe

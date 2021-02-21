@@ -42,7 +42,7 @@ struct Vertex
 };
 
 /// <summary>
-/// 命令分配器，杂项常量，材质常量，物体常量，波浪常量
+/// 围栏，命令分配器，杂项常量，材质常量，World矩阵常量，波浪顶点常量
 /// </summary>
 struct FrameResource
 {

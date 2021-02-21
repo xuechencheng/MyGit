@@ -388,6 +388,7 @@ void LitWavesApp::UpdateWaves(const GameTimer& gt)
 	mWaves->Update(gt.DeltaTime());
 	auto currWavesVB = mCurrFrameResource->WavesVB.get();
 	for(int i = 0; i < mWaves->VertexCount(); ++i)
+	for(int i = 0; i < mWaves->VertexCount(); ++i)
 	{
 		Vertex v;
 		v.Pos = mWaves->Position(i);
@@ -397,7 +398,7 @@ void LitWavesApp::UpdateWaves(const GameTimer& gt)
 	mWavesRitem->Geo->VertexBufferGPU = currWavesVB->Resource();
 }
 /// <summary>
-/// 根签名，3个根常量
+/// 根签名，3个根常量，分别是world矩阵，材质和杂项
 /// </summary>
 void LitWavesApp::BuildRootSignature()
 {
@@ -480,7 +481,6 @@ void LitWavesApp::BuildWavesGeometryBuffers()
 {
 	std::vector<std::uint16_t> indices(3 * mWaves->TriangleCount()); // 3 indices per face
 	assert(mWaves->VertexCount() < 0x0000ffff);
-
 	// Iterate over each quad.
 	int m = mWaves->RowCount();
 	int n = mWaves->ColumnCount();
@@ -492,43 +492,32 @@ void LitWavesApp::BuildWavesGeometryBuffers()
 			indices[k] = i*n + j;
 			indices[k + 1] = i*n + j + 1;
 			indices[k + 2] = (i + 1)*n + j;
-
 			indices[k + 3] = (i + 1)*n + j;
 			indices[k + 4] = i*n + j + 1;
 			indices[k + 5] = (i + 1)*n + j + 1;
-
 			k += 6; // next quad
 		}
 	}
-
 	UINT vbByteSize = mWaves->VertexCount()*sizeof(Vertex);
 	UINT ibByteSize = (UINT)indices.size()*sizeof(std::uint16_t);
-
 	auto geo = std::make_unique<MeshGeometry>();
 	geo->Name = "waterGeo";
-
 	// Set dynamically.
 	geo->VertexBufferCPU = nullptr;
 	geo->VertexBufferGPU = nullptr;
-
 	ThrowIfFailed(D3DCreateBlob(ibByteSize, &geo->IndexBufferCPU));
 	CopyMemory(geo->IndexBufferCPU->GetBufferPointer(), indices.data(), ibByteSize);
-
 	geo->IndexBufferGPU = d3dUtil::CreateDefaultBuffer(md3dDevice.Get(),
 		mCommandList.Get(), indices.data(), ibByteSize, geo->IndexBufferUploader);
-
 	geo->VertexByteStride = sizeof(Vertex);
 	geo->VertexBufferByteSize = vbByteSize;
 	geo->IndexFormat = DXGI_FORMAT_R16_UINT;
 	geo->IndexBufferByteSize = ibByteSize;
-
 	SubmeshGeometry submesh;
 	submesh.IndexCount = (UINT)indices.size();
 	submesh.StartIndexLocation = 0;
 	submesh.BaseVertexLocation = 0;
-
 	geo->DrawArgs["grid"] = submesh;
-
 	mGeometries["waterGeo"] = std::move(geo);
 }
 /// <summary>
@@ -572,7 +561,7 @@ void LitWavesApp::BuildFrameResources()
     }
 }
 /// <summary>
-/// 创建材质，设置属性
+/// 创建两种材质，水和草地
 /// </summary>
 void LitWavesApp::BuildMaterials()
 {
@@ -582,7 +571,6 @@ void LitWavesApp::BuildMaterials()
     grass->DiffuseAlbedo = XMFLOAT4(0.2f, 0.6f, 0.2f, 1.0f);
     grass->FresnelR0 = XMFLOAT3(0.01f, 0.01f, 0.01f);
     grass->Roughness = 0.125f;
-
     // This is not a good water material definition, but we do not have all the rendering
     // tools we need (transparency, environment reflection), so we fake it for now.
 	auto water = std::make_unique<Material>();
@@ -591,7 +579,6 @@ void LitWavesApp::BuildMaterials()
     water->DiffuseAlbedo = XMFLOAT4(0.0f, 0.2f, 0.6f, 1.0f);
     water->FresnelR0 = XMFLOAT3(0.1f, 0.1f, 0.1f);
     water->Roughness = 0.0f;
-
 	mMaterials["grass"] = std::move(grass);
 	mMaterials["water"] = std::move(water);
 }
@@ -609,9 +596,7 @@ void LitWavesApp::BuildRenderItems()
 	wavesRitem->IndexCount = wavesRitem->Geo->DrawArgs["grid"].IndexCount;
 	wavesRitem->StartIndexLocation = wavesRitem->Geo->DrawArgs["grid"].StartIndexLocation;
 	wavesRitem->BaseVertexLocation = wavesRitem->Geo->DrawArgs["grid"].BaseVertexLocation;
-
 	mWavesRitem = wavesRitem.get();
-
 	mRitemLayer[(int)RenderLayer::Opaque].push_back(wavesRitem.get());
 
 	auto gridRitem = std::make_unique<RenderItem>();
@@ -623,9 +608,7 @@ void LitWavesApp::BuildRenderItems()
 	gridRitem->IndexCount = gridRitem->Geo->DrawArgs["grid"].IndexCount;
 	gridRitem->StartIndexLocation = gridRitem->Geo->DrawArgs["grid"].StartIndexLocation;
 	gridRitem->BaseVertexLocation = gridRitem->Geo->DrawArgs["grid"].BaseVertexLocation;
-
 	mRitemLayer[(int)RenderLayer::Opaque].push_back(gridRitem.get());
-
 	mAllRitems.push_back(std::move(wavesRitem));
 	mAllRitems.push_back(std::move(gridRitem));
 }
@@ -643,8 +626,8 @@ void LitWavesApp::DrawRenderItems(ID3D12GraphicsCommandList* cmdList, const std:
 		cmdList->IASetVertexBuffers(0, 1, &ri->Geo->VertexBufferView());
 		cmdList->IASetIndexBuffer(&ri->Geo->IndexBufferView());
 		cmdList->IASetPrimitiveTopology(ri->PrimitiveType);
-		D3D12_GPU_VIRTUAL_ADDRESS objCBAddress = objectCB->GetGPUVirtualAddress() + ri->ObjCBIndex*objCBByteSize;
-		D3D12_GPU_VIRTUAL_ADDRESS matCBAddress = matCB->GetGPUVirtualAddress() + ri->Mat->MatCBIndex*matCBByteSize;
+		D3D12_GPU_VIRTUAL_ADDRESS objCBAddress = objectCB->GetGPUVirtualAddress() + ri->ObjCBIndex * objCBByteSize;
+		D3D12_GPU_VIRTUAL_ADDRESS matCBAddress = matCB->GetGPUVirtualAddress() + ri->Mat->MatCBIndex * matCBByteSize;
 		cmdList->SetGraphicsRootConstantBufferView(0, objCBAddress);
 		cmdList->SetGraphicsRootConstantBufferView(1, matCBAddress);
 		cmdList->DrawIndexedInstanced(ri->IndexCount, 1, ri->StartIndexLocation, ri->BaseVertexLocation, 0);

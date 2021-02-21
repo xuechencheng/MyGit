@@ -414,7 +414,7 @@ bool D3DApp::InitDirect3D()
 	mDsvDescriptorSize = md3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 	mCbvSrvUavDescriptorSize = md3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
-	//3，检测质量级别
+	//3，检测多重采样质量级别
 	D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS msQualityLevels;
 	msQualityLevels.Format = mBackBufferFormat;
 	msQualityLevels.SampleCount = 4;
@@ -452,7 +452,7 @@ void D3DApp::CreateCommandObjects()
 	mCommandList->Close();
 }
 /// <summary>
-/// 创建或者重置交换链
+/// 创建交换链
 /// </summary>
 void D3DApp::CreateSwapChain()
 {

@@ -364,7 +364,7 @@ void ShapesApp::BuildConstantBufferViews()
     }
 }
 /// <summary>
-/// 根签名，声明两个描述符表，一个是World矩阵，一个是很多杂项
+/// 创建根签名，它包含两个描述符表
 /// </summary>
 void ShapesApp::BuildRootSignature()
 {
@@ -386,11 +386,8 @@ void ShapesApp::BuildRootSignature()
 		::OutputDebugStringA((char*)errorBlob->GetBufferPointer());
 	}
 	ThrowIfFailed(hr);
-	ThrowIfFailed(md3dDevice->CreateRootSignature(
-		0,
-		serializedRootSig->GetBufferPointer(),
-		serializedRootSig->GetBufferSize(),
-		IID_PPV_ARGS(mRootSignature.GetAddressOf())));
+	ThrowIfFailed(md3dDevice->CreateRootSignature(0, serializedRootSig->GetBufferPointer(),
+		serializedRootSig->GetBufferSize(), IID_PPV_ARGS(mRootSignature.GetAddressOf())));
 }
 /// <summary>
 /// 编译Shader和构建输入布局

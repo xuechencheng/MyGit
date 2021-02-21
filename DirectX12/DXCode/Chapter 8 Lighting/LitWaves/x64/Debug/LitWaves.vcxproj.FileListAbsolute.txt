@@ -1,0 +1,2 @@
+D:\MyGit\DirectX12\DXCode\Chapter 8 Lighting\LitWaves\x64\Debug\LitWaves.exe
+D:\MyGit\DirectX12\DXCode\Chapter 8 Lighting\LitWaves\x64\Debug\LitWaves.pdb
