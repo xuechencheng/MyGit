@@ -1,0 +1,11 @@
+﻿  Camera.cpp
+  d3dApp.cpp
+  d3dUtil.cpp
+  DDSTextureLoader.cpp
+  GameTimer.cpp
+  GeometryGenerator.cpp
+  MathHelper.cpp
+  FrameResource.cpp
+  PickingApp.cpp
+  正在生成代码...
+  Picking.vcxproj -> D:\work\MyGit\DirectX12\DXCode\Chapter 17 Picking\Picking\x64\Debug\Picking.exe

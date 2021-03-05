@@ -1,9 +1,6 @@
-﻿  d3dApp.cpp
+﻿  GeometryGenerator.cpp
+  d3dApp.cpp
   d3dUtil.cpp
-  DDSTextureLoader.cpp
-  GameTimer.cpp
-  GeometryGenerator.cpp
-  MathHelper.cpp
   BezierPatchApp.cpp
   FrameResource.cpp
   正在生成代码...

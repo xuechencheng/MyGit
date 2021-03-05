@@ -1,0 +1,2 @@
+D:\work\MyGit\DirectX12\DXCode\Chapter 17 Picking\Picking\x64\Debug\Picking.exe
+D:\work\MyGit\DirectX12\DXCode\Chapter 17 Picking\Picking\x64\Debug\Picking.pdb
